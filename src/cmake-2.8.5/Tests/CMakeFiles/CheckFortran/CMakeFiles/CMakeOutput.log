@@ -1,0 +1,115 @@
+The system is: Darwin - 11.3.0 - i386
+Compiling the Fortran compiler identification source file "CMakeFortranCompilerId.F" succeeded.
+Compiler: /usr/local/bin/gfortran 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the Fortran compiler identification source "CMakeFortranCompilerId.F" produced "a.out"
+
+The Fortran compiler identification is GNU, found in "/Users/meister/Development/cando/externals/src/cmake-2.8.5/Tests/CMakeFiles/CheckFortran/CMakeFiles/CompilerIdFortran/a.out"
+
+Determining if the Fortran compiler works passed with the following output:
+Change Dir: /Users/meister/Development/cando/externals/src/cmake-2.8.5/Tests/CMakeFiles/CheckFortran/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec/fast"
+make -f CMakeFiles/cmTryCompileExec.dir/build.make CMakeFiles/cmTryCompileExec.dir/build
+/Users/meister/Development/cando/externals/src/cmake-2.8.5/Bootstrap.cmk/cmake -E cmake_progress_report /Users/meister/Development/cando/externals/src/cmake-2.8.5/Tests/CMakeFiles/CheckFortran/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building Fortran object CMakeFiles/cmTryCompileExec.dir/testFortranCompiler.f.o
+/usr/local/bin/gfortran    -c /Users/meister/Development/cando/externals/src/cmake-2.8.5/Tests/CMakeFiles/CheckFortran/CMakeFiles/CMakeTmp/testFortranCompiler.f -o CMakeFiles/cmTryCompileExec.dir/testFortranCompiler.f.o
+Linking Fortran executable cmTryCompileExec
+/Users/meister/Development/cando/externals/src/cmake-2.8.5/Bootstrap.cmk/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec.dir/link.txt --verbose=1
+/usr/local/bin/gfortran         CMakeFiles/cmTryCompileExec.dir/testFortranCompiler.f.o  -o cmTryCompileExec  
+
+
+Detecting Fortran compiler ABI info compiled with the following output:
+Change Dir: /Users/meister/Development/cando/externals/src/cmake-2.8.5/Tests/CMakeFiles/CheckFortran/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec/fast"
+make -f CMakeFiles/cmTryCompileExec.dir/build.make CMakeFiles/cmTryCompileExec.dir/build
+/Users/meister/Development/cando/externals/src/cmake-2.8.5/Bootstrap.cmk/cmake -E cmake_progress_report /Users/meister/Development/cando/externals/src/cmake-2.8.5/Tests/CMakeFiles/CheckFortran/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building Fortran object CMakeFiles/cmTryCompileExec.dir/CMakeFortranCompilerABI.F.o
+/usr/local/bin/gfortran    -c /Users/meister/Development/cando/externals/src/cmake-2.8.5/Modules/CMakeFortranCompilerABI.F -o CMakeFiles/cmTryCompileExec.dir/CMakeFortranCompilerABI.F.o
+Linking Fortran executable cmTryCompileExec
+/Users/meister/Development/cando/externals/src/cmake-2.8.5/Bootstrap.cmk/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec.dir/link.txt --verbose=1
+/usr/local/bin/gfortran   -v     CMakeFiles/cmTryCompileExec.dir/CMakeFortranCompilerABI.F.o  -o cmTryCompileExec   
+Driving: /usr/local/bin/gfortran -mmacosx-version-min=10.7.3 -v CMakeFiles/cmTryCompileExec.dir/CMakeFortranCompilerABI.F.o -o cmTryCompileExec -lgfortranbegin -lgfortran -shared-libgcc
+Using built-in specs.
+Target: i386-apple-darwin9.7.0
+Configured with: ./configure --enable-languages=fortran
+Thread model: posix
+gcc version 4.4.1 20090623 (prerelease) (GCC) 
+COMPILER_PATH=/usr/local/libexec/gcc/i386-apple-darwin9.7.0/4.4.1/:/usr/local/libexec/gcc/i386-apple-darwin9.7.0/4.4.1/:/usr/local/libexec/gcc/i386-apple-darwin9.7.0/:/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1/:/usr/local/lib/gcc/i386-apple-darwin9.7.0/
+LIBRARY_PATH=/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1/:/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1/../../../:/usr/lib/
+COLLECT_GCC_OPTIONS='-mmacosx-version-min=10.7.3' '-v' '-o' 'cmTryCompileExec' '-shared-libgcc' '-mtune=generic'
+ /usr/local/libexec/gcc/i386-apple-darwin9.7.0/4.4.1/collect2 -dynamic -arch i386 -macosx_version_min 10.7.3 -weak_reference_mismatches non-weak -o cmTryCompileExec -lcrt1.10.5.o -L/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1 -L/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1/../../.. CMakeFiles/cmTryCompileExec.dir/CMakeFortranCompilerABI.F.o -lgfortranbegin -lgfortran -lgcc_s.10.5 -lgcc -lSystem
+COLLECT_GCC_OPTIONS='-mmacosx-version-min=10.7.3' '-v' '-o' 'cmTryCompileExec' '-shared-libgcc' '-mtune=generic'
+
+
+Parsed Fortran implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /Users/meister/Development/cando/externals/src/cmake-2.8.5/Tests/CMakeFiles/CheckFortran/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:/usr/bin/make "cmTryCompileExec/fast"]
+  ignore line: [make -f CMakeFiles/cmTryCompileExec.dir/build.make CMakeFiles/cmTryCompileExec.dir/build]
+  ignore line: [/Users/meister/Development/cando/externals/src/cmake-2.8.5/Bootstrap.cmk/cmake -E cmake_progress_report /Users/meister/Development/cando/externals/src/cmake-2.8.5/Tests/CMakeFiles/CheckFortran/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building Fortran object CMakeFiles/cmTryCompileExec.dir/CMakeFortranCompilerABI.F.o]
+  ignore line: [/usr/local/bin/gfortran    -c /Users/meister/Development/cando/externals/src/cmake-2.8.5/Modules/CMakeFortranCompilerABI.F -o CMakeFiles/cmTryCompileExec.dir/CMakeFortranCompilerABI.F.o]
+  ignore line: [Linking Fortran executable cmTryCompileExec]
+  ignore line: [/Users/meister/Development/cando/externals/src/cmake-2.8.5/Bootstrap.cmk/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec.dir/link.txt --verbose=1]
+  ignore line: [/usr/local/bin/gfortran   -v     CMakeFiles/cmTryCompileExec.dir/CMakeFortranCompilerABI.F.o  -o cmTryCompileExec   ]
+  ignore line: [Driving: /usr/local/bin/gfortran -mmacosx-version-min=10.7.3 -v CMakeFiles/cmTryCompileExec.dir/CMakeFortranCompilerABI.F.o -o cmTryCompileExec -lgfortranbegin -lgfortran -shared-libgcc]
+  ignore line: [Using built-in specs.]
+  ignore line: [Target: i386-apple-darwin9.7.0]
+  ignore line: [Configured with: ./configure --enable-languages=fortran]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 4.4.1 20090623 (prerelease) (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/local/libexec/gcc/i386-apple-darwin9.7.0/4.4.1/:/usr/local/libexec/gcc/i386-apple-darwin9.7.0/4.4.1/:/usr/local/libexec/gcc/i386-apple-darwin9.7.0/:/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1/:/usr/local/lib/gcc/i386-apple-darwin9.7.0/]
+  ignore line: [LIBRARY_PATH=/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1/:/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1/../../../:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-mmacosx-version-min=10.7.3' '-v' '-o' 'cmTryCompileExec' '-shared-libgcc' '-mtune=generic']
+  link line: [ /usr/local/libexec/gcc/i386-apple-darwin9.7.0/4.4.1/collect2 -dynamic -arch i386 -macosx_version_min 10.7.3 -weak_reference_mismatches non-weak -o cmTryCompileExec -lcrt1.10.5.o -L/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1 -L/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1/../../.. CMakeFiles/cmTryCompileExec.dir/CMakeFortranCompilerABI.F.o -lgfortranbegin -lgfortran -lgcc_s.10.5 -lgcc -lSystem]
+    arg [/usr/local/libexec/gcc/i386-apple-darwin9.7.0/4.4.1/collect2] ==> ignore
+    arg [-dynamic] ==> ignore
+    arg [-arch] ==> ignore
+    arg [i386] ==> ignore
+    arg [-macosx_version_min] ==> ignore
+    arg [10.7.3] ==> ignore
+    arg [-weak_reference_mismatches] ==> ignore
+    arg [non-weak] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec] ==> ignore
+    arg [-lcrt1.10.5.o] ==> lib [crt1.10.5.o]
+    arg [-L/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1] ==> dir [/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1]
+    arg [-L/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1/../../..] ==> dir [/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1/../../..]
+    arg [CMakeFiles/cmTryCompileExec.dir/CMakeFortranCompilerABI.F.o] ==> ignore
+    arg [-lgfortranbegin] ==> lib [gfortranbegin]
+    arg [-lgfortran] ==> lib [gfortran]
+    arg [-lgcc_s.10.5] ==> lib [gcc_s.10.5]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lSystem] ==> lib [System]
+  remove lib [crt1.10.5.o]
+  remove lib [gcc_s.10.5]
+  remove lib [gcc]
+  remove lib [System]
+  collapse dir [/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1] ==> [/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1]
+  collapse dir [/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1/../../..] ==> [/usr/local/lib]
+  implicit libs: [gfortranbegin;gfortran]
+  implicit dirs: [/usr/local/lib/gcc/i386-apple-darwin9.7.0/4.4.1;/usr/local/lib]
+
+
+Determining if the Fortran compiler supports Fortran 90 passed with the following output:
+Change Dir: /Users/meister/Development/cando/externals/src/cmake-2.8.5/Tests/CMakeFiles/CheckFortran/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec/fast"
+make -f CMakeFiles/cmTryCompileExec.dir/build.make CMakeFiles/cmTryCompileExec.dir/build
+/Users/meister/Development/cando/externals/src/cmake-2.8.5/Bootstrap.cmk/cmake -E cmake_progress_report /Users/meister/Development/cando/externals/src/cmake-2.8.5/Tests/CMakeFiles/CheckFortran/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building Fortran object CMakeFiles/cmTryCompileExec.dir/testFortranCompilerF90.f90.o
+/usr/local/bin/gfortran    -c /Users/meister/Development/cando/externals/src/cmake-2.8.5/Tests/CMakeFiles/CheckFortran/CMakeFiles/CMakeTmp/testFortranCompilerF90.f90 -o CMakeFiles/cmTryCompileExec.dir/testFortranCompilerF90.f90.o
+Linking Fortran executable cmTryCompileExec
+/Users/meister/Development/cando/externals/src/cmake-2.8.5/Bootstrap.cmk/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec.dir/link.txt --verbose=1
+/usr/local/bin/gfortran         CMakeFiles/cmTryCompileExec.dir/testFortranCompilerF90.f90.o  -o cmTryCompileExec  
+
+

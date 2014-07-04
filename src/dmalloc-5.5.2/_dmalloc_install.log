@@ -1,0 +1,22 @@
+./dmalloc_fc_t -s
+./dmalloc_t -s -t 10000
+./dmalloc_t -s -t 10000
+./dmalloc_t -s -t 10000
+./dmalloc_t -s -t 10000
+./dmalloc_t -s -t 10000
+tests have passed
+./mkinstalldirs /Users/meister/Development/cando/clasp/build/cando.app/Contents/Resources/externals/common/lib
+/usr/bin/install -c libdmallocxx.a /Users/meister/Development/cando/clasp/build/cando.app/Contents/Resources/externals/common/lib
+Enter 'make installthcxx' to install the threaded C++ library
+Enter 'make installcxxsl' to install the C++ shared-library
+./mkinstalldirs /Users/meister/Development/cando/clasp/build/cando.app/Contents/Resources/externals/common/include
+/usr/bin/install -c -m 644 dmalloc.h /Users/meister/Development/cando/clasp/build/cando.app/Contents/Resources/externals/common/include
+./mkinstalldirs /Users/meister/Development/cando/clasp/build/cando.app/Contents/Resources/externals/common/lib
+/usr/bin/install -c libdmalloc.a /Users/meister/Development/cando/clasp/build/cando.app/Contents/Resources/externals/common/lib
+ranlib /Users/meister/Development/cando/clasp/build/cando.app/Contents/Resources/externals/common/lib/libdmalloc.a
+Enter 'make installsl' to install libdmalloc.dylib in /Users/meister/Development/cando/clasp/build/cando.app/Contents/Resources/externals/common/lib
+Enter 'make installcxx' to install the C++ library
+Enter 'make installth' to install thread library
+./mkinstalldirs /Users/meister/Development/cando/clasp/build/cando.app/Contents/Resources/externals/common/bin
+/usr/bin/install -c dmalloc /Users/meister/Development/cando/clasp/build/cando.app/Contents/Resources/externals/common/bin
+Enter 'make installdocs' to install dmalloc.html dmalloc.texi dmalloc.pdf in /Users/meister/Development/cando/clasp/build/cando.app/Contents/Resources/externals/common/share/doc/dmalloc
