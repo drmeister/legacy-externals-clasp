@@ -1,5 +1,0 @@
-Makefile
-*.o
-config.status
-conf.h
-dmalloc

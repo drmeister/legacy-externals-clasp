@@ -1,8 +1,0 @@
-Enter 'make cxxsl' to build the cxx shared library
-./dmalloc_fc_t -s
-./dmalloc_t -s -t 10000
-./dmalloc_t -s -t 10000
-./dmalloc_t -s -t 10000
-./dmalloc_t -s -t 10000
-./dmalloc_t -s -t 10000
-tests have passed

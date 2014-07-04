@@ -3,3 +3,7 @@
 *.a
 *.o
 *.so
+*.log
+*.la
+llvm/build-debug
+llvm/build-release
