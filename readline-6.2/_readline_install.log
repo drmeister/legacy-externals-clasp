@@ -1,4 +1,4 @@
-/bin/sh ./support/mkinstalldirs /Volumes/spin/Development/clasp-Lisp/build/cando.app/Contents/Resources/externals/common/include \
-		/Volumes/spin/Development/clasp-Lisp/build/cando.app/Contents/Resources/externals/common/include/readline /Volumes/spin/Development/clasp-Lisp/build/cando.app/Contents/Resources/externals/common/lib \
-		/Volumes/spin/Development/clasp-Lisp/build/cando.app/Contents/Resources/externals/common/share/info /Volumes/spin/Development/clasp-Lisp/build/cando.app/Contents/Resources/externals/common/share/man/man3
-mkdir -p -- /Volumes/spin/Development/clasp-Lisp/build/cando.app/Contents/Resources/externals/common/include /Volumes/spin/Development/clasp-Lisp/build/cando.app/Contents/Resources/externals/common/include/readline /Volumes/spin/Development/clasp-Lisp/build/cando.app/Contents/Resources/externals/common/lib /Volumes/spin/Development/clasp-Lisp/build/cando.app/Contents/Resources/externals/common/share/info /Volumes/spin/Development/clasp-Lisp/build/cando.app/Contents/Resources/externals/common/share/man/man3
+/bin/sh ./support/mkinstalldirs /Users/meister/local/dependent-clasp/externals/common/include \
+		/Users/meister/local/dependent-clasp/externals/common/include/readline /Users/meister/local/dependent-clasp/externals/common/lib \
+		/Users/meister/local/dependent-clasp/externals/common/share/info /Users/meister/local/dependent-clasp/externals/common/share/man/man3
+mkdir -p -- /Users/meister/local/dependent-clasp/externals/common/include/readline /Users/meister/local/dependent-clasp/externals/common/lib /Users/meister/local/dependent-clasp/externals/common/share/info /Users/meister/local/dependent-clasp/externals/common/share/man/man3

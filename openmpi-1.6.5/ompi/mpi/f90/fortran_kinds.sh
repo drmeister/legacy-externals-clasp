@@ -20,9 +20,9 @@
 
 max_array_rank="4"
 
-ikinds=" 1  2  4  8 "
-rkinds=" 4  8 "
-ckinds=" 8  16 "
+ikinds=""
+rkinds=""
+ckinds=""
 size="small"
 
 # fix up for broken generation scripts that don't properly compute the

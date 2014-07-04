@@ -29,7 +29,7 @@ PACKAGE_VERSION = 6.2
 srcdir = .
 VPATH = .
 top_srcdir = .
-BUILD_DIR = /home/meister/Development/clasp/externals/readline-6.2
+BUILD_DIR = /Users/meister/Development/chem/dependent-clasp/readline-6.2
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ PURIFY =
 
 SHELL = /bin/sh
 
-prefix = /home/meister/Development/clasp/build/cando.app/Contents/Resources/externals/common
+prefix = /Users/meister/local/dependent-clasp/externals/common
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

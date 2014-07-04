@@ -1,4 +1,14 @@
-ifeq ($(DEVELOPMENT_ENVIRONMENT),linuxClang)
+CLASP_APP_RESOURCES_DIR = $(PREFIX)
+CLASP_APP_RESOURCES_EXTERNALS_DIR = $(CLASP_APP_RESOURCES_DIR)/externals
+CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/debug
+CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/release
+CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/common
+CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)/lib
+CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/lib
+
+
+
+ifeq ($(TARGET_OS),linuxClang)
 CLASP_CXXFLAGS="-std=c++11"
 else
 CLASP_CXXFLAGS="-std=c++11 -stdlib=libc++"
@@ -56,6 +66,7 @@ printenv:
 
 
 setup:
+	install -d $(PREFIX)
 	install -d $(CLASP_APP_RESOURCES_DIR)
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_DIR)
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)
@@ -64,12 +75,12 @@ setup:
 	make boostbuild2-build  #
 	make boehm-setup        #
 	make llvm-setup		#
-	make openmpi-setup
 	make boost-setup
 	make ecl-setup
 	make gmp-setup
 	make expat-setup
 	make zlib-setup
+	make openmpi-setup
 	make readline-setup
 #	make clang-setup This is redundant, it gets configured with llvm
 #	make lldb-setup
@@ -480,7 +491,7 @@ subBundle sb:
 #
 ##
 
-ifeq ($(DEVELOPMENT_ENVIRONMENT),linuxClang)
+ifeq ($(TARGET_OS),linuxClang)
 #
 # Set clang-setup --prefix to $(CLASP_APP_RESOURCES_DIR)
 #
@@ -563,7 +574,7 @@ endif
 #
 ##
 
-ifeq ($(DEVELOPMENT_ENVIRONMENT),darwinClang)
+ifeq ($(TARGET_OS),darwinClang)
 
 export RPATH_RELEASE_FIX = @executable_path/../Resources/externals/release/lib
 export RPATH_DEBUG_FIX = @executable_path/../Resources/externals/debug/lib
@@ -712,7 +723,7 @@ endif
 #
 ##
 
-ifeq ($(DEVELOPMENT_ENVIRONMENT),kraken)
+ifeq ($(TARGET_OS),kraken)
 subAll sa:
 	make boost-jam
 	make boost

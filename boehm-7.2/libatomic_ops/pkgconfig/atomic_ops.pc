@@ -1,4 +1,4 @@
-prefix=/home/meister/Development/clasp/build/cando.app/Contents/Resources/externals/common
+prefix=/Users/meister/local/dependent-clasp/externals/common
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

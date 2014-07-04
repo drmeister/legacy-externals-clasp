@@ -32,7 +32,7 @@
 /* #undef GC_ASSERTIONS */
 
 /* Define to support Darwin pthreads. */
-/* #undef GC_DARWIN_THREADS */
+#define GC_DARWIN_THREADS 1
 
 /* Define to enable support for DB/UX threads on i386. */
 /* #undef GC_DGUX386_THREADS */
@@ -59,7 +59,7 @@
 /* #undef GC_IRIX_THREADS */
 
 /* Define to support pthreads on Linux. */
-#define GC_LINUX_THREADS 1
+/* #undef GC_LINUX_THREADS */
 
 /* Define to support NetBSD pthreads. */
 /* #undef GC_NETBSD_THREADS */
@@ -232,7 +232,7 @@
 /* #undef _PTHREADS */
 
 /* Required define if using POSIX threads. */
-#define _REENTRANT 1
+/* #undef _REENTRANT */
 
 /* Define to `__inline__' or `__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */

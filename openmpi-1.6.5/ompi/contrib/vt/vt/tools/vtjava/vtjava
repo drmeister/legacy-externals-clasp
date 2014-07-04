@@ -16,7 +16,7 @@
 if test x"$VT_PREFIX" != x; then
   prefix=$VT_PREFIX
 else
-  prefix=/home/meister/Development/clasp/build/cando.app/Contents/Resources/externals/common
+  prefix=/Users/meister/local/dependent-clasp/externals/common
 fi
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib

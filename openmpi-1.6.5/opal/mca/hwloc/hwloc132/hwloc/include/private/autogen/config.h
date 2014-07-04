@@ -45,11 +45,11 @@
 
 /* Define to 1 if you have the declaration of `CTL_HW', and to 0 if you don't.
    */
-#define HAVE_DECL_CTL_HW 0
+#define HAVE_DECL_CTL_HW 1
 
 /* Define to 1 if you have the declaration of `HW_NCPU', and to 0 if you
    don't. */
-#define HAVE_DECL_HW_NCPU 0
+#define HAVE_DECL_HW_NCPU 1
 
 /* Define to 1 if you have the declaration of `PCI_LOOKUP_NO_NUMBERS', and to
    0 if you don't. */
@@ -57,11 +57,11 @@
 
 /* Define to 1 if you have the declaration of `pthread_getaffinity_np', and to
    0 if you don't. */
-#define HAVE_DECL_PTHREAD_GETAFFINITY_NP 1
+#define HAVE_DECL_PTHREAD_GETAFFINITY_NP 0
 
 /* Define to 1 if you have the declaration of `pthread_setaffinity_np', and to
    0 if you don't. */
-#define HAVE_DECL_PTHREAD_SETAFFINITY_NP 1
+#define HAVE_DECL_PTHREAD_SETAFFINITY_NP 0
 
 /* Define to 1 if you have the declaration of `_SC_LARGE_PAGESIZE', and to 0
    if you don't. */
@@ -93,10 +93,10 @@
 #define HAVE_FFSL 1
 
 /* Define to 1 if you have the `fls' function. */
-/* #undef HAVE_FLS */
+#define HAVE_FLS 1
 
 /* Define to 1 if you have the `flsl' function. */
-/* #undef HAVE_FLSL */
+#define HAVE_FLSL 1
 
 /* Define to 1 if you have the `getpagesize' function. */
 #define HAVE_GETPAGESIZE 1
@@ -108,7 +108,7 @@
 /* #undef HAVE_GROUP_RELATIONSHIP */
 
 /* Define to 1 if you have the `host_info' function. */
-/* #undef HAVE_HOST_INFO */
+#define HAVE_HOST_INFO 1
 
 /* Define to 1 if you have the <infiniband/verbs.h> header file. */
 /* #undef HAVE_INFINIBAND_VERBS_H */
@@ -147,16 +147,16 @@
 /* #undef HAVE_LOGICAL_PROCESSOR_RELATIONSHIP */
 
 /* Define to 1 if you have the <mach/mach_host.h> header file. */
-/* #undef HAVE_MACH_MACH_HOST_H */
+#define HAVE_MACH_MACH_HOST_H 1
 
 /* Define to 1 if you have the <mach/mach_init.h> header file. */
-/* #undef HAVE_MACH_MACH_INIT_H */
+#define HAVE_MACH_MACH_INIT_H 1
 
 /* Define to 1 if you have the <malloc.h> header file. */
-#define HAVE_MALLOC_H 1
+/* #undef HAVE_MALLOC_H */
 
 /* Define to 1 if you have the `memalign' function. */
-#define HAVE_MEMALIGN 1
+/* #undef HAVE_MEMALIGN */
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
@@ -174,7 +174,7 @@
 /* #undef HAVE_NUMA_NODE_RELATIONSHIP */
 
 /* Define to 1 if you have the `openat' function. */
-#define HAVE_OPENAT 1
+/* #undef HAVE_OPENAT */
 
 /* Define to 1 if you have the <pci/pci.h> header file. */
 /* #undef HAVE_PCI_PCI_H */
@@ -235,7 +235,7 @@
 #define HAVE_SYSCTL 1
 
 /* Define to 1 if you have the `sysctlbyname' function. */
-/* #undef HAVE_SYSCTLBYNAME */
+#define HAVE_SYSCTLBYNAME 1
 
 /* Define to 1 if the system has the type
    `SYSTEM_LOGICAL_PROCESSOR_INFORMATION'. */
@@ -294,7 +294,7 @@
 #define HWLOC_C_HAVE_VISIBILITY 1
 
 /* Define to 1 on Darwin */
-/* #undef HWLOC_DARWIN_SYS */
+#define HWLOC_DARWIN_SYS 1
 
 /* Whether we are in debugging mode or not */
 /* #undef HWLOC_DEBUG */
@@ -357,7 +357,7 @@
 #define HWLOC_HAVE_ATTRIBUTE_WARN_UNUSED_RESULT 1
 
 /* Whether your compiler has __attribute__ weak alias or not */
-#define HWLOC_HAVE_ATTRIBUTE_WEAK_ALIAS 1
+#define HWLOC_HAVE_ATTRIBUTE_WEAK_ALIAS 0
 
 /* Define to 1 if your `ffs' function is known to be broken. */
 /* #undef HWLOC_HAVE_BROKEN_FFS */
@@ -375,10 +375,10 @@
 #define HWLOC_HAVE_CPUID 1
 
 /* Define to 1 if the CPU_SET macro works */
-#define HWLOC_HAVE_CPU_SET 1
+/* #undef HWLOC_HAVE_CPU_SET */
 
 /* Define to 1 if the CPU_SET_S macro works */
-#define HWLOC_HAVE_CPU_SET_S 1
+/* #undef HWLOC_HAVE_CPU_SET_S */
 
 /* Define to 1 if function `clz' is declared by system headers */
 /* #undef HWLOC_HAVE_DECL_CLZ */
@@ -393,10 +393,10 @@
 #define HWLOC_HAVE_DECL_FFSL 1
 
 /* Define to 1 if function `fls' is declared by system headers */
-/* #undef HWLOC_HAVE_DECL_FLS */
+#define HWLOC_HAVE_DECL_FLS 1
 
 /* Define to 1 if function `flsl' is declared by system headers */
-/* #undef HWLOC_HAVE_DECL_FLSL */
+#define HWLOC_HAVE_DECL_FLSL 1
 
 /* Define to 1 if you have the `ffs' function. */
 #define HWLOC_HAVE_FFS 1
@@ -405,10 +405,10 @@
 #define HWLOC_HAVE_FFSL 1
 
 /* Define to 1 if you have the `fls' function. */
-/* #undef HWLOC_HAVE_FLS */
+#define HWLOC_HAVE_FLS 1
 
 /* Define to 1 if you have the `flsl' function. */
-/* #undef HWLOC_HAVE_FLSL */
+#define HWLOC_HAVE_FLSL 1
 
 /* Define to 1 if you have the `libpci' library. */
 /* #undef HWLOC_HAVE_LIBPCI */
@@ -442,7 +442,7 @@
 /* #undef HWLOC_HAVE_PTHREAD_GETTHRDS_NP */
 
 /* Define to 1 if glibc provides a prototype of sched_setaffinity() */
-#define HWLOC_HAVE_SCHED_SETAFFINITY 1
+/* #undef HWLOC_HAVE_SCHED_SETAFFINITY */
 
 /* Define to 1 if set_mempolicy is available. */
 /* #undef HWLOC_HAVE_SET_MEMPOLICY */
@@ -466,7 +466,7 @@
 /* #undef HWLOC_IRIX_SYS */
 
 /* Define to 1 on Linux */
-#define HWLOC_LINUX_SYS 1
+/* #undef HWLOC_LINUX_SYS */
 
 /* Major version of hwloc */
 /* #undef HWLOC_MAJOR_VERSION */

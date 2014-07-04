@@ -24,7 +24,7 @@ srcdir = .
 top_srcdir = .
 
 
-prefix = /home/meister/Development/clasp/build/cando.app/Contents/Resources/externals/common
+prefix = /Users/meister/local/dependent-clasp/externals/common
 exec_prefix = ${prefix}
 
 bindir = ${exec_prefix}/bin

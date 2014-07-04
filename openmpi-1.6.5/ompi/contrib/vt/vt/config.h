@@ -13,7 +13,7 @@
 /* #undef CUDARTSHLIB_PATHNAME */
 
 /* Command to list symbols from object files. */
-#define DEFAULT_NM "/usr/bin/nm -B --demangle --line-numbers"
+#define DEFAULT_NM "/usr/bin/nm"
 
 /* Path for node-local temporary directory */
 /* #undef DEFAULT_PFORM_LDIR */
@@ -34,11 +34,11 @@
 /* #undef HAVE_CATAMOUNT_DCLOCK_H */
 
 /* Define to 1 if you have the `creat64' function. */
-#define HAVE_CREAT64 1
+/* #undef HAVE_CREAT64 */
 
 /* Define to 1 if you have the declaration of `environ', and to 0 if you
    don't. */
-#define HAVE_DECL_ENVIRON 1
+/* #undef HAVE_DECL_ENVIRON */
 
 /* Define to 1 if you have the declaration of `MPI_IN_PLACE', and to 0 if you
    don't. */
@@ -62,7 +62,7 @@
 
 /* Define to 1 if you have the declaration of `RUSAGE_THREAD', and to 0 if you
    don't. */
-#define HAVE_DECL_RUSAGE_THREAD 1
+#define HAVE_DECL_RUSAGE_THREAD 0
 
 /* Define to 1 if you have the declaration of `_Errno', and to 0 if you don't.
    */
@@ -70,11 +70,11 @@
 
 /* Define to 1 if you have the declaration of `__errno_location', and to 0 if
    you don't. */
-#define HAVE_DECL___ERRNO_LOCATION 1
+/* #undef HAVE_DECL___ERRNO_LOCATION */
 
 /* Define to 1 if you have the declaration of `__vfprintf_chk', and to 0 if
    you don't. */
-#define HAVE_DECL___VFPRINTF_CHK 1
+/* #undef HAVE_DECL___VFPRINTF_CHK */
 
 /* Define to 1 if you have the <demangle.h> header file. */
 /* #undef HAVE_DEMANGLE_H */
@@ -89,49 +89,49 @@
 /* #undef HAVE_ESSL */
 
 /* Define to 1 if you have the `execvpe' function. */
-#define HAVE_EXECVPE 1
+/* #undef HAVE_EXECVPE */
 
 /* Define to 1 if VT is configured with Fortran support. */
-#define HAVE_FC 1
+/* #undef HAVE_FC */
 
 /* Define to 1 if you have the `fdatasync' function. */
-#define HAVE_FDATASYNC 1
+/* #undef HAVE_FDATASYNC */
 
 /* Define to 1 if you have the `fexecve' function. */
-#define HAVE_FEXECVE 1
+/* #undef HAVE_FEXECVE */
 
 /* Define to 1 if you have the `fflush' function. */
-#define HAVE_FFLUSH 1
+/* #undef HAVE_FFLUSH */
 
 /* Define to 1 if you have the `flockfile' function. */
-#define HAVE_FLOCKFILE 1
+/* #undef HAVE_FLOCKFILE */
 
 /* Define to 1 if VT is configured with MPI Fortran support. */
-#define HAVE_FMPI 1
+/* #undef HAVE_FMPI */
 
 /* Define to 1 if you have the <fnmatch.h> header file. */
 #define HAVE_FNMATCH_H 1
 
 /* Define to 1 if you have the `fopen64' function. */
-#define HAVE_FOPEN64 1
+/* #undef HAVE_FOPEN64 */
 
 /* Define to 1 if you have the `fseeko' function. */
-#define HAVE_FSEEKO 1
+/* #undef HAVE_FSEEKO */
 
 /* Define to 1 if you have the `fseeko64' function. */
-#define HAVE_FSEEKO64 1
+/* #undef HAVE_FSEEKO64 */
 
 /* Define to 1 if you have the `fsetpos64' function. */
-#define HAVE_FSETPOS64 1
+/* #undef HAVE_FSETPOS64 */
 
 /* Define to 1 if you have the `fsync' function. */
-#define HAVE_FSYNC 1
+/* #undef HAVE_FSYNC */
 
 /* Define to 1 if you have the `ftrylockfile' function. */
-#define HAVE_FTRYLOCKFILE 1
+/* #undef HAVE_FTRYLOCKFILE */
 
 /* Define to 1 if you have the `funlockfile' function. */
-#define HAVE_FUNLOCKFILE 1
+/* #undef HAVE_FUNLOCKFILE */
 
 /* Define to 1 if VT is configured with Hybrid (MPI/Threads) support. */
 #define HAVE_HYBRID 1
@@ -146,16 +146,16 @@
 /* #undef HAVE_LINUX_MMTIMER_H */
 
 /* Define to 1 if you have the `lockf' function. */
-#define HAVE_LOCKF 1
+/* #undef HAVE_LOCKF */
 
 /* Define to 1 if the system has the type `long_long'. */
 /* #undef HAVE_LONG_LONG */
 
 /* Define to 1 if you have the `lseek64' function. */
-#define HAVE_LSEEK64 1
+/* #undef HAVE_LSEEK64 */
 
 /* Define to 1 if you have the `memalign' function. */
-#define HAVE_MEMALIGN 1
+/* #undef HAVE_MEMALIGN */
 
 /* Define to 1 if you have the `memmove' function. */
 #define HAVE_MEMMOVE 1
@@ -222,10 +222,10 @@
 #define HAVE_MPI_TYPE_MATCH_SIZE 1
 
 /* Define to 1 if VT is configured with OpenMP support. */
-#define HAVE_OMP 1
+/* #undef HAVE_OMP */
 
 /* Define to 1 if you have the `open64' function. */
-#define HAVE_OPEN64 1
+/* #undef HAVE_OPEN64 */
 
 /* Define to 1 if you have the `PMPI_File_read_ordered' function. */
 #define HAVE_PMPI_FILE_READ_ORDERED 1
@@ -249,10 +249,10 @@
 #define HAVE_PMPI_WIN_UNLOCK 1
 
 /* Define to 1 if you have the `posix_memalign' function. */
-#define HAVE_POSIX_MEMALIGN 1
+/* #undef HAVE_POSIX_MEMALIGN */
 
 /* Define to 1 if you have the `pread64' function. */
-#define HAVE_PREAD64 1
+/* #undef HAVE_PREAD64 */
 
 /* Define to 1 if VT is configured with Pthreads support. */
 #define HAVE_PTHREAD 1
@@ -270,7 +270,7 @@
 #define HAVE_PTHREAD_MUTEXATTR_SETPSHARED 1
 
 /* Define to 1 if you have the `pwrite64' function. */
-#define HAVE_PWRITE64 1
+/* #undef HAVE_PWRITE64 */
 
 /* Define to 1 if you have the `snprintf' function. */
 #define HAVE_SNPRINTF 1
@@ -297,7 +297,7 @@
 /* #undef HAVE_SUNPERF */
 
 /* Define to 1 if you have the `sync' function. */
-#define HAVE_SYNC 1
+/* #undef HAVE_SYNC */
 
 /* Define to 1 if you have the <sys/param.h> header file. */
 #define HAVE_SYS_PARAM_H 1
@@ -318,7 +318,7 @@
 #define HAVE_UNISTD_H 1
 
 /* Define to 1 if you have the `valloc' function. */
-#define HAVE_VALLOC 1
+/* #undef HAVE_VALLOC */
 
 /* Define to 1 if you have the `vasprintf' function. */
 #define HAVE_VASPRINTF 1
@@ -330,22 +330,22 @@
 #define HAVE_VSNPRINTF 1
 
 /* Define to 1 if you have the `wait3' function. */
-#define HAVE_WAIT3 1
+/* #undef HAVE_WAIT3 */
 
 /* Define to 1 if you have the `wait4' function. */
-#define HAVE_WAIT4 1
+/* #undef HAVE_WAIT4 */
 
 /* Define to 1 if you have the `waitid' function. */
-#define HAVE_WAITID 1
+/* #undef HAVE_WAITID */
 
 /* Define to 1 if you have the ZLIB. */
 #define HAVE_ZLIB 1
 
 /* Define to 1 if you have the `__fprintf_chk' function. */
-#define HAVE___FPRINTF_CHK 1
+/* #undef HAVE___FPRINTF_CHK */
 
 /* Define to 1 if the system has the type `__WAIT_STATUS'. */
-#define HAVE___WAIT_STATUS 1
+/* #undef HAVE___WAIT_STATUS */
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
@@ -383,7 +383,7 @@
 /* #undef PTHREAD_CREATE_JOINABLE */
 
 /* pathname of shared LIBC */
-#define SHLIBC_PATHNAME "/lib64/libc.so.6"
+/* #undef SHLIBC_PATHNAME */
 
 /* The size of `int', as computed by sizeof. */
 #define SIZEOF_INT 4
@@ -392,7 +392,7 @@
 #define SIZEOF_LONG 8
 
 /* The size of `mode_t', as computed by sizeof. */
-#define SIZEOF_MODE_T 4
+#define SIZEOF_MODE_T 2
 
 /* The size of `size_t', as computed by sizeof. */
 #define SIZEOF_SIZE_T 8
@@ -407,13 +407,13 @@
 #define TIMER TIMER_CYCLE_COUNTER
 
 /* Use `clock_gettime' function */
-#define TIMER_CLOCK_GETTIME 1
+/* #undef TIMER_CLOCK_GETTIME */
 
 /* CRAY Real-Time-Clock */
 /* #undef TIMER_CRAY_RTCLOCK */
 
 /* Cycle counter (e.g. TSC) */
-#define TIMER_CYCLE_COUNTER 3
+#define TIMER_CYCLE_COUNTER 1
 
 /* Use `dclock' function */
 /* #undef TIMER_DCLOCK */
