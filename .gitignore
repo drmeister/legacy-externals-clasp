@@ -5,5 +5,8 @@
 *.so
 *.log
 *.la
+*.lai
+.libs
 llvm/build-debug
 llvm/build-release
+expat-2.0.1/xmlwf/xmlwf

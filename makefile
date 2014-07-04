@@ -8,7 +8,7 @@ CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_
 
 
 
-ifeq ($(TARGET_OS),linuxClang)
+ifeq ($(TARGET_OS),linux)
 CLASP_CXXFLAGS="-std=c++11"
 else
 CLASP_CXXFLAGS="-std=c++11 -stdlib=libc++"
@@ -487,11 +487,11 @@ subBundle sb:
 
 ############################################################
 #
-# linuxClang linuxClang linuxClang linuxClang linuxClang linuxClang linuxClang linuxClang linuxClang
+# linux linux linux linux linux linux linux linux linux
 #
 ##
 
-ifeq ($(TARGET_OS),linuxClang)
+ifeq ($(TARGET_OS),linux)
 #
 # Set clang-setup --prefix to $(CLASP_APP_RESOURCES_DIR)
 #
@@ -502,7 +502,7 @@ ifeq ($(TARGET_OS),linuxClang)
 
 
 
-#linuxClang
+#linux
 llvm-setup-debug:
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-debug
 	(cd $(LLVM_SOURCE_DIR)/build-debug; \
@@ -515,7 +515,7 @@ llvm-setup-debug:
 		--enable-shared=no --enable-cxx11 )
 
 
-#linuxClang
+#linux
 llvm-setup-release:
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-release
 	(cd $(LLVM_SOURCE_DIR)/build-release; \
@@ -574,14 +574,14 @@ endif
 #
 ##
 
-ifeq ($(TARGET_OS),darwinClang)
+ifeq ($(TARGET_OS),darwin)
 
 export RPATH_RELEASE_FIX = @executable_path/../Resources/externals/release/lib
 export RPATH_DEBUG_FIX = @executable_path/../Resources/externals/debug/lib
 export RPATH_COMMON_FIX = @executable_path/../Resources/externals/common/lib
 
 
-#darwinClang
+#darwin
 llvm-setup-debug:
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-debug
 	(cd $(LLVM_SOURCE_DIR)/build-debug; \
@@ -590,7 +590,7 @@ llvm-setup-debug:
 			--enable-cxx11 \
 			--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR);)
 
-#darwinClang
+#darwin
 llvm-setup-release:
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-release
 	(cd $(LLVM_SOURCE_DIR)/build-release; \
@@ -609,40 +609,6 @@ boostbuild2-build:
 
 
 
-# boost-build-debug:
-# 	(cd $(BOOST_SOURCE_DIR); bjam toolset=$(BOOST_TOOLSET)   \
-# 				cxxflags="-std=c++11 -stdlib=libc++" linkflags="-std=c++11 -stdlib=libc++" \
-# 				--with-filesystem --with-date_time	\
-# 				--with-serialization --with-iostreams	\
-# 				--with-program_options --with-regex	\
-# 				--with-python --with-system  --with-thread \
-# 				--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
-# 				debug \
-# 				-j$(COMPILE_PROCESSORS) \
-# 				install ) | tee _boost.log 
-# boost-build-release:
-# 	(cd $(BOOST_SOURCE_DIR); bjam toolset=$(BOOST_TOOLSET)   \
-# 				cxxflags="-std=c++11 -stdlib=libc++" linkflags="-std=c++11 -stdlib=libc++" \
-# 				--with-filesystem --with-date_time	\
-# 				--with-serialization --with-iostreams	\
-# 				--with-program_options --with-regex	\
-# 				--with-python --with-system  --with-thread \
-# 				--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) \
-# 				release \
-# 				-j$(COMPILE_PROCESSORS) \
-# 				install ) | tee _boost.log 
-
-# boost-build-a-n:
-# 	(cd $(BOOST_SOURCE_DIR); bjam toolset=$(BOOST_TOOLSET) -a -n  \
-# 				cxxflags="-std=c++11 -stdlib=libc++" linkflags="-std=c++11 -stdlib=libc++" \
-# 				--with-filesystem --with-date_time	\
-# 				--with-serialization --with-iostreams	\
-# 				--with-program_options --with-regex	\
-# 				--with-python --with-system  --with-thread \
-# 				--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
-# 				debug  \
-# 				-j$(COMPILE_PROCESSORS) \
-# 				install ) | tee _boost.log 
 
 gmp-rpath-fix:
 	install_name_tool -id $(RPATH_COMMON_FIX)/libgmp.dylib $(CLASP_APP_RESOURCES_EXTERNALS_COMMON_LIB_DIR)/libgmp.dylib
@@ -837,12 +803,6 @@ subBundle sb:
 
 
 
-#	install -c $(OS_BUILDTOP)/lib/libboost_filesystem-$(BOOST_VERSION).dylib $(CLASP_APP_LIB_DIR)
-#	install -c $(OS_BUILDTOP)/lib/libboost_program_options-$(BOOST_VERSION).dylib $(CLASP_APP_LIB_DIR)
-#	install -c $(OS_BUILDTOP)/lib/libboost_python-$(BOOST_VERSION).dylib $(CLASP_APP_LIB_DIR)
-#	install -c /usr/local/lib/libwx* $(CLASP_APP_LIB_DIR)
-#	install -c lib
-#	install	-c /System/Library/Frameworks/Python.framework/Versions/
 
 endif
 
