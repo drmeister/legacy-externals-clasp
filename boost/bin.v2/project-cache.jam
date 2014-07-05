@@ -21,4 +21,22 @@ module config-cache {
   set "gcc visibility-<target-os>darwin-<toolset-clang:version>4.2.1-<toolset>clang" : "true" ;
   set "long double support-<target-os>darwin-<toolset-clang:version>4.2.1-<toolset>clang" : "true" ;
   set "ac-library-zlib-<link>static-<target-os>darwin-<toolset-clang:version>4.2.1-<toolset>clang" : "%default" "z" "<link>static" ;
+  set "32-bit-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "false" ;
+  set "64-bit-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "true" ;
+  set "arm-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "false" ;
+  set "mips1-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "false" ;
+  set "power-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "false" ;
+  set "sparc-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "false" ;
+  set "x86-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "true" ;
+  set "has_icu builds-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "false" ;
+  set "ac-library-zlib-<link>shared-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "%default" "z" "<link>shared" ;
+  set "iconv (libc)-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "true" ;
+  set "icu-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "false" ;
+  set "icu (lib64)-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "false" ;
+  set "compiler-supports-ssse3-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "true" ;
+  set "lockfree boost::atomic_flag-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "true" ;
+  set "compiler-supports-avx2-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "false" ;
+  set "gcc visibility-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "true" ;
+  set "long double support-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "true" ;
+  set "ac-library-zlib-<link>static-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "%default" "z" "<link>shared" ;
 }

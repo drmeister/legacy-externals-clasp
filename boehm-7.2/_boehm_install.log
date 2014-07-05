@@ -1,22 +1,47 @@
- ./install-sh -c -d '/Users/meister/local/dependent-clasp/externals/common/lib'
- /bin/sh ./libtool   --mode=install /usr/bin/install -c   libgc.la libgccpp.la libcord.la '/Users/meister/local/dependent-clasp/externals/common/lib'
-libtool: install: /usr/bin/install -c .libs/libgc.lai /Users/meister/local/dependent-clasp/externals/common/lib/libgc.la
-libtool: install: /usr/bin/install -c .libs/libgccpp.lai /Users/meister/local/dependent-clasp/externals/common/lib/libgccpp.la
-libtool: install: /usr/bin/install -c .libs/libcord.lai /Users/meister/local/dependent-clasp/externals/common/lib/libcord.la
-libtool: install: /usr/bin/install -c .libs/libgc.a /Users/meister/local/dependent-clasp/externals/common/lib/libgc.a
-libtool: install: chmod 644 /Users/meister/local/dependent-clasp/externals/common/lib/libgc.a
-libtool: install: ranlib /Users/meister/local/dependent-clasp/externals/common/lib/libgc.a
-libtool: install: /usr/bin/install -c .libs/libgccpp.a /Users/meister/local/dependent-clasp/externals/common/lib/libgccpp.a
-libtool: install: chmod 644 /Users/meister/local/dependent-clasp/externals/common/lib/libgccpp.a
-libtool: install: ranlib /Users/meister/local/dependent-clasp/externals/common/lib/libgccpp.a
-libtool: install: /usr/bin/install -c .libs/libcord.a /Users/meister/local/dependent-clasp/externals/common/lib/libcord.a
-libtool: install: chmod 644 /Users/meister/local/dependent-clasp/externals/common/lib/libcord.a
-libtool: install: ranlib /Users/meister/local/dependent-clasp/externals/common/lib/libcord.a
- ./install-sh -c -d '/Users/meister/local/dependent-clasp/externals/common/share/gc'
- /usr/bin/install -c -m 644 doc/barrett_diagram doc/debugging.html doc/gc.man doc/gcdescr.html doc/README doc/README.amiga doc/README.arm.cross doc/README.autoconf doc/README.changes doc/README.cmake doc/README.contributors doc/README.cords doc/README.DGUX386 doc/README.dj doc/README.environment doc/README.ews4800 doc/README.hp doc/README.linux doc/README.Mac doc/README.MacOSX doc/README.macros doc/README.OS2 doc/README.rs6000 doc/README.sgi doc/README.solaris2 doc/README.uts doc/README.win32 doc/README.win64 doc/overview.html doc/tree.html doc/leak.html doc/gcinterface.html doc/scale.html doc/README.darwin doc/simple_example.html doc/porting.html '/Users/meister/local/dependent-clasp/externals/common/share/gc'
- ./install-sh -c -d '/Users/meister/local/dependent-clasp/externals/common/include'
- /usr/bin/install -c -m 644 include/extra/gc_cpp.h include/extra/gc.h '/Users/meister/local/dependent-clasp/externals/common/include'
- ./install-sh -c -d '/Users/meister/local/dependent-clasp/externals/common/lib/pkgconfig'
- /usr/bin/install -c -m 644 bdw-gc.pc '/Users/meister/local/dependent-clasp/externals/common/lib/pkgconfig'
- ./install-sh -c -d '/Users/meister/local/dependent-clasp/externals/common/include/gc'
- /usr/bin/install -c -m 644 include/gc_cpp.h include/gc.h include/gc_typed.h include/gc_inline.h include/gc_mark.h include/weakpointer.h include/new_gc_alloc.h include/gc_allocator.h include/gc_backptr.h include/gc_gcj.h include/leak_detector.h include/gc_amiga_redirects.h include/gc_pthread_redirects.h include/gc_config_macros.h include/gc_tiny_fl.h include/gc_version.h include/cord.h '/Users/meister/local/dependent-clasp/externals/common/include/gc'
+make[3]: Entering directory `/home/meister/Development/dependent-clasp/boehm-7.2'
+make[4]: Entering directory `/home/meister/Development/dependent-clasp/boehm-7.2'
+make[5]: Entering directory `/home/meister/Development/dependent-clasp/boehm-7.2'
+ /bin/mkdir -p '/home/meister/local/dependent-clasp/externals/common/lib'
+ /bin/sh ./libtool   --mode=install /usr/bin/install -c   libgc.la libgccpp.la libcord.la '/home/meister/local/dependent-clasp/externals/common/lib'
+libtool: install: /usr/bin/install -c .libs/libgc.lai /home/meister/local/dependent-clasp/externals/common/lib/libgc.la
+libtool: install: /usr/bin/install -c .libs/libgccpp.lai /home/meister/local/dependent-clasp/externals/common/lib/libgccpp.la
+libtool: install: /usr/bin/install -c .libs/libcord.lai /home/meister/local/dependent-clasp/externals/common/lib/libcord.la
+libtool: install: /usr/bin/install -c .libs/libgc.a /home/meister/local/dependent-clasp/externals/common/lib/libgc.a
+libtool: install: chmod 644 /home/meister/local/dependent-clasp/externals/common/lib/libgc.a
+libtool: install: ranlib /home/meister/local/dependent-clasp/externals/common/lib/libgc.a
+libtool: install: /usr/bin/install -c .libs/libgccpp.a /home/meister/local/dependent-clasp/externals/common/lib/libgccpp.a
+libtool: install: chmod 644 /home/meister/local/dependent-clasp/externals/common/lib/libgccpp.a
+libtool: install: ranlib /home/meister/local/dependent-clasp/externals/common/lib/libgccpp.a
+libtool: install: /usr/bin/install -c .libs/libcord.a /home/meister/local/dependent-clasp/externals/common/lib/libcord.a
+libtool: install: chmod 644 /home/meister/local/dependent-clasp/externals/common/lib/libcord.a
+libtool: install: ranlib /home/meister/local/dependent-clasp/externals/common/lib/libcord.a
+libtool: finish: PATH="/home/meister/local/bin:/home/meister/local/gdb-7.7/bin:/home/meister/local/valgrind-3.9.0/bin:/home/meister/local/gcc-4.8.3/bin:/usr/lib64/qt-3.3/bin:/opt/apps/MATLAB-R2012a/bin:/opt/apps/stata13:/opt/apps/sas-9.4/SASFoundation/9.4:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/meister/bin:/home/meister/Development/clasp/build/cando.app/Contents/bin:/home/meister/Development/clasp/build/cando.app/Contents/Resources/bin:/home/meister/Development/clasp/build/cando.app/Contents/Resources/externals/common/bin:/home/meister/Development/clasp/build/cando.app/Contents/Resources/externals/release/bin:/home/meister/Development/clasp/build/cando.app/Contents/Resources/externals/release/bin:/home/meister/Development/clasp/build/cando.app/Contents/Resources/externals/release/bin:/sbin" ldconfig -n /home/meister/local/dependent-clasp/externals/common/lib
+----------------------------------------------------------------------
+Libraries have been installed in:
+   /home/meister/local/dependent-clasp/externals/common/lib
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the `-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the `LD_RUN_PATH' environment variable
+     during linking
+   - use the `-Wl,-rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+----------------------------------------------------------------------
+ /bin/mkdir -p '/home/meister/local/dependent-clasp/externals/common/share/gc'
+ /usr/bin/install -c -m 644 doc/barrett_diagram doc/debugging.html doc/gc.man doc/gcdescr.html doc/README doc/README.amiga doc/README.arm.cross doc/README.autoconf doc/README.changes doc/README.cmake doc/README.contributors doc/README.cords doc/README.DGUX386 doc/README.dj doc/README.environment doc/README.ews4800 doc/README.hp doc/README.linux doc/README.Mac doc/README.MacOSX doc/README.macros doc/README.OS2 doc/README.rs6000 doc/README.sgi doc/README.solaris2 doc/README.uts doc/README.win32 doc/README.win64 doc/overview.html doc/tree.html doc/leak.html doc/gcinterface.html doc/scale.html doc/README.darwin doc/simple_example.html doc/porting.html '/home/meister/local/dependent-clasp/externals/common/share/gc'
+ /bin/mkdir -p '/home/meister/local/dependent-clasp/externals/common/include'
+ /usr/bin/install -c -m 644 include/extra/gc_cpp.h include/extra/gc.h '/home/meister/local/dependent-clasp/externals/common/include'
+ /bin/mkdir -p '/home/meister/local/dependent-clasp/externals/common/lib/pkgconfig'
+ /usr/bin/install -c -m 644 bdw-gc.pc '/home/meister/local/dependent-clasp/externals/common/lib/pkgconfig'
+ /bin/mkdir -p '/home/meister/local/dependent-clasp/externals/common/include/gc'
+ /usr/bin/install -c -m 644 include/gc_cpp.h include/gc.h include/gc_typed.h include/gc_inline.h include/gc_mark.h include/weakpointer.h include/new_gc_alloc.h include/gc_allocator.h include/gc_backptr.h include/gc_gcj.h include/leak_detector.h include/gc_amiga_redirects.h include/gc_pthread_redirects.h include/gc_config_macros.h include/gc_tiny_fl.h include/gc_version.h include/cord.h '/home/meister/local/dependent-clasp/externals/common/include/gc'
+make[5]: Leaving directory `/home/meister/Development/dependent-clasp/boehm-7.2'
+make[4]: Leaving directory `/home/meister/Development/dependent-clasp/boehm-7.2'
+make[3]: Leaving directory `/home/meister/Development/dependent-clasp/boehm-7.2'

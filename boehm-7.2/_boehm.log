@@ -1,3 +1,5 @@
+make[3]: Entering directory `/home/meister/Development/dependent-clasp/boehm-7.2'
+make[4]: Entering directory `/home/meister/Development/dependent-clasp/boehm-7.2'
 /bin/sh ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H   -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src  -fexceptions -DUSE_MMAP -fno-strict-aliasing -MT allchblk.lo -MD -MP -MF .deps/allchblk.Tpo -c -o allchblk.lo allchblk.c
 libtool: compile:  gcc -DHAVE_CONFIG_H -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src -fexceptions -DUSE_MMAP -fno-strict-aliasing -MT allchblk.lo -MD -MP -MF .deps/allchblk.Tpo -c allchblk.c -o allchblk.o
 mv -f .deps/allchblk.Tpo .deps/allchblk.Plo
@@ -88,23 +90,20 @@ mv -f .deps/pthread_support.Tpo .deps/pthread_support.Plo
 /bin/sh ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H   -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src  -fexceptions -DUSE_MMAP -fno-strict-aliasing -MT pthread_stop_world.lo -MD -MP -MF .deps/pthread_stop_world.Tpo -c -o pthread_stop_world.lo pthread_stop_world.c
 libtool: compile:  gcc -DHAVE_CONFIG_H -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src -fexceptions -DUSE_MMAP -fno-strict-aliasing -MT pthread_stop_world.lo -MD -MP -MF .deps/pthread_stop_world.Tpo -c pthread_stop_world.c -o pthread_stop_world.o
 mv -f .deps/pthread_stop_world.Tpo .deps/pthread_stop_world.Plo
-/bin/sh ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H   -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src  -fexceptions -DUSE_MMAP -fno-strict-aliasing -MT darwin_stop_world.lo -MD -MP -MF .deps/darwin_stop_world.Tpo -c -o darwin_stop_world.lo darwin_stop_world.c
-libtool: compile:  gcc -DHAVE_CONFIG_H -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src -fexceptions -DUSE_MMAP -fno-strict-aliasing -MT darwin_stop_world.lo -MD -MP -MF .deps/darwin_stop_world.Tpo -c darwin_stop_world.c -o darwin_stop_world.o
-mv -f .deps/darwin_stop_world.Tpo .deps/darwin_stop_world.Plo
 /bin/sh ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H   -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src  -fexceptions -DUSE_MMAP -fno-strict-aliasing -MT atomic_ops.lo -MD -MP -MF .deps/atomic_ops.Tpo -c -o atomic_ops.lo `test -f 'libatomic_ops/src/atomic_ops.c' || echo './'`libatomic_ops/src/atomic_ops.c
 libtool: compile:  gcc -DHAVE_CONFIG_H -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src -fexceptions -DUSE_MMAP -fno-strict-aliasing -MT atomic_ops.lo -MD -MP -MF .deps/atomic_ops.Tpo -c libatomic_ops/src/atomic_ops.c -o atomic_ops.o
 mv -f .deps/atomic_ops.Tpo .deps/atomic_ops.Plo
 /bin/sh ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H   -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src  -fexceptions -DUSE_MMAP -fno-strict-aliasing -MT mach_dep.lo -MD -MP -MF .deps/mach_dep.Tpo -c -o mach_dep.lo mach_dep.c
 libtool: compile:  gcc -DHAVE_CONFIG_H -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src -fexceptions -DUSE_MMAP -fno-strict-aliasing -MT mach_dep.lo -MD -MP -MF .deps/mach_dep.Tpo -c mach_dep.c -o mach_dep.o
 mv -f .deps/mach_dep.Tpo .deps/mach_dep.Plo
-/bin/sh ./libtool  --tag=CC   --mode=link gcc -fexceptions -DUSE_MMAP -fno-strict-aliasing -Wl,-single_module -version-info 1:3:0 -no-undefined  -o libgc.la -rpath /Users/meister/local/dependent-clasp/externals/common/lib allchblk.lo alloc.lo blacklst.lo checksums.lo dbg_mlc.lo dyn_load.lo finalize.lo gc_dlopen.lo gcj_mlc.lo headers.lo malloc.lo mallocx.lo mark.lo mark_rts.lo misc.lo new_hblk.lo obj_map.lo os_dep.lo pcr_interface.lo ptr_chck.lo real_malloc.lo reclaim.lo specific.lo stubborn.lo typd_mlc.lo backgraph.lo thread_local_alloc.lo pthread_start.lo pthread_support.lo pthread_stop_world.lo darwin_stop_world.lo  atomic_ops.lo mach_dep.lo -lpthread   
-libtool: link: ar cru .libs/libgc.a  allchblk.o alloc.o blacklst.o checksums.o dbg_mlc.o dyn_load.o finalize.o gc_dlopen.o gcj_mlc.o headers.o malloc.o mallocx.o mark.o mark_rts.o misc.o new_hblk.o obj_map.o os_dep.o pcr_interface.o ptr_chck.o real_malloc.o reclaim.o specific.o stubborn.o typd_mlc.o backgraph.o thread_local_alloc.o pthread_start.o pthread_support.o pthread_stop_world.o darwin_stop_world.o atomic_ops.o mach_dep.o
+/bin/sh ./libtool  --tag=CC   --mode=link gcc -fexceptions -DUSE_MMAP -fno-strict-aliasing  -version-info 1:3:0 -no-undefined  -o libgc.la -rpath /home/meister/local/dependent-clasp/externals/common/lib allchblk.lo alloc.lo blacklst.lo checksums.lo dbg_mlc.lo dyn_load.lo finalize.lo gc_dlopen.lo gcj_mlc.lo headers.lo malloc.lo mallocx.lo mark.lo mark_rts.lo misc.lo new_hblk.lo obj_map.lo os_dep.lo pcr_interface.lo ptr_chck.lo real_malloc.lo reclaim.lo specific.lo stubborn.lo typd_mlc.lo backgraph.lo thread_local_alloc.lo pthread_start.lo pthread_support.lo pthread_stop_world.lo   atomic_ops.lo mach_dep.lo -lpthread -ldl   
+libtool: link: ar cru .libs/libgc.a  allchblk.o alloc.o blacklst.o checksums.o dbg_mlc.o dyn_load.o finalize.o gc_dlopen.o gcj_mlc.o headers.o malloc.o mallocx.o mark.o mark_rts.o misc.o new_hblk.o obj_map.o os_dep.o pcr_interface.o ptr_chck.o real_malloc.o reclaim.o specific.o stubborn.o typd_mlc.o backgraph.o thread_local_alloc.o pthread_start.o pthread_support.o pthread_stop_world.o atomic_ops.o mach_dep.o
 libtool: link: ranlib .libs/libgc.a
 libtool: link: ( cd ".libs" && rm -f "libgc.la" && ln -s "../libgc.la" "libgc.la" )
 /bin/sh ./libtool  --tag=CXX   --mode=compile g++ -DHAVE_CONFIG_H   -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src  -fexceptions -g -O2 -MT gc_cpp.lo -MD -MP -MF .deps/gc_cpp.Tpo -c -o gc_cpp.lo gc_cpp.cc
 libtool: compile:  g++ -DHAVE_CONFIG_H -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src -fexceptions -g -O2 -MT gc_cpp.lo -MD -MP -MF .deps/gc_cpp.Tpo -c gc_cpp.cc -o gc_cpp.o
 mv -f .deps/gc_cpp.Tpo .deps/gc_cpp.Plo
-/bin/sh ./libtool  --tag=CXX   --mode=link g++ -fexceptions -g -O2 -version-info 1:3:0 -no-undefined  -o libgccpp.la -rpath /Users/meister/local/dependent-clasp/externals/common/lib gc_cpp.lo ./libgc.la 
+/bin/sh ./libtool  --tag=CXX   --mode=link g++ -fexceptions -g -O2 -version-info 1:3:0 -no-undefined  -o libgccpp.la -rpath /home/meister/local/dependent-clasp/externals/common/lib gc_cpp.lo ./libgc.la 
 libtool: link: ar cru .libs/libgccpp.a  gc_cpp.o
 libtool: link: ranlib .libs/libgccpp.a
 libtool: link: ( cd ".libs" && rm -f "libgccpp.la" && ln -s "../libgccpp.la" "libgccpp.la" )
@@ -120,7 +119,9 @@ mv -f .deps/cordtest.Tpo .deps/cordtest.Plo
 /bin/sh ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H   -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src  -fexceptions -DUSE_MMAP -fno-strict-aliasing -MT cordxtra.lo -MD -MP -MF .deps/cordxtra.Tpo -c -o cordxtra.lo `test -f 'cord/cordxtra.c' || echo './'`cord/cordxtra.c
 libtool: compile:  gcc -DHAVE_CONFIG_H -I./include -I./include -I./libatomic_ops/src -I./libatomic_ops/src -fexceptions -DUSE_MMAP -fno-strict-aliasing -MT cordxtra.lo -MD -MP -MF .deps/cordxtra.Tpo -c cord/cordxtra.c -o cordxtra.o
 mv -f .deps/cordxtra.Tpo .deps/cordxtra.Plo
-/bin/sh ./libtool  --tag=CC   --mode=link gcc -fexceptions -DUSE_MMAP -fno-strict-aliasing -version-info 1:3:0 -no-undefined  -o libcord.la -rpath /Users/meister/local/dependent-clasp/externals/common/lib cordbscs.lo cordprnt.lo cordtest.lo cordxtra.lo ./libgc.la 
+/bin/sh ./libtool  --tag=CC   --mode=link gcc -fexceptions -DUSE_MMAP -fno-strict-aliasing -version-info 1:3:0 -no-undefined  -o libcord.la -rpath /home/meister/local/dependent-clasp/externals/common/lib cordbscs.lo cordprnt.lo cordtest.lo cordxtra.lo ./libgc.la 
 libtool: link: ar cru .libs/libcord.a  cordbscs.o cordprnt.o cordtest.o cordxtra.o
 libtool: link: ranlib .libs/libcord.a
 libtool: link: ( cd ".libs" && rm -f "libcord.la" && ln -s "../libcord.la" "libcord.la" )
+make[4]: Leaving directory `/home/meister/Development/dependent-clasp/boehm-7.2'
+make[3]: Leaving directory `/home/meister/Development/dependent-clasp/boehm-7.2'

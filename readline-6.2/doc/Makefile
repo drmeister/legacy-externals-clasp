@@ -20,7 +20,7 @@ topdir = ..
 srcdir = .
 VPATH = .
 
-prefix = /Users/meister/local/dependent-clasp/externals/common
+prefix = /home/meister/local/dependent-clasp/externals/common
 
 datarootdir = ${prefix}/share
 
@@ -46,7 +46,7 @@ RM = rm -f
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 
-BUILD_DIR = /Users/meister/Development/chem/dependent-clasp/readline-6.2
+BUILD_DIR = /home/meister/Development/dependent-clasp/readline-6.2
 TEXINPUTDIR = $(srcdir)
 
 MAKEINFO    = LANGUAGE= makeinfo

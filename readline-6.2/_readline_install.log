@@ -1,4 +1,85 @@
-/bin/sh ./support/mkinstalldirs /Users/meister/local/dependent-clasp/externals/common/include \
-		/Users/meister/local/dependent-clasp/externals/common/include/readline /Users/meister/local/dependent-clasp/externals/common/lib \
-		/Users/meister/local/dependent-clasp/externals/common/share/info /Users/meister/local/dependent-clasp/externals/common/share/man/man3
-mkdir -p -- /Users/meister/local/dependent-clasp/externals/common/include/readline /Users/meister/local/dependent-clasp/externals/common/lib /Users/meister/local/dependent-clasp/externals/common/share/info /Users/meister/local/dependent-clasp/externals/common/share/man/man3
+make[3]: Entering directory `/home/meister/Development/dependent-clasp/readline-6.2'
+/bin/sh ./support/mkinstalldirs /home/meister/local/dependent-clasp/externals/common/include \
+		/home/meister/local/dependent-clasp/externals/common/include/readline /home/meister/local/dependent-clasp/externals/common/lib \
+		/home/meister/local/dependent-clasp/externals/common/share/info /home/meister/local/dependent-clasp/externals/common/share/man/man3
+mkdir -p -- /home/meister/local/dependent-clasp/externals/common/include/readline /home/meister/local/dependent-clasp/externals/common/lib /home/meister/local/dependent-clasp/externals/common/share/info /home/meister/local/dependent-clasp/externals/common/share/man/man3
+for f in readline.h chardefs.h keymaps.h history.h tilde.h rlstdc.h rlconf.h rltypedefs.h; do \
+		/usr/bin/install -c -m 644 ./$f /home/meister/local/dependent-clasp/externals/common/include/readline ; \
+	done
+( if test -d doc ; then \
+		cd doc && \
+		make -w infodir=/home/meister/local/dependent-clasp/externals/common/share/info DESTDIR= install; \
+	  fi )
+make[4]: Entering directory `/home/meister/Development/dependent-clasp/readline-6.2/doc'
+/bin/sh ../support/mkdirs /home/meister/local/dependent-clasp/externals/common/share/info /home/meister/local/dependent-clasp/externals/common/share/man/man3
+if test -n "" ; then \
+		/bin/sh ../support/mkdirs  ; \
+	fi
+if test -f readline.info; then \
+		/usr/bin/install -c -m 644 readline.info /home/meister/local/dependent-clasp/externals/common/share/info/readline.info; \
+	else \
+		/usr/bin/install -c -m 644 ./readline.info /home/meister/local/dependent-clasp/externals/common/share/info/readline.info; \
+	fi
+if test -f rluserman.info; then \
+		/usr/bin/install -c -m 644 rluserman.info /home/meister/local/dependent-clasp/externals/common/share/info/rluserman.info; \
+	else \
+		/usr/bin/install -c -m 644 ./rluserman.info /home/meister/local/dependent-clasp/externals/common/share/info/rluserman.info; \
+	fi
+if test -f history.info; then \
+		/usr/bin/install -c -m 644 history.info /home/meister/local/dependent-clasp/externals/common/share/info/history.info; \
+	else \
+		/usr/bin/install -c -m 644 ./history.info /home/meister/local/dependent-clasp/externals/common/share/info/history.info; \
+	fi
+if /bin/sh -c 'install-info --version' >/dev/null 2>&1; then \
+		install-info --dir-file=/home/meister/local/dependent-clasp/externals/common/share/info/dir \
+			/home/meister/local/dependent-clasp/externals/common/share/info/readline.info ; \
+		install-info --dir-file=/home/meister/local/dependent-clasp/externals/common/share/info/dir \
+			/home/meister/local/dependent-clasp/externals/common/share/info/history.info ; \
+		install-info --dir-file=/home/meister/local/dependent-clasp/externals/common/share/info/dir \
+			/home/meister/local/dependent-clasp/externals/common/share/info/rluserman.info ; \
+	else true; fi
+/usr/bin/install -c -m 644 ./readline.3 /home/meister/local/dependent-clasp/externals/common/share/man/man3/readline.3
+/usr/bin/install -c -m 644 ./history.3 /home/meister/local/dependent-clasp/externals/common/share/man/man3/history.3
+if test -n "" ; then \
+		if test -f readline.html; then \
+			/usr/bin/install -c -m 644 readline.html /readline.html; \
+		else \
+			/usr/bin/install -c -m 644 ./readline.html /readline.html; \
+		fi ; \
+		if test -f history.html; then \
+			/usr/bin/install -c -m 644 history.html /history.html; \
+		else \
+			/usr/bin/install -c -m 644 ./history.html /history.html; \
+		fi ; \
+		if test -f rluserman.html; then \
+			/usr/bin/install -c -m 644 rluserman.html /rluserman.html; \
+		else \
+			/usr/bin/install -c -m 644 ./rluserman.html /rluserman.html; \
+		fi ; \
+	fi
+make[4]: Leaving directory `/home/meister/Development/dependent-clasp/readline-6.2/doc'
+test -d shlib || mkdir shlib
+( cd shlib ; make -w all )
+make[4]: Entering directory `/home/meister/Development/dependent-clasp/readline-6.2/shlib'
+make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `/home/meister/Development/dependent-clasp/readline-6.2/shlib'
+( cd examples ; make -w DESTDIR= install )
+make[4]: Entering directory `/home/meister/Development/dependent-clasp/readline-6.2/examples'
+/bin/sh ../support/mkdirs /home/meister/local/dependent-clasp/externals/common/share/readline
+mkdir /home/meister/local/dependent-clasp/externals/common/share/readline
+make[4]: Leaving directory `/home/meister/Development/dependent-clasp/readline-6.2/examples'
+mv /home/meister/local/dependent-clasp/externals/common/lib/libreadline.a /home/meister/local/dependent-clasp/externals/common/lib/libreadline.old
+/usr/bin/install -c -m 644 libreadline.a /home/meister/local/dependent-clasp/externals/common/lib/libreadline.a
+test -n "ranlib" && ranlib /home/meister/local/dependent-clasp/externals/common/lib/libreadline.a
+mv /home/meister/local/dependent-clasp/externals/common/lib/libhistory.a /home/meister/local/dependent-clasp/externals/common/lib/libhistory.old
+/usr/bin/install -c -m 644 libhistory.a /home/meister/local/dependent-clasp/externals/common/lib/libhistory.a
+test -n "ranlib" && ranlib /home/meister/local/dependent-clasp/externals/common/lib/libhistory.a
+( cd shlib ; make -w DESTDIR= install )
+make[4]: Entering directory `/home/meister/Development/dependent-clasp/readline-6.2/shlib'
+/bin/sh ../support/mkdirs /home/meister/local/dependent-clasp/externals/common/lib
+/bin/sh ../support/mkdirs /home/meister/local/dependent-clasp/externals/common/bin
+/bin/sh ../support/shlib-install -O linux-gnu -V unknown -d /home/meister/local/dependent-clasp/externals/common/lib -b /home/meister/local/dependent-clasp/externals/common/bin -i "/usr/bin/install -c -m 644" libhistory.so.6.2
+/bin/sh ../support/shlib-install -O linux-gnu -V unknown -d /home/meister/local/dependent-clasp/externals/common/lib -b /home/meister/local/dependent-clasp/externals/common/bin -i "/usr/bin/install -c -m 644" libreadline.so.6.2
+install: you may need to run ldconfig
+make[4]: Leaving directory `/home/meister/Development/dependent-clasp/readline-6.2/shlib'
+make[3]: Leaving directory `/home/meister/Development/dependent-clasp/readline-6.2'

@@ -1,0 +1,176 @@
+make[3]: Entering directory `/home/meister/Development/dependent-clasp/readline-6.2'
+rm -f readline.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O readline.c
+rm -f vi_mode.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O vi_mode.c
+rm -f funmap.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O funmap.c
+rm -f keymaps.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O keymaps.c
+rm -f parens.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O parens.c
+rm -f search.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O search.c
+rm -f rltty.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O rltty.c
+rm -f complete.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O complete.c
+rm -f bind.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O bind.c
+rm -f isearch.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O isearch.c
+rm -f display.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O display.c
+rm -f signals.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O signals.c
+rm -f util.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O util.c
+rm -f kill.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O kill.c
+rm -f undo.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O undo.c
+rm -f macro.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O macro.c
+rm -f input.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O input.c
+rm -f callback.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O callback.c
+rm -f terminal.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O terminal.c
+rm -f text.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O text.c
+rm -f nls.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O nls.c
+rm -f misc.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O misc.c
+rm -f compat.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O compat.c
+rm -f xfree.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O xfree.c
+rm -f xmalloc.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O xmalloc.c
+rm -f history.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O history.c
+rm -f histexpand.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O histexpand.c
+rm -f histfile.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O histfile.c
+rm -f histsearch.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O histsearch.c
+rm -f shell.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O shell.c
+rm -f mbutil.o
+gcc -c -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O mbutil.c
+rm -f tilde.o
+gcc -DHAVE_CONFIG_H    -I. -I. -DRL_LIBRARY_VERSION='"6.2"' -g -O -DREADLINE_LIBRARY -c ./tilde.c
+rm -f libreadline.a
+ar cr libreadline.a readline.o vi_mode.o funmap.o keymaps.o parens.o search.o rltty.o complete.o bind.o isearch.o display.o signals.o util.o kill.o undo.o macro.o input.o callback.o terminal.o text.o nls.o misc.o compat.o xfree.o xmalloc.o history.o histexpand.o histfile.o histsearch.o shell.o mbutil.o tilde.o
+test -n "ranlib" && ranlib libreadline.a
+rm -f libhistory.a
+ar cr libhistory.a history.o histexpand.o histfile.o histsearch.o shell.o mbutil.o xmalloc.o xfree.o
+test -n "ranlib" && ranlib libhistory.a
+test -d shlib || mkdir shlib
+( cd shlib ; make -w all )
+make[4]: Entering directory `/home/meister/Development/dependent-clasp/readline-6.2/shlib'
+rm -f readline.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o readline.o ../readline.c 
+mv readline.o readline.so
+rm -f vi_mode.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o vi_mode.o ../vi_mode.c 
+mv vi_mode.o vi_mode.so
+rm -f funmap.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o funmap.o ../funmap.c 
+mv funmap.o funmap.so
+rm -f keymaps.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o keymaps.o ../keymaps.c 
+mv keymaps.o keymaps.so
+rm -f parens.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o parens.o ../parens.c 
+mv parens.o parens.so
+rm -f search.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o search.o ../search.c 
+mv search.o search.so
+rm -f rltty.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o rltty.o ../rltty.c 
+mv rltty.o rltty.so
+rm -f complete.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o complete.o ../complete.c 
+mv complete.o complete.so
+rm -f bind.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o bind.o ../bind.c 
+mv bind.o bind.so
+rm -f isearch.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o isearch.o ../isearch.c 
+mv isearch.o isearch.so
+rm -f display.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o display.o ../display.c 
+mv display.o display.so
+rm -f signals.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o signals.o ../signals.c 
+mv signals.o signals.so
+rm -f util.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o util.o ../util.c 
+mv util.o util.so
+rm -f kill.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o kill.o ../kill.c 
+mv kill.o kill.so
+rm -f undo.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o undo.o ../undo.c 
+mv undo.o undo.so
+rm -f macro.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o macro.o ../macro.c 
+mv macro.o macro.so
+rm -f input.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o input.o ../input.c 
+mv input.o input.so
+rm -f callback.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o callback.o ../callback.c 
+mv callback.o callback.so
+rm -f terminal.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o terminal.o ../terminal.c 
+mv terminal.o terminal.so
+rm -f text.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o text.o ../text.c 
+mv text.o text.so
+rm -f nls.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o nls.o ../nls.c 
+mv nls.o nls.so
+rm -f misc.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o misc.o ../misc.c 
+mv misc.o misc.so
+rm -f xmalloc.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o xmalloc.o ../xmalloc.c 
+mv xmalloc.o xmalloc.so
+rm -f xfree.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o xfree.o ../xfree.c 
+mv xfree.o xfree.so
+rm -f history.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o history.o ../history.c 
+mv history.o history.so
+rm -f histexpand.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o histexpand.o ../histexpand.c 
+mv histexpand.o histexpand.so
+rm -f histfile.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o histfile.o ../histfile.c 
+mv histfile.o histfile.so
+rm -f histsearch.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o histsearch.o ../histsearch.c 
+mv histsearch.o histsearch.so
+rm -f shell.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o shell.o ../shell.c 
+mv shell.o shell.so
+rm -f mbutil.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o mbutil.o ../mbutil.c 
+mv mbutil.o mbutil.so
+rm -f tilde.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -DREADLINE_LIBRARY -c -o tilde.o ../tilde.c
+mv tilde.o tilde.so
+rm -f compat.so
+gcc -c -DHAVE_CONFIG_H    -I. -I.. -I.. -DRL_LIBRARY_VERSION='"6.2"' -g -O -fPIC -o compat.o ../compat.c 
+mv compat.o compat.so
+rm -f libreadline.so.6.2
+gcc -shared -Wl,-soname,libreadline.so.6.2 -Wl,-rpath,/home/meister/local/dependent-clasp/externals/common/lib -Wl,-soname,`basename libreadline.so.6.2 .2` -o libreadline.so.6.2 readline.so vi_mode.so funmap.so keymaps.so parens.so search.so rltty.so complete.so bind.so isearch.so display.so signals.so util.so kill.so undo.so macro.so input.so callback.so terminal.so text.so nls.so misc.so xmalloc.so xfree.so history.so histexpand.so histfile.so histsearch.so shell.so mbutil.so tilde.so compat.so 
+rm -f libhistory.so.6.2
+gcc -shared -Wl,-soname,libhistory.so.6.2 -Wl,-rpath,/home/meister/local/dependent-clasp/externals/common/lib -Wl,-soname,`basename libhistory.so.6.2 .2` -o libhistory.so.6.2 history.so histexpand.so histfile.so histsearch.so shell.so mbutil.so xmalloc.so xfree.so 
+make[4]: Leaving directory `/home/meister/Development/dependent-clasp/readline-6.2/shlib'
+make[3]: Leaving directory `/home/meister/Development/dependent-clasp/readline-6.2'
