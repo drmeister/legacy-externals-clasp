@@ -342,7 +342,7 @@ configure:10914: checking how to hardcode library paths into programs
 configure:10939: result: immediate
 configure:11033: checking for shl_load
 configure:11033: gcc -o conftest -DNDEBUG -g -O2 -fvisibility=hidden   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   -I/usr/include/infiniband -I/usr/include/infiniband    conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/ccvTzTul.o: In function `main':
+/tmp/cc7WGGtf.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/libltdl/conftest.c:57: undefined reference to `shl_load'
 collect2: error: ld returned 1 exit status
 configure:11033: $? = 1
@@ -454,7 +454,7 @@ configure: failed program was:
 configure:11071: result: no
 configure:11076: checking for dlopen
 configure:11076: gcc -o conftest -DNDEBUG -g -O2 -fvisibility=hidden   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   -I/usr/include/infiniband -I/usr/include/infiniband    conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/cc2cYuNs.o: In function `main':
+/tmp/ccMte6Fm.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/libltdl/conftest.c:57: undefined reference to `dlopen'
 collect2: error: ld returned 1 exit status
 configure:11076: $? = 1
@@ -548,7 +548,7 @@ configure:11635: checking for the default library search path
 configure:11642: result: /lib /usr/lib /usr/lib64/atlas /usr/lib64/mysql /usr/lib64/qt-3.3/lib 
 configure:11672: checking for library containing dlopen
 configure:11703: gcc -o conftest -DNDEBUG -g -O2 -fvisibility=hidden   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   -I/usr/include/infiniband -I/usr/include/infiniband    conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/ccoYCdZM.o: In function `main':
+/tmp/ccsfycXD.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/libltdl/conftest.c:37: undefined reference to `dlopen'
 collect2: error: ld returned 1 exit status
 configure:11703: $? = 1
@@ -1105,7 +1105,7 @@ configure:12437: $? = 0
 configure:12437: result: yes
 configure:12456: checking for strlcat
 configure:12456: gcc -o conftest -DNDEBUG -g -O2 -fvisibility=hidden   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   -I/usr/include/infiniband -I/usr/include/infiniband    conftest.c -ldl -lrt -lnsl  -lutil -lm  >&5
-/tmp/cchTuV99.o: In function `main':
+/tmp/ccQT0KvY.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/libltdl/conftest.c:79: undefined reference to `strlcat'
 collect2: error: ld returned 1 exit status
 configure:12456: $? = 1
@@ -1195,7 +1195,7 @@ configure: failed program was:
 configure:12456: result: no
 configure:12456: checking for strlcpy
 configure:12456: gcc -o conftest -DNDEBUG -g -O2 -fvisibility=hidden   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   -I/usr/include/infiniband -I/usr/include/infiniband    conftest.c -ldl -lrt -lnsl  -lutil -lm  >&5
-/tmp/ccTG8VDd.o: In function `main':
+/tmp/cci6Nky0.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/libltdl/conftest.c:79: undefined reference to `strlcpy'
 collect2: error: ld returned 1 exit status
 configure:12456: $? = 1

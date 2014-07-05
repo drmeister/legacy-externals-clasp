@@ -696,7 +696,7 @@ configure:17060: $? = 0
 configure:17061: result: yes
 configure:17073: checking whether we need to link -lm to get math functions
 configure:17089: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread -DINSIDE_OPENMPI -DINSIDE_OPENMPI   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   -I/usr/include/infiniband -I/usr/include/infiniband  -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include -D_GNU_SOURCE   -L/home/meister/Development/dependent-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../.libs conftest.c  >&5
-/tmp/ccNNKRyE.o: In function `main':
+/tmp/ccGda2FG.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/extlib/otf/conftest.c:30: undefined reference to `ceil'
 collect2: error: ld returned 1 exit status
 configure:17089: $? = 1
@@ -964,7 +964,7 @@ configure:17945: $? = 0
 configure:17959: result: 8
 configure:17975: checking for library containing clock_gettime
 configure:18006: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread -DINSIDE_OPENMPI -DINSIDE_OPENMPI   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   -I/usr/include/infiniband -I/usr/include/infiniband  -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include -D_GNU_SOURCE   -L/home/meister/Development/dependent-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../.libs conftest.c  >&5
-/tmp/cczLvUP6.o: In function `main':
+/tmp/cceUuW89.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/extlib/otf/conftest.c:56: undefined reference to `clock_gettime'
 collect2: error: ld returned 1 exit status
 configure:18006: $? = 1

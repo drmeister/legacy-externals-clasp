@@ -1,15 +1,7 @@
-#####
-##### Local settings
-#####
-export PREFIX = $(HOME)/local/dependent-clasp
-export TARGET_OS = linux
-export PJOBS = 16
-export GCC-TOOLCHAIN = $(HOME)/local/gcc-4.8.3
+# Copy local.config.template local.config
+# Edit local.config for your local configuration
 
-
-#
-# Use the following to set up
-# make getllvm
+include local.config
 
 ######################################################################
 ######################################################################
@@ -17,6 +9,8 @@ export GCC-TOOLCHAIN = $(HOME)/local/gcc-4.8.3
 #
 # Do not change below here
 #
+
+export PATH := $(PREFIX)/externals/release/bin:$(PREFIX)/externals/common/bin:$(PATH)
 
 
 
@@ -201,7 +195,7 @@ ecl-setup:
 	(cd $(ECL_SOURCE_DIR); ./configure --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR))
 
 ecl-build:
-	(cd $(ECL_SOURCE_DIR); make; make install)  2>&1 | tee logs/_ecl.log
+	(cd $(ECL_SOURCE_DIR); make; make install)  2>&1 | tee ../logs/_ecl.log
 
 ecl-clean:
 	-(rm -rf $(ECL_SOURCE_DIR)/build)
@@ -238,13 +232,13 @@ llvm-build:
 	make llvm-release
 
 # build llvm with VERBOSE=1 to see commands as they execute  - also set -j1 so multiple builds output aren't interleaved
-#	(cd $(LLVM_SOURCE_DIR)/build-debug; export VERBOSE=1;  make VERBOSE=1 -j$(COMPILE_PROCESSORS) ; make install) 2>&1 | tee _llvm-debug.log
+#	(cd $(LLVM_SOURCE_DIR)/build-debug; export VERBOSE=1;  make VERBOSE=1 -j$(COMPILE_PROCESSORS) ; make install) 2>&1 | tee ../_llvm-debug.log
 
 llvm-debug:
-	(cd $(LLVM_SOURCE_DIR)/build-debug; make -j$(COMPILE_PROCESSORS) ; make install) 2>&1 | tee logs/_llvm-debug.log
+	(cd $(LLVM_SOURCE_DIR)/build-debug; make -j$(COMPILE_PROCESSORS) ; make install) 2>&1 | tee ../logs/_llvm-debug.log
 
 llvm-release:
-	(cd $(LLVM_SOURCE_DIR)/build-release; make -j$(COMPILE_PROCESSORS) ; make install) 2>&1 | tee logs/_llvm-release.log
+	(cd $(LLVM_SOURCE_DIR)/build-release; make -j$(COMPILE_PROCESSORS) ; make install) 2>&1 | tee ../logs/_llvm-release.log
 
 
 
@@ -291,7 +285,7 @@ llvm-doxygen:
 	(cd $(LLVM_SOURCE_DIR)/build-doxygen; export REQUIRES_RTTI=1; \
 		../configure --enable-doxygen \
 		--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR);)
-	(cd $(LLVM_SOURCE_DIR)/build-dbg; export REQUIRES_RTTI=1; make -j$(COMPILE_PROCESSORS) REQUIRES_RTTI=1; make install) 2>&1 | tee logs/_llvm-doxygen.log
+	(cd $(LLVM_SOURCE_DIR)/build-dbg; export REQUIRES_RTTI=1; make -j$(COMPILE_PROCESSORS) REQUIRES_RTTI=1; make install) 2>&1 | tee ../logs/_llvm-doxygen.log
 
 
 
@@ -312,7 +306,7 @@ clang-clean-release:
 
 
 clang-release:
-	(cd $(LLVM_SOURCE_DIR)/clang-build; export REQUIRES_RTTI=1; make -j$(COMPILE_PROCESSORS) REQUIRES_RTTI=1 ; make install) 2>&1 | tee logs/_clang.log
+	(cd $(LLVM_SOURCE_DIR)/clang-build; export REQUIRES_RTTI=1; make -j$(COMPILE_PROCESSORS) REQUIRES_RTTI=1 ; make install) 2>&1 | tee ../logs/_clang.log
 
 
 
@@ -404,10 +398,10 @@ dmalloc-build:
 	make dmalloc-install
 
 dmalloc-compile:
-	(cd dmalloc-$(DMALLOC_VERSION); make -j1 cxx light | tee logs/_dmalloc.log)
+	(cd dmalloc-$(DMALLOC_VERSION); make -j1 cxx light | tee ../logs/_dmalloc.log)
 
 dmalloc-install:
-	(cd dmalloc-$(DMALLOC_VERSION); make -j1 light installcxx install | tee logs/_dmalloc_install.log)
+	(cd dmalloc-$(DMALLOC_VERSION); make -j1 light installcxx install | tee ../logs/_dmalloc_install.log)
 
 
 
@@ -429,10 +423,10 @@ boehm-build:
 	make boehm-install
 
 boehm-compile:
-	(cd $(BOEHM_SOURCE_DIR); make -j1 | tee logs/_boehm.log)
+	(cd $(BOEHM_SOURCE_DIR); make -j1 | tee _boehm.log)
 
 boehm-install:
-	(cd $(BOEHM_SOURCE_DIR); make -j1 install | tee logs/_boehm_install.log)
+	(cd $(BOEHM_SOURCE_DIR); make -j1 install | tee _boehm_install.log)
 
 
 
@@ -459,10 +453,10 @@ readline-setup:
 
 
 readline-compile:
-	(cd readline-$(READLINE_VERSION); make -j1 | tee logs/_readline.log)
+	(cd readline-$(READLINE_VERSION); make -j1 | tee ../logs/_readline.log)
 
 readline-install:
-	(cd readline-$(READLINE_VERSION); make -j1 install | tee logs/_readline_install.log)
+	(cd readline-$(READLINE_VERSION); make -j1 install | tee ../logs/_readline_install.log)
 
 
 
@@ -543,7 +537,6 @@ llvm-setup-debug:
 		../configure --enable-targets=x86_64 --enable-debug-symbols --enable-debug-runtime --enable-profiling \
 		--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
 		--with-gcc-toolchain=$(GCC-TOOLCHAIN) \
-		--with-clang-srcdir=clang \
 		CC=$(HOME)/local/gcc-4.8.3/bin/gcc \
 		CXX=$(HOME)/local/gcc-4.8.3/bin/g++ \
 		CXXFLAGS="-static-libstdc++ -static-libgcc" \
@@ -558,7 +551,6 @@ llvm-setup-release:
 		../configure --enable-targets=x86_64  --enable-optimized --enable-assertions --enable-profiling  \
 		--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) \
 		--with-gcc-toolchain=$(GCC-TOOLCHAIN) \
-		--with-clang-srcdir=clang \
 		CC=$(HOME)/local/gcc-4.8.3/bin/gcc \
 		CXX=$(HOME)/local/gcc-4.8.3/bin/g++ \
 		CXXFLAGS="-static-libstdc++ -static-libgcc" \
@@ -772,7 +764,7 @@ boost-fresh:
 			--debug-configuration \
 			link=static \
 			install \
-			2>&1 | tee logs/_boost.log )
+			2>&1 | tee ../logs/_boost.log )
 	make boost-rpath-fix
 
 boost-build:
@@ -791,7 +783,7 @@ boost-build:
 			--debug-configuration \
 			link=static \
 			install \
-			2>&1 | tee logs/_boost.log )
+			2>&1 | tee ../logs/_boost.log )
 	make boost-rpath-fix
 
 boost-n:
@@ -871,13 +863,13 @@ python-config:
 			--enable-framework \
 			--enable-unicode=ucs2 \
 			--enable-universalsdk \
-			--prefix=$(EXTERNALS_DIR) 2>&1 | tee logs/_python-config.log;\
+			--prefix=$(EXTERNALS_DIR) 2>&1 | tee ../logs/_python-config.log;\
 	)
 
 
 
 python-compile:
-	make -j 1 -C $(PYTHON_SOURCE_DIR) frameworkinstall 2>&1 | tee logs/_python-compile.log
+	make -j 1 -C $(PYTHON_SOURCE_DIR) frameworkinstall 2>&1 | tee ../logs/_python-compile.log
 
 python-clean:
 	-make -C $(PYTHON_SOURCE_DIR) clean

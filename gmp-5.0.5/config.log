@@ -3307,7 +3307,7 @@ configure:26263: $? = 0
 configure:26263: result: yes
 configure:26263: checking for attr_get
 configure:26263: gcc -std=gnu99 -o conftest -O2 -pedantic -m64 -mtune=bdver1 -march=bdver1   conftest.c  >&5
-/tmp/ccTNufby.o: In function `main':
+/tmp/ccJBe9tL.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `attr_get'
 collect2: error: ld returned 1 exit status
 configure:26263: $? = 1
@@ -3428,7 +3428,7 @@ configure:26263: $? = 0
 configure:26263: result: yes
 configure:26263: checking for clock_gettime
 configure:26263: gcc -std=gnu99 -o conftest -O2 -pedantic -m64 -mtune=bdver1 -march=bdver1   conftest.c  >&5
-/tmp/ccLMiutH.o: In function `main':
+/tmp/cc7QhIaV.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `clock_gettime'
 collect2: error: ld returned 1 exit status
 configure:26263: $? = 1
@@ -3546,7 +3546,7 @@ configure: failed program was:
 configure:26263: result: no
 configure:26263: checking for cputime
 configure:26263: gcc -std=gnu99 -o conftest -O2 -pedantic -m64 -mtune=bdver1 -march=bdver1   conftest.c  >&5
-/tmp/ccsby3qM.o: In function `main':
+/tmp/ccJB31a0.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `cputime'
 collect2: error: ld returned 1 exit status
 configure:26263: $? = 1
@@ -3676,7 +3676,7 @@ configure:26263: $? = 0
 configure:26263: result: yes
 configure:26263: checking for getsysinfo
 configure:26263: gcc -std=gnu99 -o conftest -O2 -pedantic -m64 -mtune=bdver1 -march=bdver1   conftest.c  >&5
-/tmp/ccYnArU3.o: In function `main':
+/tmp/ccVO8zha.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `getsysinfo'
 collect2: error: ld returned 1 exit status
 configure:26263: $? = 1
@@ -3828,7 +3828,7 @@ configure:26263: $? = 0
 configure:26263: result: yes
 configure:26263: checking for processor_info
 configure:26263: gcc -std=gnu99 -o conftest -O2 -pedantic -m64 -mtune=bdver1 -march=bdver1   conftest.c  >&5
-/tmp/ccN7H3ux.o: In function `main':
+/tmp/ccUXEpMN.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `processor_info'
 collect2: error: ld returned 1 exit status
 configure:26263: $? = 1
@@ -3956,7 +3956,7 @@ configure: failed program was:
 configure:26263: result: no
 configure:26263: checking for pstat_getprocessor
 configure:26263: gcc -std=gnu99 -o conftest -O2 -pedantic -m64 -mtune=bdver1 -march=bdver1   conftest.c  >&5
-/tmp/ccEp8dBC.o: In function `main':
+/tmp/ccxzDZMP.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `pstat_getprocessor'
 collect2: error: ld returned 1 exit status
 configure:26263: $? = 1
@@ -4088,7 +4088,7 @@ configure:26263: $? = 0
 configure:26263: result: yes
 configure:26263: checking for read_real_time
 configure:26263: gcc -std=gnu99 -o conftest -O2 -pedantic -m64 -mtune=bdver1 -march=bdver1   conftest.c  >&5
-/tmp/ccjnwp6L.o: In function `main':
+/tmp/ccAxBn8Z.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `read_real_time'
 collect2: error: ld returned 1 exit status
 configure:26263: $? = 1
@@ -4225,13 +4225,13 @@ configure:26263: $? = 0
 configure:26263: result: yes
 configure:26263: checking for sigstack
 configure:26263: gcc -std=gnu99 -o conftest -O2 -pedantic -m64 -mtune=bdver1 -march=bdver1   conftest.c  >&5
-/tmp/ccHN9z12.o: In function `main':
+/tmp/ccgQbZge.o: In function `main':
 conftest.c:(.text.startup+0x7): warning: the `sigstack' function is dangerous.  `sigaltstack' should be used instead.
 configure:26263: $? = 0
 configure:26263: result: yes
 configure:26263: checking for syssgi
 configure:26263: gcc -std=gnu99 -o conftest -O2 -pedantic -m64 -mtune=bdver1 -march=bdver1   conftest.c  >&5
-/tmp/ccKJfHL7.o: In function `main':
+/tmp/ccIcYpbk.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `syssgi'
 collect2: error: ld returned 1 exit status
 configure:26263: $? = 1
@@ -4394,7 +4394,7 @@ configure:26263: $? = 0
 configure:26263: result: yes
 configure:26263: checking for sysctlbyname
 configure:26263: gcc -std=gnu99 -o conftest -O2 -pedantic -m64 -mtune=bdver1 -march=bdver1   conftest.c  >&5
-/tmp/ccado9IB.o: In function `main':
+/tmp/ccUbanIN.o: In function `main':
 conftest.c:(.text.startup+0x7): undefined reference to `sysctlbyname'
 collect2: error: ld returned 1 exit status
 configure:26263: $? = 1
@@ -5382,10 +5382,10 @@ configure:29153: checking lex output file root
 configure:29167: result: lex.yy
 configure:29172: checking lex library
 configure:29186: gcc -std=gnu99 -o conftest -O2 -pedantic -m64 -mtune=bdver1 -march=bdver1   conftest.c   >&5
-/tmp/cceLasHX.o: In function `yylex':
+/tmp/ccX4vHT1.o: In function `yylex':
 conftest.c:(.text+0xa5b): undefined reference to `yywrap'
 conftest.c:(.text+0xec5): undefined reference to `yywrap'
-/tmp/cceLasHX.o: In function `main':
+/tmp/ccX4vHT1.o: In function `main':
 conftest.c:(.text.startup+0x9): undefined reference to `yywrap'
 collect2: error: ld returned 1 exit status
 configure:29186: $? = 1

@@ -8,5 +8,6 @@
 *.lai
 .libs
 *.Plo
+local.config
 llvm3.4svn
 expat-2.0.1/xmlwf/xmlwf
