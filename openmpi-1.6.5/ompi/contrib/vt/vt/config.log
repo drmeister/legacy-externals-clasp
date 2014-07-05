@@ -4082,6 +4082,7 @@ config.status:1702: creating doc/Makefile
 config.status:1702: creating config/mpigen/mk_registry.sh
 config.status:1702: creating config/mpigen/mk_c_wrapper.sh
 config.status:1702: creating config.h
+config.status:1883: config.h is unchanged
 config.status:1931: executing depfiles commands
 config.status:1931: executing libtool commands
 configure:34776: executing MPI wrapper generator

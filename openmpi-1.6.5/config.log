@@ -20956,7 +20956,7 @@ configure:54978: $? = 0
 configure:54978: result: yes
 configure:55087: checking if we need -lutil for openpty
 configure:55133: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing   conftest.c  >&5
-/tmp/cc5VEc5c.o: In function `main':
+/tmp/ccCNy0aP.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:452: undefined reference to `openpty'
 collect2: error: ld returned 1 exit status
 configure:55133: $? = 1
@@ -21889,7 +21889,7 @@ configure:55609: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-
 conftest.c:445:6: warning: conflicting types for built-in function 'ceil' [enabled by default]
  char ceil ();
       ^
-/tmp/ccsVTPpL.o: In function `main':
+/tmp/cc4hPLXf.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:456: undefined reference to `ceil'
 collect2: error: ld returned 1 exit status
 configure:55609: $? = 1
@@ -22454,7 +22454,7 @@ configure:55692: $? = 0
 configure:55692: result: yes
 configure:55692: checking for regcmp
 configure:55692: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing   conftest.c -lnsl  -lutil -lm >&5
-/tmp/cc0JH5rn.o: In function `main':
+/tmp/ccKRzDaU.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:476: undefined reference to `regcmp'
 collect2: error: ld returned 1 exit status
 configure:55692: $? = 1
@@ -22949,7 +22949,7 @@ configure:55692: $? = 0
 configure:55692: result: yes
 configure:55692: checking for _NSGetEnviron
 configure:55692: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing   conftest.c -lnsl  -lutil -lm >&5
-/tmp/ccoYvJbv.o: In function `main':
+/tmp/ccPAwbD7.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:478: undefined reference to `_NSGetEnviron'
 collect2: error: ld returned 1 exit status
 configure:55692: $? = 1
@@ -23442,7 +23442,7 @@ configure:55692: $? = 0
 configure:55692: result: yes
 configure:55692: checking for strncpy_s
 configure:55692: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing   conftest.c -lnsl  -lutil -lm >&5
-/tmp/cckcpj7F.o: In function `main':
+/tmp/ccX1Wemi.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:479: undefined reference to `strncpy_s'
 collect2: error: ld returned 1 exit status
 configure:55692: $? = 1
@@ -23932,7 +23932,7 @@ configure: failed program was:
 configure:55692: result: no
 configure:55692: checking for _strdup
 configure:55692: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing   conftest.c -lnsl  -lutil -lm >&5
-/tmp/ccYRkiKK.o: In function `main':
+/tmp/cclQZxun.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:479: undefined reference to `_strdup'
 collect2: error: ld returned 1 exit status
 configure:55692: $? = 1
@@ -25889,7 +25889,7 @@ configure:56311: $? = 0
 configure:56321: result: no
 configure:56403: checking if C compiler and POSIX threads work as is
 configure:56461: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing  -D_REENTRANT  conftest.c -lnsl  -lutil -lm >&5
-/tmp/ccbC3Pas.o: In function `main':
+/tmp/ccPqhqb9.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:462: undefined reference to `pthread_join'
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:463: undefined reference to `__pthread_register_cancel'
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:464: undefined reference to `pthread_create'
@@ -26367,7 +26367,7 @@ configure: failed program was:
 configure:56482: result: no
 configure:56494: checking if C++ compiler and POSIX threads work as is
 configure:56552: g++ -o conftest -O3 -DNDEBUG -finline-functions   conftest.cpp -lnsl  -lutil -lm >&5
-/tmp/cciC1nZx.o: In function `main':
+/tmp/cczGpxae.o: In function `main':
 conftest.cpp:(.text.startup+0xf): undefined reference to `pthread_join'
 conftest.cpp:(.text.startup+0x23): undefined reference to `pthread_create'
 collect2: error: ld returned 1 exit status
@@ -29894,11 +29894,11 @@ configure:59061: checking lex output file root
 configure:59075: result: lex.yy
 configure:59080: checking lex library
 configure:59094: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread     conftest.c  -lnsl  -lutil -lm  >&5
-/tmp/ccw5Fg9E.o: In function `input':
+/tmp/cch1BuQg.o: In function `input':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/lex.yy.c:1168: undefined reference to `yywrap'
-/tmp/ccw5Fg9E.o: In function `yylex':
+/tmp/cch1BuQg.o: In function `yylex':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/lex.yy.c:867: undefined reference to `yywrap'
-/tmp/ccw5Fg9E.o: In function `main':
+/tmp/cch1BuQg.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.l:17: undefined reference to `yywrap'
 collect2: error: ld returned 1 exit status
 configure:59094: $? = 1
@@ -52925,7 +52925,7 @@ configure:64195: $? = 0
 configure:64195: result: yes
 configure:64195: checking for sysctlbyname
 configure:64195: gcc -o conftest -DNDEBUG -g -O2     conftest.c -lnsl  -lutil -lm  >&5
-/tmp/cc9lMDp1.o: In function `main':
+/tmp/ccw94DKE.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:551: undefined reference to `sysctlbyname'
 collect2: error: ld returned 1 exit status
 configure:64195: $? = 1
@@ -56873,7 +56873,7 @@ configure: failed program was:
 configure:64695: result: yes
 configure:64716: checking for fls
 configure:64716: gcc -o conftest -DNDEBUG -g -O2     conftest.c -lnsl  -lutil -lm  >&5
-/tmp/ccVTXMvN.o: In function `main':
+/tmp/ccsBPlhg.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:563: undefined reference to `fls'
 collect2: error: ld returned 1 exit status
 configure:64716: $? = 1
@@ -57447,7 +57447,7 @@ configure: failed program was:
 configure:64716: result: no
 configure:64762: checking for flsl
 configure:64762: gcc -o conftest -DNDEBUG -g -O2     conftest.c -lnsl  -lutil -lm  >&5
-/tmp/cco5m7KR.o: In function `main':
+/tmp/ccgJf0ok.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:563: undefined reference to `flsl'
 collect2: error: ld returned 1 exit status
 configure:64762: $? = 1
@@ -58021,7 +58021,7 @@ configure: failed program was:
 configure:64762: result: no
 configure:64809: checking for clz
 configure:64809: gcc -o conftest -DNDEBUG -g -O2     conftest.c -lnsl  -lutil -lm  >&5
-/tmp/ccX9sBDW.o: In function `main':
+/tmp/ccyWyqPp.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:563: undefined reference to `clz'
 collect2: error: ld returned 1 exit status
 configure:64809: $? = 1
@@ -58595,7 +58595,7 @@ configure: failed program was:
 configure:64809: result: no
 configure:64855: checking for clzl
 configure:64855: gcc -o conftest -DNDEBUG -g -O2     conftest.c -lnsl  -lutil -lm  >&5
-/tmp/ccjaNb81.o: In function `main':
+/tmp/ccgZ3Sgw.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:563: undefined reference to `clzl'
 collect2: error: ld returned 1 exit status
 configure:64855: $? = 1
@@ -60877,7 +60877,7 @@ configure: failed program was:
 configure:65024: result: no
 configure:65035: checking for library containing pthread_getthrds_np
 configure:65066: gcc -o conftest -DNDEBUG -g -O2     conftest.c -lnsl  -lutil -lm  >&5
-/tmp/cccT3sqB.o: In function `main':
+/tmp/cccnCb52.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:549: undefined reference to `pthread_getthrds_np'
 collect2: error: ld returned 1 exit status
 configure:65066: $? = 1
@@ -61435,7 +61435,7 @@ configure: failed program was:
 |   return 0;
 | }
 configure:65066: gcc -o conftest -DNDEBUG -g -O2     conftest.c -lpthread  -lnsl  -lutil -lm  >&5
-/tmp/ccHNRqUF.o: In function `main':
+/tmp/ccjfBKT9.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:549: undefined reference to `pthread_getthrds_np'
 collect2: error: ld returned 1 exit status
 configure:65066: $? = 1
@@ -67678,7 +67678,7 @@ configure:69661: checking for ucontext.h
 configure:69661: result: yes
 configure:69674: checking for printstack
 configure:69674: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   conftest.c -lnsl  -lutil -lm  >&5
-/tmp/cceSpelu.o: In function `main':
+/tmp/ccvTyEq4.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:580: undefined reference to `printstack'
 collect2: error: ld returned 1 exit status
 configure:69674: $? = 1
@@ -68273,7 +68273,7 @@ configure:69925: checking for MCA component backtrace:darwin compile mode
 configure:69928: result: static
 configure:69937: checking for vm_read_overwrite
 configure:69937: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   conftest.c -lnsl  -lutil -lm  >&5
-/tmp/ccQTmpnA.o: In function `main':
+/tmp/ccRv5431.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:580: undefined reference to `vm_read_overwrite'
 collect2: error: ld returned 1 exit status
 configure:69937: $? = 1
@@ -70728,7 +70728,7 @@ configure:77592: $? = 0
 configure:77592: result: yes
 configure:77610: checking for __munmap
 configure:77610: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   conftest.c -lnsl  -lutil -lm  >&5
-/tmp/cckfLk5g.o: In function `main':
+/tmp/ccRLdKbS.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:584: undefined reference to `__munmap'
 collect2: error: ld returned 1 exit status
 configure:77610: $? = 1
@@ -71323,7 +71323,7 @@ configure: failed program was:
 configure:77610: result: no
 configure:77621: checking for __mmap
 configure:77621: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   conftest.c -lnsl  -lutil -lm  >&5
-/tmp/ccxCQNvm.o: In function `main':
+/tmp/ccY5274W.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:584: undefined reference to `__mmap'
 collect2: error: ld returned 1 exit status
 configure:77621: $? = 1
@@ -73145,7 +73145,7 @@ configure:80740: checking if want POSIX shared memory support
 configure:80752: result: yes
 configure:80754: checking for library containing shm_open
 configure:80785: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   conftest.c -lnsl  -lutil -lm  >&5
-/tmp/ccwwS1H1.o: In function `main':
+/tmp/ccxgSsFq.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:568: undefined reference to `shm_open'
 collect2: error: ld returned 1 exit status
 configure:80785: $? = 1
@@ -73742,7 +73742,7 @@ configure:81429: checking if want Windows shared memory support
 configure:81441: result: yes
 configure:81443: checking for CreateFileMapping
 configure:81443: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/ccPg2oId.o: In function `main':
+/tmp/ccyOLygG.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:593: undefined reference to `CreateFileMapping'
 collect2: error: ld returned 1 exit status
 configure:81443: $? = 1
@@ -76729,7 +76729,7 @@ configure:84720: checking for MCA component timer:aix compile mode
 configure:84723: result: static
 configure:84750: checking for time_base_to_time
 configure:84750: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/ccHN98uv.o: In function `main':
+/tmp/ccx0kfb6.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:594: undefined reference to `time_base_to_time'
 collect2: error: ld returned 1 exit status
 configure:84750: $? = 1
@@ -78511,7 +78511,7 @@ configure:85119: checking for mach/mach_time.h
 configure:85119: result: no
 configure:85129: checking for mach_absolute_time
 configure:85129: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/ccquCQMF.o: In function `main':
+/tmp/ccQZhjNg.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:594: undefined reference to `mach_absolute_time'
 collect2: error: ld returned 1 exit status
 configure:85129: $? = 1
@@ -79120,7 +79120,7 @@ configure:85386: checking for MCA component timer:solaris compile mode
 configure:85389: result: static
 configure:85416: checking for gethrtime
 configure:85416: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/cca0SVwJ.o: In function `main':
+/tmp/ccDpe2jd.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:594: undefined reference to `gethrtime'
 collect2: error: ld returned 1 exit status
 configure:85416: $? = 1
@@ -80919,7 +80919,7 @@ configure:87717: checking for MCA component ess:cnos compile mode
 configure:87723: result: dso
 configure:87735: checking for cnos_get_rank
 configure:87735: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/cc9G0n4Y.o: In function `main':
+/tmp/ccbftfWs.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:595: undefined reference to `cnos_get_rank'
 collect2: error: ld returned 1 exit status
 configure:87735: $? = 1
@@ -85179,7 +85179,7 @@ configure:94263: checking for MCA component grpcomm:cnos compile mode
 configure:94269: result: dso
 configure:94284: checking for cnos_barrier
 configure:94284: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include    conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/ccDO0Wqv.o: In function `main':
+/tmp/ccRIjw75.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:598: undefined reference to `cnos_barrier'
 collect2: error: ld returned 1 exit status
 configure:94284: $? = 1
@@ -88238,7 +88238,7 @@ configure:100615: checking for MCA component odls:process compile mode
 configure:100621: result: dso
 configure:100629: checking for CreateProcess
 configure:100629: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include     conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/ccPQFj8Y.o: In function `main':
+/tmp/ccMfTJGs.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:601: undefined reference to `CreateProcess'
 collect2: error: ld returned 1 exit status
 configure:100629: $? = 1
@@ -96883,7 +96883,7 @@ configure:122184: $? = 0
 configure:122184: result: yes
 configure:122200: checking for ibv_create_xrc_rcv_qp
 configure:122200: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include       conftest.c -lrt -lnsl  -lutil -lm  -libverbs  >&5
-/tmp/ccEx8B0M.o: In function `main':
+/tmp/ccxpnmym.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:611: undefined reference to `ibv_create_xrc_rcv_qp'
 collect2: error: ld returned 1 exit status
 configure:122200: $? = 1
@@ -111405,7 +111405,7 @@ configure:152987: $? = 0
 configure:153000: result: yes
 configure:153192: checking for port_create
 configure:153192: gcc -o conftest -DNDEBUG -g -O2   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   -I/usr/include/infiniband -I/usr/include/infiniband    conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/ccfvXrRa.o: In function `main':
+/tmp/ccmDiRoG.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:692: undefined reference to `port_create'
 collect2: error: ld returned 1 exit status
 configure:153192: $? = 1
@@ -113624,7 +113624,7 @@ configure:159706: checking how to hardcode library paths into programs
 configure:159731: result: immediate
 configure:159825: checking for shl_load
 configure:159825: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   -I/usr/include/infiniband -I/usr/include/infiniband    conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/cc9BUaKc.o: In function `main':
+/tmp/ccj9A0ZH.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:694: undefined reference to `shl_load'
 collect2: error: ld returned 1 exit status
 configure:159825: $? = 1
@@ -115010,7 +115010,7 @@ configure: failed program was:
 configure:159863: result: no
 configure:159868: checking for dlopen
 configure:159868: gcc -o conftest -DNDEBUG -g -O2 -finline-functions -fno-strict-aliasing -pthread   -I/home/meister/Development/dependent-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include   -I/usr/include/infiniband -I/usr/include/infiniband    conftest.c -lrt -lnsl  -lutil -lm  >&5
-/tmp/ccQ1N9Fk.o: In function `main':
+/tmp/ccRJ8t5P.o: In function `main':
 /home/meister/Development/dependent-clasp/openmpi-1.6.5/conftest.c:694: undefined reference to `dlopen'
 collect2: error: ld returned 1 exit status
 configure:159868: $? = 1
@@ -116857,15 +116857,19 @@ config.status:3353: creating ompi/tools/ompi-server/Makefile
 config.status:3353: creating ompi/tools/ompi-probe/Makefile
 config.status:3353: creating ompi/tools/ompi-profiler/Makefile
 config.status:3353: creating opal/include/opal_config.h
+config.status:3534: opal/include/opal_config.h is unchanged
 config.status:3353: creating orte/include/orte_config.h
 config.status:3534: orte/include/orte_config.h is unchanged
 config.status:3353: creating ompi/include/ompi_config.h
 config.status:3534: ompi/include/ompi_config.h is unchanged
 config.status:3353: creating ompi/include/mpi.h
+config.status:3534: ompi/include/mpi.h is unchanged
 config.status:3353: creating ompi/include/mpi_portable_platform.h
 config.status:3534: ompi/include/mpi_portable_platform.h is unchanged
 config.status:3353: creating opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/config.h
+config.status:3534: opal/mca/hwloc/hwloc132/hwloc/include/private/autogen/config.h is unchanged
 config.status:3353: creating opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h
+config.status:3534: opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h is unchanged
 config.status:3582: executing depfiles commands
 config.status:3582: executing libtool commands
 
@@ -118393,7 +118397,7 @@ OMPI_BUILD_topo_unity_DSO_FALSE='#'
 OMPI_BUILD_topo_unity_DSO_TRUE=''
 OMPI_BUILD_vprotocol_pessimist_DSO_FALSE='#'
 OMPI_BUILD_vprotocol_pessimist_DSO_TRUE=''
-OMPI_CONFIGURE_DATE='Fri Jul  4 11:53:10 EDT 2014'
+OMPI_CONFIGURE_DATE='Sat Jul  5 10:19:15 EDT 2014'
 OMPI_CONFIGURE_HOST='compute.temple.edu'
 OMPI_CONFIGURE_USER='meister'
 OMPI_CONTRIB_DIST_SUBDIRS=' contrib/libompitrace contrib/vt'

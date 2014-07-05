@@ -1838,6 +1838,7 @@ config.status:1337: creating util/romioinstall
 config.status:1337: creating mpi-io/glue/openmpi/Makefile
 config.status:1337: creating util/Makefile
 config.status:1337: creating adio/include/romioconf.h
+config.status:1503: adio/include/romioconf.h is unchanged
 config.status:1551: executing depfiles commands
 config.status:1551: executing libtool commands
 config.status:1551: executing default-1 commands

@@ -1662,7 +1662,7 @@ configure:7852: $? = 0
 configure:7868: result: yes
 configure:7892: checking for tgetent
 configure:7948: gcc -o conftest -g -O   conftest.c  >&5
-/tmp/ccAqdlBM.o: In function `main':
+/tmp/cc72bHMi.o: In function `main':
 conftest.c:(.text+0xa): undefined reference to `tgetent'
 collect2: error: ld returned 1 exit status
 configure:7955: $? = 1
@@ -1819,7 +1819,7 @@ configure:8818: $? = 0
 configure:8838: result: yes
 configure:8847: checking for mbscasecmp
 configure:8903: gcc -o conftest -g -O   conftest.c  >&5
-/tmp/ccbkVnW7.o: In function `main':
+/tmp/cc7Fa4MR.o: In function `main':
 conftest.c:(.text+0xa): undefined reference to `mbscasecmp'
 collect2: error: ld returned 1 exit status
 configure:8910: $? = 1
@@ -1940,7 +1940,7 @@ configure: failed program was:
 configure:8930: result: no
 configure:8939: checking for mbscmp
 configure:8995: gcc -o conftest -g -O   conftest.c  >&5
-/tmp/ccD3ykmc.o: In function `main':
+/tmp/ccc89ZtT.o: In function `main':
 conftest.c:(.text+0xa): undefined reference to `mbscmp'
 collect2: error: ld returned 1 exit status
 configure:9002: $? = 1
@@ -2069,7 +2069,7 @@ configure:9186: $? = 0
 configure:9206: result: yes
 configure:9221: checking for mbschr
 configure:9277: gcc -o conftest -g -O   conftest.c  >&5
-/tmp/ccYMTlYs.o: In function `main':
+/tmp/ccS9Roi1.o: In function `main':
 conftest.c:(.text+0xa): undefined reference to `mbschr'
 collect2: error: ld returned 1 exit status
 configure:9284: $? = 1
@@ -2290,6 +2290,7 @@ config.status:853: creating doc/Makefile
 config.status:853: creating examples/Makefile
 config.status:853: creating shlib/Makefile
 config.status:853: creating config.h
+config.status:1069: config.h is unchanged
 config.status:1087: executing default commands
 
 ## ---------------- ##

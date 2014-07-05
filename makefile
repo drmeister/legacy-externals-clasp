@@ -1,3 +1,25 @@
+#####
+##### Local settings
+#####
+export PREFIX = $(HOME)/local/dependent-clasp
+export TARGET_OS = linux
+export PJOBS = 16
+export GCC-TOOLCHAIN = $(HOME)/local/gcc-4.8.3
+
+
+#
+# Use the following to set up
+# make getllvm
+
+######################################################################
+######################################################################
+######################################################################
+#
+# Do not change below here
+#
+
+
+
 CLASP_APP_RESOURCES_DIR = $(PREFIX)
 CLASP_APP_RESOURCES_EXTERNALS_DIR = $(CLASP_APP_RESOURCES_DIR)/externals
 CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/debug
@@ -8,6 +30,7 @@ CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_
 
 
 all:
+	make getllvm
 	make setup
 	make subAll
 	make subBundle
@@ -32,12 +55,18 @@ ifneq ($(LDFLAGS),)
 endif
 
 
-CLANG_SOURCE_DIR = clang
 OPENMPI_SOURCE_DIR = openmpi-1.6.5
 MPS_SOURCE_DIR = mps-temporary
 ECL_SOURCE_DIR = ecl
 
 
+getllvm:
+	svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm3.4svn
+	(cd llvm3.4svn/tools; svn co http://llvm.org/svn/llvm-project/cfe/trunk clang)
+	(cd llvm3.4svn/tools/clang/tools; svn co http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
+
+resetllvm:
+	rm -rf llvm3.4svn
 
 all-dependencies:
 	make subClean
@@ -47,7 +76,7 @@ all-dependencies:
 export LLVM_REVISION=207120
 
 # export LLVM_SOURCE_DIR = llvm-$(LLVM_REVISION)
-export LLVM_SOURCE_DIR = llvm
+export LLVM_SOURCE_DIR = llvm3.4svn
 
 
 BOEHM_SOURCE_DIR = boehm-7.2
@@ -603,7 +632,7 @@ llvm-setup-debug:
 llvm-setup-release:
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-release
 	(cd $(LLVM_SOURCE_DIR)/build-release; \
-		../configure --with-clang-srcdir=../$(CLANG_SOURCE_DIR)  --enable-targets=x86_64  --enable-optimized --enable-assertions  \
+		../configure --enable-targets=x86_64  --enable-optimized --enable-assertions  \
 			--enable-cxx11 \
 			--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR);)
 

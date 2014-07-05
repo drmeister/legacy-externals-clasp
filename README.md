@@ -3,8 +3,15 @@ dependent-clasp
 
 Libraries that clasp depends on.
 
-To build everything from within the top level directory use:
+To build everything from within the top level directory do the following.
 
-> make PREFIX={target-directory eg: /home/meister/local/dependent-clasp} TARGET_OS={darwin|linux} install
+1) Edit the top of the makefile to configure it for your system
+2) make
 
-This will configure all of the dependent libraries and install them in {target-directory}
+
+Other useful make targets:
+
+make setup - configures all libraries
+make subAll - makes all libraries
+
+

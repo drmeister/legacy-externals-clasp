@@ -7,6 +7,6 @@
 *.la
 *.lai
 .libs
-llvm/build-debug
-llvm/build-release
+*.Plo
+llvm3.4svn
 expat-2.0.1/xmlwf/xmlwf

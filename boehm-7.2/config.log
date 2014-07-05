@@ -447,6 +447,303 @@ configure:9966: checking for gcc option to produce PIC
 configure:9973: result: -fPIC -DPIC
 configure:9981: checking if gcc PIC flag -fPIC -DPIC works
 configure:9999: gcc -c -DUSE_MMAP -fno-strict-aliasing  -fPIC -DPIC -DPIC conftest.c >&5
+configure:10003: $? = 0
+configure:10016: result: yes
+configure:10045: checking if gcc static flag -static works
+configure:10073: result: no
+configure:10088: checking if gcc supports -c -o file.o
+configure:10109: gcc -c -DUSE_MMAP -fno-strict-aliasing  -o out/conftest2.o conftest.c >&5
+configure:10113: $? = 0
+configure:10135: result: yes
+configure:10143: checking if gcc supports -c -o file.o
+configure:10190: result: yes
+configure:10223: checking whether the gcc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries
+configure:11376: result: yes
+configure:11616: checking dynamic linker characteristics
+configure:12127: gcc -o conftest -DUSE_MMAP -fno-strict-aliasing   -Wl,-rpath -Wl,/foo conftest.c  >&5
+configure:12127: $? = 0
+configure:12349: result: GNU/Linux ld.so
+configure:12456: checking how to hardcode library paths into programs
+configure:12481: result: immediate
+configure:13021: checking whether stripping libraries is possible
+configure:13026: result: yes
+configure:13061: checking if libtool supports shared libraries
+configure:13063: result: yes
+configure:13066: checking whether to build shared libraries
+configure:13087: result: no
+configure:13090: checking whether to build static libraries
+configure:13094: result: yes
+configure:13117: checking how to run the C++ preprocessor
+configure:13144: g++ -E  conftest.cpp
+configure:13144: $? = 0
+configure:13158: g++ -E  conftest.cpp
+conftest.cpp:28:28: fatal error: ac_nonexistent.h: No such file or directory
+ #include <ac_nonexistent.h>
+                            ^
+compilation terminated.
+configure:13158: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "gc"
+| #define PACKAGE_TARNAME "gc"
+| #define PACKAGE_VERSION "7.2"
+| #define PACKAGE_STRING "gc 7.2"
+| #define PACKAGE_BUGREPORT "gc@linux.hpl.hp.com"
+| #define PACKAGE_URL ""
+| #define GC_VERSION_MAJOR 7
+| #define GC_VERSION_MINOR 2
+| #define PACKAGE "gc"
+| #define VERSION "7.2"
+| #define GC_LINUX_THREADS 1
+| #define _REENTRANT 1
+| #define THREAD_LOCAL_ALLOC 1
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_DLFCN_H 1
+| #define LT_OBJDIR ".libs/"
+| /* end confdefs.h.  */
+| #include <ac_nonexistent.h>
+configure:13183: result: g++ -E
+configure:13203: g++ -E  conftest.cpp
+configure:13203: $? = 0
+configure:13217: g++ -E  conftest.cpp
+conftest.cpp:28:28: fatal error: ac_nonexistent.h: No such file or directory
+ #include <ac_nonexistent.h>
+                            ^
+compilation terminated.
+configure:13217: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "gc"
+| #define PACKAGE_TARNAME "gc"
+| #define PACKAGE_VERSION "7.2"
+| #define PACKAGE_STRING "gc 7.2"
+| #define PACKAGE_BUGREPORT "gc@linux.hpl.hp.com"
+| #define PACKAGE_URL ""
+| #define GC_VERSION_MAJOR 7
+| #define GC_VERSION_MINOR 2
+| #define PACKAGE "gc"
+| #define VERSION "7.2"
+| #define GC_LINUX_THREADS 1
+| #define _REENTRANT 1
+| #define THREAD_LOCAL_ALLOC 1
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_DLFCN_H 1
+| #define LT_OBJDIR ".libs/"
+| /* end confdefs.h.  */
+| #include <ac_nonexistent.h>
+configure:13386: checking for ld used by g++
+configure:13453: result: /usr/bin/ld -m elf_x86_64
+configure:13460: checking if the linker (/usr/bin/ld -m elf_x86_64) is GNU ld
+configure:13475: result: yes
+configure:13530: checking whether the g++ linker (/usr/bin/ld -m elf_x86_64) supports shared libraries
+configure:14535: result: yes
+configure:14571: g++ -c -g -O2  conftest.cpp >&5
+configure:14574: $? = 0
+configure:15094: checking for g++ option to produce PIC
+configure:15101: result: -fPIC -DPIC
+configure:15109: checking if g++ PIC flag -fPIC -DPIC works
+configure:15127: g++ -c -g -O2  -fPIC -DPIC -DPIC conftest.cpp >&5
+configure:15131: $? = 0
+configure:15144: result: yes
+configure:15167: checking if g++ static flag -static works
+configure:15195: result: no
+configure:15207: checking if g++ supports -c -o file.o
+configure:15228: g++ -c -g -O2  -o out/conftest2.o conftest.cpp >&5
+configure:15232: $? = 0
+configure:15254: result: yes
+configure:15259: checking if g++ supports -c -o file.o
+configure:15306: result: yes
+configure:15336: checking whether the g++ linker (/usr/bin/ld -m elf_x86_64) supports shared libraries
+configure:15372: result: yes
+configure:15513: checking dynamic linker characteristics
+configure:16180: result: GNU/Linux ld.so
+configure:16233: checking how to hardcode library paths into programs
+configure:16258: result: immediate
+configure:16344: checking whether Solaris gcc optimization fix is necessary
+configure:16367: result: no
+configure:16495: checking sys/dg_sys_info.h usability
+configure:16495: gcc -c -DUSE_MMAP -fno-strict-aliasing  conftest.c >&5
+conftest.c:64:29: fatal error: sys/dg_sys_info.h: No such file or directory
+ #include <sys/dg_sys_info.h>
+                             ^
+compilation terminated.
+configure:16495: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "gc"
+| #define PACKAGE_TARNAME "gc"
+| #define PACKAGE_VERSION "7.2"
+| #define PACKAGE_STRING "gc 7.2"
+| #define PACKAGE_BUGREPORT "gc@linux.hpl.hp.com"
+| #define PACKAGE_URL ""
+| #define GC_VERSION_MAJOR 7
+| #define GC_VERSION_MINOR 2
+| #define PACKAGE "gc"
+| #define VERSION "7.2"
+| #define GC_LINUX_THREADS 1
+| #define _REENTRANT 1
+| #define THREAD_LOCAL_ALLOC 1
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_DLFCN_H 1
+| #define LT_OBJDIR ".libs/"
+| #define NO_EXECUTE_PERMISSION 1
+| #define ALL_INTERIOR_POINTERS 1
+| #define GC_GCJ_SUPPORT 1
+| /* end confdefs.h.  */
+| #include <stdio.h>
+| #ifdef HAVE_SYS_TYPES_H
+| # include <sys/types.h>
+| #endif
+| #ifdef HAVE_SYS_STAT_H
+| # include <sys/stat.h>
+| #endif
+| #ifdef STDC_HEADERS
+| # include <stdlib.h>
+| # include <stddef.h>
+| #else
+| # ifdef HAVE_STDLIB_H
+| #  include <stdlib.h>
+| # endif
+| #endif
+| #ifdef HAVE_STRING_H
+| # if !defined STDC_HEADERS && defined HAVE_MEMORY_H
+| #  include <memory.h>
+| # endif
+| # include <string.h>
+| #endif
+| #ifdef HAVE_STRINGS_H
+| # include <strings.h>
+| #endif
+| #ifdef HAVE_INTTYPES_H
+| # include <inttypes.h>
+| #endif
+| #ifdef HAVE_STDINT_H
+| # include <stdint.h>
+| #endif
+| #ifdef HAVE_UNISTD_H
+| # include <unistd.h>
+| #endif
+| #include <sys/dg_sys_info.h>
+configure:16495: result: no
+configure:16495: checking sys/dg_sys_info.h presence
+configure:16495: gcc -E  conftest.c
+conftest.c:31:29: fatal error: sys/dg_sys_info.h: No such file or directory
+ #include <sys/dg_sys_info.h>
+                             ^
+compilation terminated.
+configure:16495: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "gc"
+| #define PACKAGE_TARNAME "gc"
+| #define PACKAGE_VERSION "7.2"
+| #define PACKAGE_STRING "gc 7.2"
+| #define PACKAGE_BUGREPORT "gc@linux.hpl.hp.com"
+| #define PACKAGE_URL ""
+| #define GC_VERSION_MAJOR 7
+| #define GC_VERSION_MINOR 2
+| #define PACKAGE "gc"
+| #define VERSION "7.2"
+| #define GC_LINUX_THREADS 1
+| #define _REENTRANT 1
+| #define THREAD_LOCAL_ALLOC 1
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_DLFCN_H 1
+| #define LT_OBJDIR ".libs/"
+| #define NO_EXECUTE_PERMISSION 1
+| #define ALL_INTERIOR_POINTERS 1
+| #define GC_GCJ_SUPPORT 1
+| /* end confdefs.h.  */
+| #include <sys/dg_sys_info.h>
+configure:16495: result: no
+configure:16495: checking for sys/dg_sys_info.h
+configure:16495: result: no
+configure:16727: checking for pkg-config
+configure:16745: found /usr/bin/pkg-config
+configure:16757: result: /usr/bin/pkg-config
+configure:16782: checking pkg-config is at least version 0.9.0
+configure:16785: result: yes
+configure:16796: checking for ATOMIC_OPS
+configure:16803: $PKG_CONFIG --exists --print-errors "atomic_ops"
+Package atomic_ops was not found in the pkg-config search path.
+Perhaps you should add the directory containing `atomic_ops.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'atomic_ops' found
+configure:16806: $? = 1
+configure:16820: $PKG_CONFIG --exists --print-errors "atomic_ops"
+Package atomic_ops was not found in the pkg-config search path.
+Perhaps you should add the directory containing `atomic_ops.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'atomic_ops' found
+configure:16823: $? = 1
+configure:16837: result: no
+No package 'atomic_ops' found
+configure:16880: checking which libatomic_ops to use
+configure:16888: result: internal
+configure:17029: checking that generated files are newer than configure
+configure:17035: result: done
+configure:17122: creating ./config.status
+
+## ---------------------- ##
+## Running config.status. ##
+## ---------------------- ##
+
+This file was extended by gc config.status 7.2, which was
+generated by GNU Autoconf 2.69.  Invocation command line was
+
+  CONFIG_FILES    = 
+  CONFIG_HEADERS  = 
+  CONFIG_LINKS    = 
+  CONFIG_COMMANDS = 
+  $ ./config.status 
+
+on compute.temple.edu
+
+config.status:1216: creating Makefile
+config.status:1216: creating bdw-gc.pc
+config.status:1216: creating include/private/config.h
+config.status:1397: include/private/config.h is unchanged
+config.status:1445: executing depfiles commands
+config.status:1445: executing libtool commands
+config.status:1445: executing default commands
+configure:19684: === configuring in libatomic_ops (/home/meister/Development/dependent-clasp/boehm-7.2/libatomic_ops)
+configure:19747: running /bin/sh ./configure --disable-option-checking '--prefix=/home/meister/local/dependent-clasp/externals/common'  '--enable-shared=no' '--enable-static=yes' '--enable-handle-fork' '--enable-cplusplus' 'CFLAGS=-DUSE_MMAP' --cache-file=/dev/null --srcdir=.
 
 ## ---------------- ##
 ## Cache variables. ##
@@ -505,6 +802,7 @@ ac_cv_header_stdint_h=yes
 ac_cv_header_stdlib_h=yes
 ac_cv_header_string_h=yes
 ac_cv_header_strings_h=yes
+ac_cv_header_sys_dg_sys_info_h=no
 ac_cv_header_sys_stat_h=yes
 ac_cv_header_sys_types_h=yes
 ac_cv_header_unistd_h=yes
@@ -516,10 +814,12 @@ ac_cv_path_EGREP='/bin/grep -E'
 ac_cv_path_FGREP='/bin/grep -F'
 ac_cv_path_GREP=/bin/grep
 ac_cv_path_SED=/bin/sed
+ac_cv_path_ac_pt_PKG_CONFIG=/usr/bin/pkg-config
 ac_cv_path_install='/usr/bin/install -c'
 ac_cv_path_mkdir=/bin/mkdir
 ac_cv_prog_AWK=gawk
 ac_cv_prog_CPP='gcc -E'
+ac_cv_prog_CXXCPP='g++ -E'
 ac_cv_prog_ac_ct_AR=ar
 ac_cv_prog_ac_ct_CC=gcc
 ac_cv_prog_ac_ct_CXX=g++
@@ -544,13 +844,22 @@ lt_cv_ld_reload_flag=-r
 lt_cv_nm_interface='BSD nm'
 lt_cv_objdir=.libs
 lt_cv_path_LD=/usr/bin/ld
+lt_cv_path_LDCXX='/usr/bin/ld -m elf_x86_64'
 lt_cv_path_NM='/usr/bin/nm -B'
 lt_cv_path_mainfest_tool=no
+lt_cv_prog_compiler_c_o=yes
+lt_cv_prog_compiler_c_o_CXX=yes
 lt_cv_prog_compiler_pic='-fPIC -DPIC'
-lt_cv_prog_compiler_pic_works=no
+lt_cv_prog_compiler_pic_CXX='-fPIC -DPIC'
+lt_cv_prog_compiler_pic_works=yes
+lt_cv_prog_compiler_pic_works_CXX=yes
 lt_cv_prog_compiler_rtti_exceptions=no
+lt_cv_prog_compiler_static_works=no
+lt_cv_prog_compiler_static_works_CXX=no
 lt_cv_prog_gnu_ld=yes
+lt_cv_prog_gnu_ldcxx=yes
 lt_cv_sharedlib_from_linklib_cmd='printf %s\n'
+lt_cv_shlibpath_overrides_runpath=no
 lt_cv_sys_global_symbol_pipe='sed -n -e '\''s/^.*[	 ]\([ABCDGIRSTW][ABCDGIRSTW]*\)[	 ][	 ]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p'\'' | sed '\''/ __gnu_lto/d'\'''
 lt_cv_sys_global_symbol_to_c_name_address='sed -n -e '\''s/^: \([^ ]*\)[ ]*$/  {\"\1\", (void *) 0},/p'\'' -e '\''s/^[ABCDGIRSTW]* \([^ ]*\) \([^ ]*\)$/  {"\2", (void *) \&\2},/p'\'''
 lt_cv_sys_global_symbol_to_c_name_address_lib_prefix='sed -n -e '\''s/^: \([^ ]*\)[ ]*$/  {\"\1\", (void *) 0},/p'\'' -e '\''s/^[ABCDGIRSTW]* \([^ ]*\) \(lib[^ ]*\)$/  {"\2", (void *) \&\2},/p'\'' -e '\''s/^[ABCDGIRSTW]* \([^ ]*\) \([^ ]*\)$/  {"lib\2", (void *) \&\2},/p'\'''
@@ -575,7 +884,7 @@ AM_DEFAULT_V='$(AM_DEFAULT_VERBOSITY)'
 AM_DEFAULT_VERBOSITY='1'
 AM_V='$(V)'
 AR='ar'
-ATOMIC_OPS_CFLAGS=''
+ATOMIC_OPS_CFLAGS='-I$(top_builddir)/libatomic_ops/src -I$(top_srcdir)/libatomic_ops/src'
 ATOMIC_OPS_LIBS=''
 AUTOCONF='${SHELL} /home/meister/Development/dependent-clasp/boehm-7.2/missing autoconf'
 AUTOHEADER='${SHELL} /home/meister/Development/dependent-clasp/boehm-7.2/missing autoheader'
@@ -596,13 +905,13 @@ CPLUSPLUS_TRUE=''
 CPP='gcc -E'
 CPPFLAGS=''
 CXX='g++'
-CXXCPP=''
+CXXCPP='g++ -E'
 CXXDEPMODE='depmode=gcc3'
 CXXFLAGS='-g -O2'
 CYGPATH_W='echo'
 DARWIN_THREADS_FALSE=''
 DARWIN_THREADS_TRUE='#'
-DEFS=''
+DEFS='-DHAVE_CONFIG_H'
 DEPDIR='.deps'
 DLLTOOL='false'
 DSYMUTIL=''
@@ -611,7 +920,7 @@ ECHO_C=''
 ECHO_N='-n'
 ECHO_T=''
 EGREP='/bin/grep -E'
-ENABLE_GCJ_SUPPORT_FALSE=''
+ENABLE_GCJ_SUPPORT_FALSE='#'
 ENABLE_GCJ_SUPPORT_TRUE=''
 EXEEXT=''
 EXTRA_TEST_LIBS=''
@@ -624,7 +933,7 @@ INSTALL_PROGRAM='${INSTALL}'
 INSTALL_SCRIPT='${INSTALL}'
 INSTALL_STRIP_PROGRAM='$(install_sh) -c -s'
 KEEP_BACK_PTRS_FALSE=''
-KEEP_BACK_PTRS_TRUE=''
+KEEP_BACK_PTRS_TRUE='#'
 LD='/usr/bin/ld -m elf_x86_64'
 LDFLAGS=''
 LIBOBJS=''
@@ -640,7 +949,7 @@ MAKEINFO='${SHELL} /home/meister/Development/dependent-clasp/boehm-7.2/missing m
 MANIFEST_TOOL=':'
 MKDIR_P='/bin/mkdir -p'
 NEED_ATOMIC_OPS_ASM_FALSE=''
-NEED_ATOMIC_OPS_ASM_TRUE=''
+NEED_ATOMIC_OPS_ASM_TRUE='#'
 NM='/usr/bin/nm -B'
 NMEDIT=''
 OBJDUMP='objdump'
@@ -657,7 +966,7 @@ PACKAGE_TARNAME='gc'
 PACKAGE_URL=''
 PACKAGE_VERSION='7.2'
 PATH_SEPARATOR=':'
-PKG_CONFIG=''
+PKG_CONFIG='/usr/bin/pkg-config'
 PKG_CONFIG_LIBDIR=''
 PKG_CONFIG_PATH=''
 PTHREADS_FALSE='#'
@@ -671,9 +980,9 @@ THREADDLLIBS='-lpthread -ldl'
 THREADS_FALSE='#'
 THREADS_TRUE=''
 UNWINDLIBS=''
-USE_INTERNAL_LIBATOMIC_OPS_FALSE=''
+USE_INTERNAL_LIBATOMIC_OPS_FALSE='#'
 USE_INTERNAL_LIBATOMIC_OPS_TRUE=''
-USE_LIBDIR_FALSE=''
+USE_LIBDIR_FALSE='#'
 USE_LIBDIR_TRUE=''
 VERSION='7.2'
 WIN32_THREADS_FALSE=''
@@ -685,7 +994,7 @@ ac_ct_DUMPBIN=''
 addlibs=''
 addobjs=' mach_dep.lo'
 am__EXEEXT_FALSE=''
-am__EXEEXT_TRUE=''
+am__EXEEXT_TRUE='#'
 am__fastdepCCAS_FALSE='#'
 am__fastdepCCAS_TRUE=''
 am__fastdepCC_FALSE='#'
@@ -709,7 +1018,7 @@ datadir='${datarootdir}'
 datarootdir='${prefix}/share'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
 dvidir='${docdir}'
-exec_prefix='NONE'
+exec_prefix='${prefix}'
 extra_ldflags_libgc=''
 host='x86_64-unknown-linux-gnu'
 host_alias=''
@@ -733,7 +1042,7 @@ program_transform_name='s,x,x,'
 psdir='${docdir}'
 sbindir='${exec_prefix}/sbin'
 sharedstatedir='${prefix}/com'
-subdirs=''
+subdirs=' libatomic_ops'
 sysconfdir='${prefix}/etc'
 target='x86_64-unknown-linux-gnu'
 target_alias=''
@@ -772,6 +1081,11 @@ target_vendor='unknown'
 #define HAVE_UNISTD_H 1
 #define HAVE_DLFCN_H 1
 #define LT_OBJDIR ".libs/"
+#define NO_EXECUTE_PERMISSION 1
+#define ALL_INTERIOR_POINTERS 1
+#define GC_GCJ_SUPPORT 1
+#define JAVA_FINALIZATION 1
+#define ATOMIC_UNCOLLECTABLE 1
+#define HANDLE_FORK 1
 
-configure: caught signal 2
-configure: exit 1
+configure: exit 0
