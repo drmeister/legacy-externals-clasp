@@ -1,0 +1,9 @@
+#
+# Local settings
+#
+export PREFIX = $(HOME)/local/dependent-clasp
+export TARGET_OS = linux
+export PJOBS = 16
+export GCC-TOOLCHAIN = $(HOME)/local/gcc-4.8.3
+
+
