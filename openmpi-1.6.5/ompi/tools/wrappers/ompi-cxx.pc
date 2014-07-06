@@ -5,7 +5,7 @@ Description: Portable high-performance MPI implementation
 Version: 1.6.5
 URL: http://www.open-mpi.org/
 #
-prefix=/home/meister/local/externals-clasp/common
+prefix=/Users/meister/local/externals-clasp/common
 exec_prefix=${prefix}
 includedir=${prefix}/include
 libdir=${exec_prefix}/lib
@@ -15,10 +15,10 @@ libdir=${exec_prefix}/lib
 # dependencies), so only list these in Libs.private.
 #
 Libs: -L${libdir}      -lmpi_cxx -lmpi
-Libs.private:   -ldl  -lm  -Wl,--export-dynamic -lrt -lnsl -lutil -lm -ldl 
+Libs.private:     -lm  
 #
 # It is safe to hard-wire the -I before the EXTRA_INCLUDES because we
 # will not be installing this .pc file unless --enable-devel-headers is
 # selected, meaning that there will definitely be a value in EXTRA_INCLUDES.
 #
-Cflags: -I${includedir} -I${includedir}/  -pthread 
+Cflags: -I${includedir} -I${includedir}/   

@@ -9,13 +9,13 @@ mpio_err.lo: mpio_err.c \
   /usr/include/sys/_types/_size_t.h /usr/include/sys/_types/_null.h \
   /usr/include/sys/_types/_off_t.h /usr/include/sys/_types/_ssize_t.h \
   /usr/include/secure/_stdio.h /usr/include/secure/_common.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/mpi-io/mpioimpl.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/mpi-io/mpioimpl.h \
   ../../../adio/include/adio.h ../../../adio/include/romioconf.h \
   ../../../adio/include/romioconf-undefs.h \
   ../../../../../../../../ompi/include/mpi.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/mpio.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/mpio.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h \
   /usr/include/fcntl.h /usr/include/sys/fcntl.h \
   /usr/include/sys/_types/_mode_t.h /usr/include/sys/_types/_pid_t.h \
   /usr/include/sys/_types/_o_sync.h /usr/include/sys/_types/_o_dsync.h \
@@ -79,7 +79,7 @@ mpio_err.lo: mpio_err.c \
   ../../../adio/include/adioi.h ../../../adio/include/adioi_error.h \
   /usr/include/assert.h ../../../adio/include/adioi_fs_proto.h \
   ../../../adio/include/mpio_error.h ../../../adio/include/mpipr.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/mpi-io/mpioprof.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/mpi-io/mpioprof.h \
   ../../../adio/include/adio_extern.h
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stdarg.h:
@@ -118,7 +118,7 @@ mpio_err.lo: mpio_err.c \
 
 /usr/include/secure/_common.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/mpi-io/mpioimpl.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/mpi-io/mpioimpl.h:
 
 ../../../adio/include/adio.h:
 
@@ -130,9 +130,9 @@ mpio_err.lo: mpio_err.c \
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/mpio.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/mpio.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h:
 
 /usr/include/fcntl.h:
 
@@ -334,6 +334,6 @@ mpio_err.lo: mpio_err.c \
 
 ../../../adio/include/mpipr.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/mpi-io/mpioprof.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/mpi-io/mpioprof.h:
 
 ../../../adio/include/adio_extern.h:

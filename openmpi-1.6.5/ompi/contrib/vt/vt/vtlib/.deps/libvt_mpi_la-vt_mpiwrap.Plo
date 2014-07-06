@@ -73,9 +73,9 @@ libvt_mpi_la-vt_mpiwrap.lo: vt_mpiwrap.c ../config.h ../config_bottom.h \
   ../include/vt_inttypes.h vt_mallocwrap.h vt_thrd.h vt_otf_gen.h \
   vt_rusage.h ../rfg/rfg.h ../rfg/rfg_regions.h ../rfg/rfg_filter.h \
   ../rfg/rfg_groups.h vt_trc.h vt_mpicom.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h \
   vt_mpireg.h vt_mpireg.gen.h vt_mpireq.h vt_mpiwrap.h vt_pform.h \
   vt_unimci.h vt_mpifile.h vt_iowrap.h vt_mpiwrap.gen.c
 
@@ -337,11 +337,11 @@ vt_trc.h:
 
 vt_mpicom.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h:
 
 vt_mpireg.h:
 

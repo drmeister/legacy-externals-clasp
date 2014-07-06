@@ -27,7 +27,7 @@ along with the GNU MP Library.  If not, see http://www.gnu.org/licenses/.
 
 /* The gmp-mparam.h file (a string) the tune program should suggest updating.
    */
-#define GMP_MPARAM_H_SUGGEST "./mpn/x86_64/bd1/gmp-mparam.h"
+#define GMP_MPARAM_H_SUGGEST "./mpn/x86_64/coreinhm/gmp-mparam.h"
 
 /* Define to 1 if you have the `alarm' function. */
 #define HAVE_ALARM 1
@@ -308,13 +308,13 @@ along with the GNU MP Library.  If not, see http://www.gnu.org/licenses/.
 #define HAVE_NL_TYPES_H 1
 
 /* Define to 1 if you have the `obstack_vprintf' function. */
-#define HAVE_OBSTACK_VPRINTF 1
+/* #undef HAVE_OBSTACK_VPRINTF */
 
 /* Define to 1 if you have the `popen' function. */
 #define HAVE_POPEN 1
 
 /* Define to 1 if you have the `processor_info' function. */
-/* #undef HAVE_PROCESSOR_INFO */
+#define HAVE_PROCESSOR_INFO 1
 
 /* Define to 1 if <sys/pstat.h> `struct pst_processor' exists and contains
    `psp_iticksperclktick'. */
@@ -342,7 +342,7 @@ along with the GNU MP Library.  If not, see http://www.gnu.org/licenses/.
 #define HAVE_SIGALTSTACK 1
 
 /* Define to 1 if you have the `sigstack' function. */
-#define HAVE_SIGSTACK 1
+/* #undef HAVE_SIGSTACK */
 
 /* Tune directory speed_cyclecounter, undef=none, 1=32bits, 2=64bits) */
 #define HAVE_SPEED_CYCLECOUNTER 2
@@ -396,7 +396,7 @@ along with the GNU MP Library.  If not, see http://www.gnu.org/licenses/.
 #define HAVE_SYSCTL 1
 
 /* Define to 1 if you have the `sysctlbyname' function. */
-/* #undef HAVE_SYSCTLBYNAME */
+#define HAVE_SYSCTLBYNAME 1
 
 /* Define to 1 if you have the `syssgi' function. */
 /* #undef HAVE_SYSSGI */
@@ -429,7 +429,7 @@ along with the GNU MP Library.  If not, see http://www.gnu.org/licenses/.
 #define HAVE_SYS_SYSCTL_H 1
 
 /* Define to 1 if you have the <sys/sysinfo.h> header file. */
-#define HAVE_SYS_SYSINFO_H 1
+/* #undef HAVE_SYS_SYSINFO_H */
 
 /* Define to 1 if you have the <sys/syssgi.h> header file. */
 /* #undef HAVE_SYS_SYSSGI_H */
@@ -459,7 +459,7 @@ along with the GNU MP Library.  If not, see http://www.gnu.org/licenses/.
 #define HAVE_VSNPRINTF 1
 
 /* Assembler local label prefix */
-#define LSYM_PREFIX ".L"
+#define LSYM_PREFIX "L"
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */

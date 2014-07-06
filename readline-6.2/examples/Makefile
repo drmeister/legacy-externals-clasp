@@ -21,7 +21,7 @@ RL_LIBRARY_VERSION = 6.2
 SHELL = /bin/sh
 RM = rm -f
 
-prefix = /home/meister/local/externals-clasp/common
+prefix = /Users/meister/local/externals-clasp/common
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share
@@ -32,7 +32,7 @@ datadir = ${datarootdir}
 VPATH = .
 top_srcdir = ..
 #BUILD_DIR = .
-BUILD_DIR = /home/meister/Development/externals-clasp/readline-6.2
+BUILD_DIR = /Users/meister/Development/externals-clasp/readline-6.2
 installdir = $(datadir)/readline
 
 INSTALL = /usr/bin/install -c

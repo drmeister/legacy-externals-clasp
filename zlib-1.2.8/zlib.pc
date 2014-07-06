@@ -1,4 +1,4 @@
-prefix=/home/meister/local/externals-clasp/common
+prefix=/Users/meister/local/externals-clasp/common
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 sharedlibdir=${libdir}

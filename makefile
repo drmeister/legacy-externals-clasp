@@ -10,7 +10,7 @@ include local.config
 # Do not change below here
 #
 
-export PATH := $(PREFIX)/release/bin:$(PREFIX)/common/bin:$(PATH)
+export PATH := $(PATH):$(PREFIX)/release/bin:$(PREFIX)/common/bin
 
 TOP = `pwd`
 
@@ -237,10 +237,10 @@ llvm-build:
 #	(cd $(LLVM_SOURCE_DIR)/build-debug; export VERBOSE=1;  make VERBOSE=1 -j$(COMPILE_PROCESSORS) ; make install) 2>&1 | tee ../_llvm-debug.log
 
 llvm-debug:
-	(cd $(LLVM_SOURCE_DIR)/build-debug; make -j$(PJOBS) VERBOSE=1 ; make install) 2>&1 | tee $(TOP)/logs/_llvm-debug.log
+	(cd $(LLVM_SOURCE_DIR)/build-debug; make -j$(PJOBS) ; make install)
 
 llvm-release:
-	(cd $(LLVM_SOURCE_DIR)/build-release; make -j$(PJOBS) ; make install) 2>&1 | tee $(TOP)/logs/_llvm-release.log
+	(cd $(LLVM_SOURCE_DIR)/build-release; make -j$(PJOBS) ; make install)
 
 
 
@@ -262,8 +262,7 @@ boost-build-debug:
 				include=../$(ZLIB_SOURCE_DIR) linkflags=-L../$(ZLIB_SOURCE_DIR)\
 				--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
 				debug link=static \
-				-j$(PJOBS) \
-				install ) | tee logs/_boost.log 
+				-j$(PJOBS) install )
 
 
 boost-build-release:
@@ -278,7 +277,7 @@ boost-build-release:
 				link=static \
 				release \
 				-j$(PJOBS) \
-				install ) | tee logs/_boost.log 
+				install )
 
 #				include=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR) \
 
@@ -332,7 +331,7 @@ gmp-setup:
 
 
 gmp-build-n:
-	(cd $(GMP_SOURCE_DIR); make install -n) | tee logs/_gmp.log
+	(cd $(GMP_SOURCE_DIR); make install -n)
 
 
 
@@ -363,12 +362,10 @@ boost-clean:
 
 
 expat-setup:
-	(cd $(EXPAT_SOURCE_DIR); \
-		./configure --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR); )
+	(cd $(EXPAT_SOURCE_DIR); ./configure --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR); )
 
 expat-build:
-	(cd $(EXPAT_SOURCE_DIR); \
-			make -j1 install) | tee logs/_expat.log
+	(cd $(EXPAT_SOURCE_DIR);  make -j1 install)
 
 
 expat-clean:
@@ -378,8 +375,7 @@ expat-clean:
 
 
 zlib-setup:
-	(cd $(ZLIB_SOURCE_DIR); \
-		./configure -shared --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR);)
+	(cd $(ZLIB_SOURCE_DIR); ./configure -shared --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR);)
 
 zlib-build:
 	(cd $(ZLIB_SOURCE_DIR); make -j1 install)
@@ -506,7 +502,7 @@ subBundle sb:
 	install -c jamfile.jam.lib $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/jamfile.jam
 	-install -c $(OPENMM_INSTALL)/lib/lib* $(CLASP_APP_LIB_DIR)
 	-install -c $(OPENMM_INSTALL)/lib/plugins/* $(CLASP_APP_LIB_DIR)/plugins
-	make rpath-fix
+#	make rpath-fix
 # This first link allows LibTooling to find the clang include directories relative to the clasp executable path
 	install -d $(CLASP_APP_BIN_DIR)
 	-ln -s $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/lib $(CLASP_APP_BIN_DIR)/../lib
@@ -631,7 +627,7 @@ llvm-setup-release:
 			--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR);)
 
 gmp-build:
-	(cd $(GMP_SOURCE_DIR); make install) | tee logs/_gmp.log
+	(cd $(GMP_SOURCE_DIR); make install)
 	(cd $(GMP_SOURCE_DIR); source fixlibgmpxx.sh)   # fixes libgmpxx so that it uses libc++ on OS X
 
 
@@ -674,36 +670,41 @@ llvm-rpath-fix-debug:
 
 
 boost-rpath-fix:
-	echo The following sets up the libraries so that clasp can find them and so that they can find each other
-	echo Fixing rpaths for release boost libraries
-	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_program_options.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_program_options.dylib
-	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_iostreams.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_iostreams.dylib
-	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_regex.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_regex.dylib
-	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_filesystem.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_filesystem.dylib
-	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_date_time.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_date_time.dylib
-	-install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_mpi.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_mpi.dylib
-	-install_name_tool -change libboost_serialization.dylib $(RPATH_RELEASE_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_mpi.dylib 
-#	-install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_thread.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_thread.dylib
-	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_serialization.dylib
-#	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_python.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_python.dylib
-	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_system.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_system.dylib
-#	install_name_tool -change libboost_system.dylib $(RPATH_RELEASE_FIX)/libboost_system.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_thread.dylib
-	install_name_tool -change libboost_system.dylib $(RPATH_RELEASE_FIX)/libboost_system.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_filesystem.dylib
-	echo Fixing rpaths for debug boost libraries
-	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_program_options.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_program_options.dylib
-	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_iostreams.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_iostreams.dylib
-	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_regex.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_regex.dylib
-	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_filesystem.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_filesystem.dylib
-	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_date_time.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_date_time.dylib
-	-install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_mpi.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_mpi.dylib
-	-install_name_tool -change libboost_serialization.dylib $(RPATH_DEBUG_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_mpi.dylib 
-#	-install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_thread.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_thread.dylib
-	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_serialization.dylib
-#	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_python.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_python.dylib
-	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_system.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_system.dylib
-#	install_name_tool -change libboost_system.dylib $(RPATH_DEBUG_FIX)/libboost_system.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_thread.dylib
-	install_name_tool -change libboost_system.dylib $(RPATH_DEBUG_FIX)/libboost_system.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_filesystem.dylib
+	echo Do nothing
 
+
+
+#
+#	echo The following sets up the libraries so that clasp can find them and so that they can find each other
+#	echo Fixing rpaths for release boost libraries
+#	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_program_options.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_program_options.dylib
+#	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_iostreams.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_iostreams.dylib
+#	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_regex.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_regex.dylib
+#	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_filesystem.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_filesystem.dylib
+#	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_date_time.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_date_time.dylib
+#	-install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_mpi.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_mpi.dylib
+#	-install_name_tool -change libboost_serialization.dylib $(RPATH_RELEASE_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_mpi.dylib 
+##	-install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_thread.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_thread.dylib
+#	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_serialization.dylib
+##	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_python.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_python.dylib
+#	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_system.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_system.dylib
+##	install_name_tool -change libboost_system.dylib $(RPATH_RELEASE_FIX)/libboost_system.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_thread.dylib
+#	install_name_tool -change libboost_system.dylib $(RPATH_RELEASE_FIX)/libboost_system.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_filesystem.dylib
+#	echo Fixing rpaths for debug boost libraries
+#	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_program_options.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_program_options.dylib
+#	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_iostreams.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_iostreams.dylib
+#	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_regex.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_regex.dylib
+#	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_filesystem.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_filesystem.dylib
+#	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_date_time.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_date_time.dylib
+#	-install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_mpi.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_mpi.dylib
+#	-install_name_tool -change libboost_serialization.dylib $(RPATH_DEBUG_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_mpi.dylib 
+##	-install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_thread.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_thread.dylib
+#	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_serialization.dylib
+##	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_python.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_python.dylib
+#	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_system.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_system.dylib
+##	install_name_tool -change libboost_system.dylib $(RPATH_DEBUG_FIX)/libboost_system.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_thread.dylib
+#	install_name_tool -change libboost_system.dylib $(RPATH_DEBUG_FIX)/libboost_system.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_filesystem.dylib
+#
 
 
 endif

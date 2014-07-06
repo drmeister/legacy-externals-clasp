@@ -68,9 +68,9 @@ libvt_hyb_la-vt_sync.lo: vt_sync.c /usr/include/stdlib.h \
   /usr/include/limits.h /usr/include/machine/limits.h \
   /usr/include/i386/limits.h /usr/include/i386/_limits.h \
   ../include/vt_inttypes.h vt_iowrap.h vt_pform.h vt_sync.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h \
   vt_trc.h
 
 /usr/include/stdlib.h:
@@ -307,10 +307,10 @@ vt_pform.h:
 
 vt_sync.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h:
 
 vt_trc.h:

@@ -17,19 +17,19 @@ PID=$$
 # relevant VampirTrace configuration
 #
 
-MACOS=0
+MACOS=1
 HAVE_THREADS=1
 HAVE_MPI=1
-HAVE_FMPI=1
+HAVE_FMPI=0
 HAVE_DYNINST=0
 VTVERSION="5.14.4openmpi"
-VTSEQLIB="libvt.so"
-VTMPILIB="libvt-mpi.so"
-VTMTLIB="libvt-mt.so"
-VTHYBLIB="libvt-hyb.so"
+VTSEQLIB="libvt`test .$module = .yes && echo .so || echo .dylib`"
+VTMPILIB="libvt-mpi`test .$module = .yes && echo .so || echo .dylib`"
+VTMTLIB="libvt-mt`test .$module = .yes && echo .so || echo .dylib`"
+VTHYBLIB="libvt-hyb`test .$module = .yes && echo .so || echo .dylib`"
 FMPILIB=""
-DYNATTLIB="libvt-dynatt.so"
-NM="/usr/bin/nm -B --demangle "
+DYNATTLIB="libvt-dynatt`test .$module = .yes && echo .so || echo .dylib`"
+NM="/usr/bin/nm"
 
 #
 # subroutine show_helptext() - shows the help text
@@ -138,7 +138,7 @@ error_msg()
 if test x"$VT_PREFIX" != x; then
   prefix=$VT_PREFIX
 else
-  prefix=/home/meister/local/externals-clasp/common
+  prefix=/Users/meister/local/externals-clasp/common
 fi
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib

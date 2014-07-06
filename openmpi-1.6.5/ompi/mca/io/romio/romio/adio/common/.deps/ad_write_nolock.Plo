@@ -25,8 +25,8 @@ ad_write_nolock.lo: ad_write_nolock.c /usr/include/unistd.h \
   ../../adio/include/romioconf-undefs.h \
   ../../../../../../../ompi/include/mpi.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/mpio.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/mpio.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h \
   /usr/include/fcntl.h /usr/include/sys/fcntl.h \
   /usr/include/sys/_types/_o_sync.h /usr/include/sys/_types/_o_dsync.h \
   /usr/include/sys/_types/_s_ifmt.h /usr/include/sys/_types/_filesec_t.h \
@@ -173,9 +173,9 @@ ad_write_nolock.lo: ad_write_nolock.c /usr/include/unistd.h \
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/mpio.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/mpio.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h:
 
 /usr/include/fcntl.h:
 

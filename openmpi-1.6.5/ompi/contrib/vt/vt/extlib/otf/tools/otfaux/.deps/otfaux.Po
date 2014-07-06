@@ -6,7 +6,8 @@ otfaux.o: otfaux.cpp ../../config.h \
   /usr/include/sys/_posix_availability.h /usr/include/machine/_types.h \
   /usr/include/i386/_types.h /usr/include/Availability.h \
   /usr/include/AvailabilityInternal.h /usr/include/sys/_types/_size_t.h \
-  /usr/include/sys/_types/_null.h /usr/include/sys/_types/_ssize_t.h \
+  /usr/include/sys/_types/_null.h /usr/include/sys/_types/_rsize_t.h \
+  /usr/include/sys/_types/_errno_t.h /usr/include/sys/_types/_ssize_t.h \
   /usr/include/strings.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/cerrno \
   /usr/include/errno.h /usr/include/sys/errno.h \
@@ -44,14 +45,16 @@ otfaux.o: otfaux.cpp ../../config.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/new \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/utility \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__tuple \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__tuple_03 \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/limits \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__undef_min_max \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__functional_base \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__functional_base_03 \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/tuple \
-  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/atomic \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/stdexcept \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/algorithm \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/functional \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__functional_03 \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/iostream \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/ios \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__locale \
@@ -119,7 +122,6 @@ otfaux.o: otfaux.cpp ../../config.h \
   /usr/include/sys/_types/_nlink_t.h \
   /usr/include/sys/_types/_useconds_t.h \
   /usr/include/sys/_types/_suseconds_t.h \
-  /usr/include/sys/_types/_rsize_t.h /usr/include/sys/_types/_errno_t.h \
   /usr/include/sys/_types/_fd_def.h \
   /usr/include/sys/_types/_fd_setsize.h \
   /usr/include/sys/_types/_fd_set.h /usr/include/sys/_types/_fd_clr.h \
@@ -186,6 +188,10 @@ otfaux.o: otfaux.cpp ../../config.h \
 /usr/include/sys/_types/_size_t.h:
 
 /usr/include/sys/_types/_null.h:
+
+/usr/include/sys/_types/_rsize_t.h:
+
+/usr/include/sys/_types/_errno_t.h:
 
 /usr/include/sys/_types/_ssize_t.h:
 
@@ -295,21 +301,25 @@ otfaux.o: otfaux.cpp ../../config.h \
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__tuple:
 
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__tuple_03:
+
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/limits:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__undef_min_max:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__functional_base:
 
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/tuple:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__functional_base_03:
 
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/atomic:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/tuple:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/stdexcept:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/algorithm:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/functional:
+
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/__functional_03:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/iostream:
 
@@ -500,10 +510,6 @@ otfaux.o: otfaux.cpp ../../config.h \
 /usr/include/sys/_types/_useconds_t.h:
 
 /usr/include/sys/_types/_suseconds_t.h:
-
-/usr/include/sys/_types/_rsize_t.h:
-
-/usr/include/sys/_types/_errno_t.h:
 
 /usr/include/sys/_types/_fd_def.h:
 

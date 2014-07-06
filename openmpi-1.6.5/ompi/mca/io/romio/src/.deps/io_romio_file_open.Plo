@@ -63,19 +63,19 @@ src/io_romio_file_open.lo: src/io_romio_file_open.c \
   /usr/include/sys/_types/_sigset_t.h /usr/include/inttypes.h \
   /usr/include/Availability.h /usr/include/AvailabilityInternal.h \
   /usr/include/_types.h /usr/include/sys/_types/_wchar_t.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/communicator/communicator.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/class/opal_object.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/communicator/communicator.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/class/opal_object.h \
   /usr/include/assert.h /usr/include/stdlib.h /usr/include/sys/wait.h \
   /usr/include/sys/resource.h /usr/include/sys/_types/_timeval.h \
   /usr/include/alloca.h /usr/include/sys/_types/_ct_rune_t.h \
   /usr/include/sys/_types/_rune_t.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/errhandler/errhandler.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/errhandler/errhandler.h \
   ../../../../ompi/include/mpi.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h \
   ../../../../opal/include/opal/prefetch.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/class/opal_pointer_array.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/threads/mutex.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/threads/mutex_unix.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/class/opal_pointer_array.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/threads/mutex.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/threads/mutex_unix.h \
   /usr/include/pthread.h /usr/include/pthread_impl.h \
   /usr/include/sched.h /usr/include/time.h /usr/include/_structs.h \
   /usr/include/sys/_structs.h /usr/include/sys/_types/_timespec.h \
@@ -87,56 +87,56 @@ src/io_romio_file_open.lo: src/io_romio_file_open.c \
   ../../../../opal/include/opal/sys/architecture.h \
   ../../../../opal/include/opal/sys/amd64/atomic.h \
   ../../../../opal/include/opal/sys/atomic_impl.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/runtime/mpiruntime.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/class/opal_list.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/class/opal_hash_table.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/errhandler/errhandler_predefined.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/errhandler/errcode-internal.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/runtime/mpiruntime.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/class/opal_list.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/class/opal_hash_table.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/errhandler/errhandler_predefined.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/errhandler/errcode-internal.h \
   ../../../../ompi/include/ompi/constants.h \
   ../../../../orte/include/orte/constants.h \
   ../../../../opal/include/opal/constants.h \
   ../../../../orte/include/orte_config.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/group/group.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/proc/proc.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/group/group.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/proc/proc.h \
   ../../../../ompi/include/ompi/types.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/dss/dss_types.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/paffinity/paffinity.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/dss/dss_types.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/paffinity/paffinity.h \
   /usr/include/string.h /usr/include/strings.h \
   /usr/include/secure/_string.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/mca.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/base/base.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/base/mca_base_param.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/util/cmd_line.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/mca.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/base/base.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/base/mca_base_param.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/util/cmd_line.h \
   ../../../../orte/include/orte/types.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/util/output.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/util/output.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stdarg.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/group/group_dbg.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/coll/coll.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/crs/crs.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/crs/base/base.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/util/opal_environ.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/group/group_dbg.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/coll/coll.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/crs/crs.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/crs/base/base.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/util/opal_environ.h \
   /usr/include/crt_externs.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/orte/mca/rml/rml_types.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/orte/mca/rml/rml_types.h \
   /usr/include/sys/uio.h /usr/include/sys/_types/_iovec_t.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/info/info.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/file/file.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/io.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/request/request.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/class/ompi_free_list.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/class/opal_atomic_lifo.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/threads/condition.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/info/info.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/file/file.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/io.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/request/request.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/class/ompi_free_list.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/class/opal_atomic_lifo.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/threads/condition.h \
   /usr/include/sys/time.h /usr/include/sys/_select.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/runtime/opal_progress.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/runtime/opal_cr.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/event/event.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/event/event_rename.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/event/evutil.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/runtime/opal.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/request/request_dbg.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/runtime/opal_progress.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/runtime/opal_cr.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/event/event.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/event/event_rename.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/event/evutil.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/runtime/opal.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/request/request_dbg.h \
   src/io_romio.h romio/adio/include/romioconf.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/adio/include/romioconf-undefs.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/adio/include/romioconf-undefs.h \
   romio/include/mpio.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h
 
 ../../../../ompi/include/ompi_config.h:
 
@@ -340,9 +340,9 @@ src/io_romio_file_open.lo: src/io_romio_file_open.c \
 
 /usr/include/sys/_types/_wchar_t.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/communicator/communicator.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/communicator/communicator.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/class/opal_object.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/class/opal_object.h:
 
 /usr/include/assert.h:
 
@@ -360,7 +360,7 @@ src/io_romio_file_open.lo: src/io_romio_file_open.c \
 
 /usr/include/sys/_types/_rune_t.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/errhandler/errhandler.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/errhandler/errhandler.h:
 
 ../../../../ompi/include/mpi.h:
 
@@ -368,11 +368,11 @@ src/io_romio_file_open.lo: src/io_romio_file_open.c \
 
 ../../../../opal/include/opal/prefetch.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/class/opal_pointer_array.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/class/opal_pointer_array.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/threads/mutex.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/threads/mutex.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/threads/mutex_unix.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/threads/mutex_unix.h:
 
 /usr/include/pthread.h:
 
@@ -410,15 +410,15 @@ src/io_romio_file_open.lo: src/io_romio_file_open.c \
 
 ../../../../opal/include/opal/sys/atomic_impl.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/runtime/mpiruntime.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/runtime/mpiruntime.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/class/opal_list.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/class/opal_list.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/class/opal_hash_table.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/class/opal_hash_table.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/errhandler/errhandler_predefined.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/errhandler/errhandler_predefined.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/errhandler/errcode-internal.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/errhandler/errcode-internal.h:
 
 ../../../../ompi/include/ompi/constants.h:
 
@@ -428,15 +428,15 @@ src/io_romio_file_open.lo: src/io_romio_file_open.c \
 
 ../../../../orte/include/orte_config.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/group/group.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/group/group.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/proc/proc.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/proc/proc.h:
 
 ../../../../ompi/include/ompi/types.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/dss/dss_types.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/dss/dss_types.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/paffinity/paffinity.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/paffinity/paffinity.h:
 
 /usr/include/string.h:
 
@@ -444,76 +444,76 @@ src/io_romio_file_open.lo: src/io_romio_file_open.c \
 
 /usr/include/secure/_string.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/mca.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/mca.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/base/base.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/base/base.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/base/mca_base_param.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/base/mca_base_param.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/util/cmd_line.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/util/cmd_line.h:
 
 ../../../../orte/include/orte/types.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/util/output.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/util/output.h:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stdarg.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/group/group_dbg.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/group/group_dbg.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/coll/coll.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/coll/coll.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/crs/crs.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/crs/crs.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/crs/base/base.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/crs/base/base.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/util/opal_environ.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/util/opal_environ.h:
 
 /usr/include/crt_externs.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/orte/mca/rml/rml_types.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/orte/mca/rml/rml_types.h:
 
 /usr/include/sys/uio.h:
 
 /usr/include/sys/_types/_iovec_t.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/info/info.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/info/info.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/file/file.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/file/file.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/io.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/io.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/request/request.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/request/request.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/class/ompi_free_list.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/class/ompi_free_list.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/class/opal_atomic_lifo.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/class/opal_atomic_lifo.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/threads/condition.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/threads/condition.h:
 
 /usr/include/sys/time.h:
 
 /usr/include/sys/_select.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/runtime/opal_progress.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/runtime/opal_progress.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/runtime/opal_cr.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/runtime/opal_cr.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/event/event.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/event/event.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/event/event_rename.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/event/event_rename.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/event/evutil.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/event/evutil.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/runtime/opal.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/runtime/opal.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/request/request_dbg.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/request/request_dbg.h:
 
 src/io_romio.h:
 
 romio/adio/include/romioconf.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/adio/include/romioconf-undefs.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/adio/include/romioconf-undefs.h:
 
 romio/include/mpio.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h:

@@ -15,7 +15,7 @@
 #ifndef _INSTALLDIRS_CONF_H
 #define _INSTALLDIRS_CONF_H
 
-#define VT_PREFIX      "/home/meister/local/externals-clasp/common"
+#define VT_PREFIX      "/Users/meister/local/externals-clasp/common"
 #define VT_EXEC_PREFIX "${prefix}"
 #define VT_BINDIR      "${exec_prefix}/bin"
 #define VT_INCLUDEDIR  "${prefix}/include/vampirtrace"

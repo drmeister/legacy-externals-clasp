@@ -69,9 +69,9 @@ libvt_mpi_la-vt_mpireq.lo: vt_mpireq.c ../config.h ../config_bottom.h \
   /usr/include/stdio.h /usr/include/sys/_types/_va_list.h \
   /usr/include/secure/_stdio.h /usr/include/secure/_common.h vt_defs.h \
   vt_error.h ../include/vt_inttypes.h vt_mpireq.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h \
   vt_mpicom.h vt_trc.h
 
 ../config.h:
@@ -306,11 +306,11 @@ vt_error.h:
 
 vt_mpireq.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h:
 
 vt_mpicom.h:
 

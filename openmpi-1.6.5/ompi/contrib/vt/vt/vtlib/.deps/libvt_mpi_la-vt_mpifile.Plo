@@ -67,9 +67,9 @@ libvt_mpi_la-vt_mpifile.lo: vt_mpifile.c ../config.h ../config_bottom.h \
   /usr/include/limits.h /usr/include/machine/limits.h \
   /usr/include/i386/limits.h /usr/include/i386/_limits.h vt_defs.h \
   vt_error.h vt_trc.h ../include/vt_inttypes.h vt_mpifile.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h \
   vt_thrd.h vt_otf_gen.h vt_rusage.h ../rfg/rfg.h ../rfg/rfg_regions.h \
   ../rfg/rfg_filter.h ../rfg/rfg_groups.h ../util/hash.h \
   /usr/include/string.h /usr/include/strings.h \
@@ -301,11 +301,11 @@ vt_trc.h:
 
 vt_mpifile.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h:
 
 vt_thrd.h:
 

@@ -90,15 +90,15 @@ base/odls_base_open.lo: base/odls_base_open.c \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stdarg.h \
   ../../../opal/mca/hwloc/hwloc132/hwloc132.h \
   ../../../opal/mca/hwloc/hwloc132/hwloc/include/hwloc.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h \
   /usr/include/unistd.h /usr/include/sys/unistd.h \
   /usr/include/sys/_types/_posix_vdisable.h \
   /usr/include/sys/_types/_seek_set.h /usr/include/sys/select.h \
   /usr/include/sys/_types/_uuid_t.h /usr/include/gethostuuid.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/rename.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/bitmap.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/cpuset.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/helper.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/rename.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/bitmap.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/cpuset.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/helper.h \
   ../../../opal/mca/paffinity/base/base.h \
   ../../../opal/mca/paffinity/paffinity.h \
   ../../../opal/mca/sysinfo/sysinfo.h \
@@ -421,7 +421,7 @@ base/odls_base_open.lo: base/odls_base_open.c \
 
 ../../../opal/mca/hwloc/hwloc132/hwloc/include/hwloc.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h:
 
 /usr/include/unistd.h:
 
@@ -437,13 +437,13 @@ base/odls_base_open.lo: base/odls_base_open.c \
 
 /usr/include/gethostuuid.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/rename.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/rename.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/bitmap.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/bitmap.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/cpuset.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/cpuset.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/helper.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/helper.h:
 
 ../../../opal/mca/paffinity/base/base.h:
 

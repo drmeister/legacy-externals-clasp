@@ -103,11 +103,11 @@ util/nidmap.lo: util/nidmap.c ../orte/include/orte_config.h \
   ../opal/mca/base/base.h ../opal/mca/base/mca_base_param.h \
   ../opal/util/cmd_line.h ../opal/mca/hwloc/hwloc132/hwloc132.h \
   ../opal/mca/hwloc/hwloc132/hwloc/include/hwloc.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/rename.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/bitmap.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/cpuset.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/helper.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/rename.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/bitmap.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/cpuset.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/helper.h \
   ../orte/mca/errmgr/errmgr.h ../opal/util/error.h \
   ../orte/runtime/orte_globals.h ../opal/class/opal_value_array.h \
   ../orte/mca/plm/plm_types.h ../orte/util/proc_info.h \
@@ -479,15 +479,15 @@ util/nidmap.lo: util/nidmap.c ../orte/include/orte_config.h \
 
 ../opal/mca/hwloc/hwloc132/hwloc/include/hwloc.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/rename.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/rename.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/bitmap.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/bitmap.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/cpuset.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/cpuset.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/helper.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/helper.h:
 
 ../orte/mca/errmgr/errmgr.h:
 

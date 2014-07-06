@@ -112,10 +112,10 @@
 #endif
 
 /* Defined to 1 on Linux */
-#define HWLOC_LINUX_SYS 1
+/* #undef HWLOC_LINUX_SYS */
 
 /* Defined to 1 if the CPU_SET macro works */
-#define HWLOC_HAVE_CPU_SET 1
+/* #undef HWLOC_HAVE_CPU_SET */
 
 /* Defined to 1 if you have the `windows.h' header. */
 /* #undef HWLOC_HAVE_WINDOWS_H */

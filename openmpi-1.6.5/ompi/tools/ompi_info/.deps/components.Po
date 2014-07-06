@@ -148,15 +148,15 @@ components.o: components.c ../../../ompi/include/ompi_config.h \
   ../../../opal/mca/hwloc/base/base.h ../../../opal/mca/hwloc/hwloc.h \
   ../../../opal/mca/hwloc/hwloc132/hwloc132.h \
   ../../../opal/mca/hwloc/hwloc132/hwloc/include/hwloc.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h \
   /usr/include/unistd.h /usr/include/sys/unistd.h \
   /usr/include/sys/_types/_posix_vdisable.h \
   /usr/include/sys/_types/_seek_set.h /usr/include/sys/select.h \
   /usr/include/sys/_types/_uuid_t.h /usr/include/gethostuuid.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/rename.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/bitmap.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/cpuset.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/helper.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/rename.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/bitmap.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/cpuset.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/helper.h \
   ../../../opal/runtime/opal.h ../../../opal/dss/dss.h \
   ../../../ompi/mca/allocator/base/base.h \
   ../../../ompi/mca/allocator/allocator.h \
@@ -702,7 +702,7 @@ components.o: components.c ../../../ompi/include/ompi_config.h \
 
 ../../../opal/mca/hwloc/hwloc132/hwloc/include/hwloc.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/autogen/config.h:
 
 /usr/include/unistd.h:
 
@@ -718,13 +718,13 @@ components.o: components.c ../../../ompi/include/ompi_config.h \
 
 /usr/include/gethostuuid.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/rename.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/rename.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/bitmap.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/bitmap.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/cpuset.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/cpuset.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/helper.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/opal/mca/hwloc/hwloc132/hwloc/include/hwloc/helper.h:
 
 ../../../opal/runtime/opal.h:
 

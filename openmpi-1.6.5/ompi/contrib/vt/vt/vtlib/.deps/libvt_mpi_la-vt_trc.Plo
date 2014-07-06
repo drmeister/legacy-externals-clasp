@@ -88,8 +88,8 @@ libvt_mpi_la-vt_trc.lo: vt_trc.c ../config.h ../config_bottom.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h \
   ../util/installdirs.h vt_mpireg.h vt_mpireg.gen.h vt_mpiwrap.h \
   vt_sync.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h \
   vt_unimci.h ../tools/vtunify/mpi/vt_unify_lib.h vt_plugin_cntr_int.h \
   ../include/vt_plugin_cntr.h
 
@@ -419,9 +419,9 @@ vt_mpiwrap.h:
 
 vt_sync.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/contrib/vt/vt/../../../include/mpi_portable_platform.h:
 
 vt_unimci.h:
 

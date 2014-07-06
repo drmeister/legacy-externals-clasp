@@ -188,7 +188,7 @@
 #define HAVE_TERMCAP_H 1
 
 /* Define if you have the <termio.h> header file.  */
-#define HAVE_TERMIO_H 1
+/* #undef HAVE_TERMIO_H */
 
 /* Define if you have the <termios.h> header file.  */
 #define HAVE_TERMIOS_H 1
@@ -222,13 +222,13 @@
 /* Definitions pulled in from aclocal.m4. */
 #define VOID_SIGHANDLER 1
 
-#define GWINSZ_IN_SYS_IOCTL 1
+/* #undef GWINSZ_IN_SYS_IOCTL */
 
 #define STRUCT_WINSIZE_IN_SYS_IOCTL 1
 
 /* #undef STRUCT_WINSIZE_IN_TERMIOS */
 
-/* #undef TIOCSTAT_IN_SYS_IOCTL */
+#define TIOCSTAT_IN_SYS_IOCTL 1
 
 #define FIONREAD_IN_SYS_IOCTL 1
 

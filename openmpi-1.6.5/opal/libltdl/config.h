@@ -2,28 +2,28 @@
 /* config-h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define to 1 if you have the `argz_add' function. */
-#define HAVE_ARGZ_ADD 1
+/* #undef HAVE_ARGZ_ADD */
 
 /* Define to 1 if you have the `argz_append' function. */
-#define HAVE_ARGZ_APPEND 1
+/* #undef HAVE_ARGZ_APPEND */
 
 /* Define to 1 if you have the `argz_count' function. */
-#define HAVE_ARGZ_COUNT 1
+/* #undef HAVE_ARGZ_COUNT */
 
 /* Define to 1 if you have the `argz_create_sep' function. */
-#define HAVE_ARGZ_CREATE_SEP 1
+/* #undef HAVE_ARGZ_CREATE_SEP */
 
 /* Define to 1 if you have the <argz.h> header file. */
-#define HAVE_ARGZ_H 1
+/* #undef HAVE_ARGZ_H */
 
 /* Define to 1 if you have the `argz_insert' function. */
-#define HAVE_ARGZ_INSERT 1
+/* #undef HAVE_ARGZ_INSERT */
 
 /* Define to 1 if you have the `argz_next' function. */
-#define HAVE_ARGZ_NEXT 1
+/* #undef HAVE_ARGZ_NEXT */
 
 /* Define to 1 if you have the `argz_stringify' function. */
-#define HAVE_ARGZ_STRINGIFY 1
+/* #undef HAVE_ARGZ_STRINGIFY */
 
 /* Define to 1 if you have the `closedir' function. */
 #define HAVE_CLOSEDIR 1
@@ -54,7 +54,7 @@
 /* #undef HAVE_DYLD */
 
 /* Define to 1 if the system has the type `error_t'. */
-#define HAVE_ERROR_T 1
+/* #undef HAVE_ERROR_T */
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
@@ -66,7 +66,7 @@
 #define HAVE_LIBDLLOADER 1
 
 /* Define to 1 if you have the <mach-o/dyld.h> header file. */
-/* #undef HAVE_MACH_O_DYLD_H */
+#define HAVE_MACH_O_DYLD_H 1
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
@@ -96,10 +96,10 @@
 #define HAVE_STRING_H 1
 
 /* Define to 1 if you have the `strlcat' function. */
-/* #undef HAVE_STRLCAT */
+#define HAVE_STRLCAT 1
 
 /* Define to 1 if you have the `strlcpy' function. */
-/* #undef HAVE_STRLCPY */
+#define HAVE_STRLCPY 1
 
 /* Define to 1 if you have the <sys/dl.h> header file. */
 /* #undef HAVE_SYS_DL_H */
@@ -114,13 +114,13 @@
 #define HAVE_UNISTD_H 1
 
 /* This value is set to 1 to indicate that the system argz facility works */
-#define HAVE_WORKING_ARGZ 1
+/* #undef HAVE_WORKING_ARGZ */
 
 /* Define if the OS needs help to load dependent libraries for dlopen(). */
 /* #undef LTDL_DLOPEN_DEPLIBS */
 
 /* Define to the system default library search path. */
-#define LT_DLSEARCH_PATH "/lib:/usr/lib:/usr/lib64/atlas:/usr/lib64/mysql:/usr/lib64/qt-3.3/lib"
+#define LT_DLSEARCH_PATH "/usr/local/lib:/lib:/usr/lib"
 
 /* The archive extension */
 #define LT_LIBEXT "a"
@@ -133,14 +133,14 @@
 
 /* Define to the name of the environment variable that determines the run-time
    module search path. */
-#define LT_MODULE_PATH_VAR "LD_LIBRARY_PATH"
+#define LT_MODULE_PATH_VAR "DYLD_LIBRARY_PATH"
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
 #define LT_OBJDIR ".libs/"
 
 /* Define to the shared library suffix, say, ".dylib". */
-/* #undef LT_SHARED_EXT */
+#define LT_SHARED_EXT ".dylib"
 
 /* Define if dlsym() requires a leading underscore in symbol names. */
 /* #undef NEED_USCORE */
@@ -173,7 +173,7 @@
 #define VERSION "2.4.2"
 
 /* Define so that glibc/gnulib argp.h does not typedef error_t. */
-/* #undef __error_t_defined */
+#define __error_t_defined 1
 
 /* Define to a type to use for `error_t' if it is not otherwise available. */
-/* #undef error_t */
+#define error_t int

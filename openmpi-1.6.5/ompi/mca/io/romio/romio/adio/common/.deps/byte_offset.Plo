@@ -2,8 +2,8 @@ byte_offset.lo: byte_offset.c ../../adio/include/adio.h \
   ../../adio/include/romioconf.h ../../adio/include/romioconf-undefs.h \
   ../../../../../../../ompi/include/mpi.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/mpio.h \
-  /Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/mpio.h \
+  /Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h \
   /usr/include/fcntl.h /usr/include/sys/fcntl.h \
   /usr/include/sys/_types.h /usr/include/sys/cdefs.h \
   /usr/include/sys/_symbol_aliasing.h \
@@ -87,9 +87,9 @@ byte_offset.lo: byte_offset.c ../../adio/include/adio.h \
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stddef.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/mpio.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/mpio.h:
 
-/Users/meister/Development/cando/clasp/externals/src/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h:
+/Users/meister/Development/externals-clasp/openmpi-1.6.5/ompi/mca/io/romio/romio/include/io_romio_conv.h:
 
 /usr/include/fcntl.h:
 
