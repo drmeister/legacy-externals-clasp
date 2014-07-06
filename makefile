@@ -7,7 +7,7 @@ include local.config
 ######################################################################
 ######################################################################
 #
-# Do not change below here
+# Shouldn't need changes below here
 #
 BOOST_TOOLSET = $(TOOLSET)
 export PATH := $(PATH):$(PREFIX)/release/bin:$(PREFIX)/common/bin
@@ -103,11 +103,11 @@ setup:
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)
 	make subClean
-	make boostbuild2-build  #
-	make boehm-setup        #
-	make llvm-setup		#
+	make boostbuild2-build  
+	make boehm-setup        
+	make llvm-setup		
 	make boost-setup
-	make ecl-setup
+	make ecl-setup        
 	make gmp-setup
 	make expat-setup
 	make zlib-setup
@@ -366,7 +366,7 @@ expat-setup:
 	(cd $(EXPAT_SOURCE_DIR); ./configure --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR); )
 
 expat-build:
-	(cd $(EXPAT_SOURCE_DIR);  make -j1 install)
+	(cd $(EXPAT_SOURCE_DIR);  make -j$(PJOBS) install)
 
 
 expat-clean:
@@ -379,7 +379,7 @@ zlib-setup:
 	(cd $(ZLIB_SOURCE_DIR); ./configure -shared --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR);)
 
 zlib-build:
-	(cd $(ZLIB_SOURCE_DIR); make -j1 install)
+	(cd $(ZLIB_SOURCE_DIR); make -j$(PJOBS) install)
 
 
 zlib-clean:
@@ -452,10 +452,10 @@ readline-setup:
 
 
 readline-compile:
-	(cd readline-$(READLINE_VERSION); make -j1)
+	(cd readline-$(READLINE_VERSION); make -j$(PJOBS))
 
 readline-install:
-	(cd readline-$(READLINE_VERSION); make -j1 install)
+	(cd readline-$(READLINE_VERSION); make -j$(PJOBS) install)
 
 
 
