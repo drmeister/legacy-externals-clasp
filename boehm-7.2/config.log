@@ -41,8 +41,6 @@ PATH: /usr/bin
 PATH: /usr/local/sbin
 PATH: /usr/sbin
 PATH: /sbin
-PATH: /home/meister/bin
-PATH: /home/meister/local/clasp/bin
 PATH: /home/meister/local/externals-clasp/release/bin
 PATH: /home/meister/local/externals-clasp/common/bin
 PATH: /home/meister/local/externals-clasp/release/bin
