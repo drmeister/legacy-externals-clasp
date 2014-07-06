@@ -24,7 +24,7 @@ srcdir = .
 top_srcdir = .
 
 
-prefix = /Users/meister/local/externals-clasp/common
+prefix = /home/meister/local/externals-clasp/common
 exec_prefix = ${prefix}
 
 bindir = ${exec_prefix}/bin

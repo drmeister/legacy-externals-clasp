@@ -1,7 +1,7 @@
-prefix=/Users/meister/local/externals-clasp/common
+prefix=/home/meister/local/externals-clasp/common
 exec_prefix=${prefix}
-top_builddir=/Users/meister/Development/externals-clasp/boehm-7.2/libatomic_ops
-top_srcdir=/Users/meister/Development/externals-clasp/boehm-7.2/libatomic_ops
+top_builddir=/home/meister/Development/externals-clasp/boehm-7.2/libatomic_ops
+top_srcdir=/home/meister/Development/externals-clasp/boehm-7.2/libatomic_ops
 
 Name: The atomic_ops library (uninstalled)
 Description: Atomic memory update operations

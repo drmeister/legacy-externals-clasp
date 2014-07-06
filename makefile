@@ -9,7 +9,7 @@ include local.config
 #
 # Do not change below here
 #
-
+BOOST_TOOLSET = $(TOOLSET)
 export PATH := $(PATH):$(PREFIX)/release/bin:$(PREFIX)/common/bin
 
 TOP = `pwd`
@@ -50,7 +50,7 @@ ifneq ($(LDFLAGS),)
 	BOOST_LDFLAGS="linkflags=$(LDFLAGS) -lc++"
 endif
 
-
+READLINE_VERSION=6.2
 OPENMPI_SOURCE_DIR = openmpi-1.6.5
 MPS_SOURCE_DIR = mps-temporary
 ECL_SOURCE_DIR = ecl
@@ -110,15 +110,14 @@ setup:
 	make gmp-setup
 	make expat-setup
 	make zlib-setup
-	make openmpi-setup
 	make readline-setup
+#	make openmpi-setup
 #	make clang-setup This is redundant, it gets configured with llvm
 #	make lldb-setup
 
 subAll sa:
 	make boehm-build
 	make llvm-build
-	make openmpi-build
 	make boost-build
 	make ecl-build
 	make gmp-build
@@ -126,12 +125,13 @@ subAll sa:
 	make zlib-build
 	make readline-build
 	make subBundle
+#	make openmpi-build
 #	-make ez_setup
 #	-make pyOpenGl-cleanBuild
 
 
 subClean:
-	make openmpi-clean
+#	make openmpi-clean
 	make ecl-clean
 	make dmalloc-clean
 	make boehm-clean
@@ -498,14 +498,14 @@ pyopenmm-install:
 
 
 subBundle sb:
-	install -d $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/bin
-	install -c jamfile.jam.lib $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/jamfile.jam
-	-install -c $(OPENMM_INSTALL)/lib/lib* $(CLASP_APP_LIB_DIR)
-	-install -c $(OPENMM_INSTALL)/lib/plugins/* $(CLASP_APP_LIB_DIR)/plugins
+#	install -d $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/bin
+#	install -c jamfile.jam.lib $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/jamfile.jam
+#	-install -c $(OPENMM_INSTALL)/lib/lib* $(CLASP_APP_LIB_DIR)
+#	-install -c $(OPENMM_INSTALL)/lib/plugins/* $(CLASP_APP_LIB_DIR)/plugins
 #	make rpath-fix
 # This first link allows LibTooling to find the clang include directories relative to the clasp executable path
-	install -d $(CLASP_APP_BIN_DIR)
-	-ln -s $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/lib $(CLASP_APP_BIN_DIR)/../lib
+#	install -d $(CLASP_APP_BIN_DIR)
+#	-ln -s $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/lib $(CLASP_APP_BIN_DIR)/../lib
 	echo IF YOU GOT HERE EVERYTHING IS GOING TO BE JUST FINE!!!
 
 
@@ -559,7 +559,7 @@ llvm-setup-release:
 
 
 boostbuild2-build:
-	(cd $(BOOST_BUILD_SOURCE_DIR); ./bootstrap.sh; ./b2 toolset=$(CLASP_TOOLSET) install --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR))
+	(cd $(BOOST_BUILD_SOURCE_DIR); ./bootstrap.sh; ./b2 toolset=gcc install --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR))
 
 
 gmp-build:
