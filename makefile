@@ -57,9 +57,9 @@ ECL_SOURCE_DIR = ecl
 
 
 getllvm:
-	svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm3.4svn
-	(cd llvm3.4svn/tools; svn co http://llvm.org/svn/llvm-project/cfe/trunk clang)
-	(cd llvm3.4svn/tools/clang/tools; svn co http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
+	svn -R $(LLVM_REVISION) co http://llvm.org/svn/llvm-project/llvm/trunk llvm3.4svn
+	(cd llvm3.4svn/tools; svn -R $(LLVM_REVISION) co http://llvm.org/svn/llvm-project/cfe/trunk clang)
+	(cd llvm3.4svn/tools/clang/tools; svn -R $(LLVM_REVISION) co http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
 
 resetllvm:
 	rm -rf llvm3.4svn
@@ -69,7 +69,7 @@ all-dependencies:
 	make setup
 	make subAll
 
-export LLVM_REVISION=207120
+export LLVM_REVISION = 212390
 
 # export LLVM_SOURCE_DIR = llvm-$(LLVM_REVISION)
 export LLVM_SOURCE_DIR = llvm3.4svn
