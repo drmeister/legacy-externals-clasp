@@ -36,7 +36,7 @@
 #ifndef OPAL_INST_DIRS_H
 #define OPAL_INST_DIRS_H
 
-#define OPAL_PREFIX "/home/meister/local/dependent-clasp/externals/common"
+#define OPAL_PREFIX "/home/meister/local/externals-clasp/common"
 #define OPAL_EXEC_PREFIX "${prefix}"
 
 /* The directory for installing executable programs that users can

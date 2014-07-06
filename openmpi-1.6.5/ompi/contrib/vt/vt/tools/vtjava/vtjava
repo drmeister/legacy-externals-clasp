@@ -16,7 +16,7 @@
 if test x"$VT_PREFIX" != x; then
   prefix=$VT_PREFIX
 else
-  prefix=/home/meister/local/dependent-clasp/externals/common
+  prefix=/home/meister/local/externals-clasp/common
 fi
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib

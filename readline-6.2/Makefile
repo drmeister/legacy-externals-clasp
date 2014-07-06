@@ -29,7 +29,7 @@ PACKAGE_VERSION = 6.2
 srcdir = .
 VPATH = .
 top_srcdir = .
-BUILD_DIR = /home/meister/Development/dependent-clasp/readline-6.2
+BUILD_DIR = /home/meister/Development/externals-clasp/readline-6.2
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -48,7 +48,7 @@ PURIFY =
 
 SHELL = /bin/sh
 
-prefix = /home/meister/local/dependent-clasp/externals/common
+prefix = /home/meister/local/externals-clasp/common
 exec_prefix = ${prefix}
 
 datarootdir = ${prefix}/share

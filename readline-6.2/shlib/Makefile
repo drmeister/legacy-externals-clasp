@@ -32,7 +32,7 @@ datarootdir = ${prefix}/share
 srcdir = .
 VPATH = .:..
 topdir = ..
-BUILD_DIR = /home/meister/Development/dependent-clasp/readline-6.2
+BUILD_DIR = /home/meister/Development/externals-clasp/readline-6.2
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL}
@@ -52,7 +52,7 @@ SHELL = /bin/sh
 host_os = linux-gnu
 host_vendor = unknown
 
-prefix = /home/meister/local/dependent-clasp/externals/common
+prefix = /home/meister/local/externals-clasp/common
 exec_prefix = ${prefix}
 includedir = ${prefix}/include
 bindir = ${exec_prefix}/bin

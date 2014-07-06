@@ -5,7 +5,7 @@ Description: Lowest layer abstractions for the Open MPI software package
 Version: 1.6.5
 URL: http://www.open-mpi.org/
 #
-prefix=/home/meister/local/dependent-clasp/externals/common
+prefix=/home/meister/local/externals-clasp/common
 exec_prefix=${prefix}
 includedir=${prefix}/include
 libdir=${exec_prefix}/lib

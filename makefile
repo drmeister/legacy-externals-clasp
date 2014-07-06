@@ -12,7 +12,7 @@ include local.config
 
 export PATH := $(PREFIX)/release/bin:$(PREFIX)/common/bin:$(PATH)
 
-
+TOP = `pwd`
 
 CLASP_APP_RESOURCES_DIR = $(PREFIX)
 CLASP_APP_RESOURCES_EXTERNALS_DIR = $(CLASP_APP_RESOURCES_DIR)
@@ -30,7 +30,9 @@ all:
 	make subBundle
 
 
-ifeq ($(TARGET_OS),linux)
+
+
+ifeq ($(TARGET-OS),linux)
 CLASP_CXXFLAGS="-std=c++11"
 else
 CLASP_CXXFLAGS="-std=c++11 -stdlib=libc++"
@@ -168,7 +170,7 @@ mps-setup:
 
 
 mps-build:
-	-(cd $(MPS_SOURCE_DIR); make -j$(COMPILE_PROCESSORS) install)
+	-(cd $(MPS_SOURCE_DIR); make -j$(PJOBS) install)
 
 
 lldb-get:
@@ -195,7 +197,7 @@ ecl-setup:
 	(cd $(ECL_SOURCE_DIR); ./configure --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR))
 
 ecl-build:
-	(cd $(ECL_SOURCE_DIR); make; make install)  2>&1 | tee ../logs/_ecl.log
+	(cd $(ECL_SOURCE_DIR); make; make install)
 
 ecl-clean:
 	-(rm -rf $(ECL_SOURCE_DIR)/build)
@@ -235,10 +237,10 @@ llvm-build:
 #	(cd $(LLVM_SOURCE_DIR)/build-debug; export VERBOSE=1;  make VERBOSE=1 -j$(COMPILE_PROCESSORS) ; make install) 2>&1 | tee ../_llvm-debug.log
 
 llvm-debug:
-	(cd $(LLVM_SOURCE_DIR)/build-debug; make -j$(COMPILE_PROCESSORS) ; make install) 2>&1 | tee ../logs/_llvm-debug.log
+	(cd $(LLVM_SOURCE_DIR)/build-debug; make -j$(PJOBS) VERBOSE=1 ; make install) 2>&1 | tee $(TOP)/logs/_llvm-debug.log
 
 llvm-release:
-	(cd $(LLVM_SOURCE_DIR)/build-release; make -j$(COMPILE_PROCESSORS) ; make install) 2>&1 | tee ../logs/_llvm-release.log
+	(cd $(LLVM_SOURCE_DIR)/build-release; make -j$(PJOBS) ; make install) 2>&1 | tee $(TOP)/logs/_llvm-release.log
 
 
 
@@ -259,8 +261,8 @@ boost-build-debug:
 				--with-system --with-mpi\
 				include=../$(ZLIB_SOURCE_DIR) linkflags=-L../$(ZLIB_SOURCE_DIR)\
 				--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
-				debug link=static\
-				-j$(COMPILE_PROCESSORS) \
+				debug link=static \
+				-j$(PJOBS) \
 				install ) | tee logs/_boost.log 
 
 
@@ -273,8 +275,9 @@ boost-build-release:
 				--with-system --with-mpi \
 				include=../$(ZLIB_SOURCE_DIR) linkflags=-L../$(ZLIB_SOURCE_DIR)\
 				--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) \
+				link=static \
 				release \
-				-j$(COMPILE_PROCESSORS) \
+				-j$(PJOBS) \
 				install ) | tee logs/_boost.log 
 
 #				include=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR) \
@@ -285,7 +288,7 @@ llvm-doxygen:
 	(cd $(LLVM_SOURCE_DIR)/build-doxygen; export REQUIRES_RTTI=1; \
 		../configure --enable-doxygen \
 		--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR);)
-	(cd $(LLVM_SOURCE_DIR)/build-dbg; export REQUIRES_RTTI=1; make -j$(COMPILE_PROCESSORS) REQUIRES_RTTI=1; make install) 2>&1 | tee ../logs/_llvm-doxygen.log
+	(cd $(LLVM_SOURCE_DIR)/build-dbg; export REQUIRES_RTTI=1; make -j$(PJOBS) REQUIRES_RTTI=1; make install) 2>&1 | tee ../logs/_llvm-doxygen.log
 
 
 
@@ -306,7 +309,7 @@ clang-clean-release:
 
 
 clang-release:
-	(cd $(LLVM_SOURCE_DIR)/clang-build; export REQUIRES_RTTI=1; make -j$(COMPILE_PROCESSORS) REQUIRES_RTTI=1 ; make install) 2>&1 | tee ../logs/_clang.log
+	(cd $(LLVM_SOURCE_DIR)/clang-build; export REQUIRES_RTTI=1; make -j$(PJOBS) REQUIRES_RTTI=1 ; make install) 2>&1 | tee ../logs/_clang.log
 
 
 
@@ -349,7 +352,7 @@ boost-build-a-n:
 				--with-python --with-system  --with-thread \
 				--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
 				debug  \
-				-j$(COMPILE_PROCESSORS) \
+				-j$(PJOBS) \
 				install ) | tee logs/_boost.log 
 
 
@@ -379,8 +382,7 @@ zlib-setup:
 		./configure -shared --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR);)
 
 zlib-build:
-	(cd $(ZLIB_SOURCE_DIR); \
-			make -j1 install) | tee logs/_zlib.log
+	(cd $(ZLIB_SOURCE_DIR); make -j1 install)
 
 
 zlib-clean:
@@ -453,10 +455,10 @@ readline-setup:
 
 
 readline-compile:
-	(cd readline-$(READLINE_VERSION); make -j1 | tee ../logs/_readline.log)
+	(cd readline-$(READLINE_VERSION); make -j1)
 
 readline-install:
-	(cd readline-$(READLINE_VERSION); make -j1 install | tee ../logs/_readline_install.log)
+	(cd readline-$(READLINE_VERSION); make -j1 install)
 
 
 
@@ -519,7 +521,7 @@ subBundle sb:
 #
 ##
 
-ifeq ($(TARGET_OS),linux)
+ifeq ($(TARGET-OS),linux)
 #
 # Set clang-setup --prefix to $(CLASP_APP_RESOURCES_DIR)
 #
@@ -534,7 +536,7 @@ ifeq ($(TARGET_OS),linux)
 llvm-setup-debug:
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-debug
 	(cd $(LLVM_SOURCE_DIR)/build-debug; \
-		../configure --enable-targets=x86_64 --enable-debug-symbols --enable-debug-runtime --enable-profiling \
+		../configure --enable-targets=x86_64 --enable-debug-symbols --enable-debug-runtime \
 		--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
 		--with-gcc-toolchain=$(GCC-TOOLCHAIN) \
 		CC=$(HOME)/local/gcc-4.8.3/bin/gcc \
@@ -548,7 +550,7 @@ llvm-setup-debug:
 llvm-setup-release:
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-release
 	(cd $(LLVM_SOURCE_DIR)/build-release; \
-		../configure --enable-targets=x86_64  --enable-optimized --enable-assertions --enable-profiling  \
+		../configure --enable-targets=x86_64  --enable-optimized --enable-assertions \
 		--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) \
 		--with-gcc-toolchain=$(GCC-TOOLCHAIN) \
 		CC=$(HOME)/local/gcc-4.8.3/bin/gcc \
@@ -565,7 +567,7 @@ boostbuild2-build:
 
 
 gmp-build:
-	(cd $(GMP_SOURCE_DIR); make install) | tee logs/_gmp.log
+	(cd $(GMP_SOURCE_DIR); make install)
 
 
 
@@ -604,7 +606,7 @@ endif
 #
 ##
 
-ifeq ($(TARGET_OS),darwin)
+ifeq ($(TARGET-OS),darwin)
 
 export RPATH_RELEASE_FIX = @executable_path/../Resources/externals/release/lib
 export RPATH_DEBUG_FIX = @executable_path/../Resources/externals/debug/lib
@@ -719,7 +721,7 @@ endif
 #
 ##
 
-ifeq ($(TARGET_OS),kraken)
+ifeq ($(TARGET-OS),kraken)
 subAll sa:
 	make boost-jam
 	make boost
@@ -814,8 +816,7 @@ boost-clean:
 
 
 expat-build:
-	(cd $(EXPAT_SOURCE_DIR); \
-			make -j1 install) | tee logs/_expat.log
+	(cd $(EXPAT_SOURCE_DIR); make -j1 install)
 
 expat-clean:
 	-(cd $(EXPAT_SOURCE_DIR); make clean )
