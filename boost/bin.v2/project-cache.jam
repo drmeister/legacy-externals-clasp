@@ -39,4 +39,6 @@ module config-cache {
   set "gcc visibility-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "true" ;
   set "long double support-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "true" ;
   set "ac-library-zlib-<link>static-<target-os>linux-<toolset-gcc:version>4.8.3-<toolset>gcc" : "%default" "z" "<link>shared" ;
+  set "ac-library-zlib-<link>static-<target-os>darwin-<toolset-gcc:version>4.2.1-<toolset>gcc" : "missing" ;
+  set "has_icu builds-<target-os>darwin-<toolset-gcc:version>4.2.1-<toolset>gcc" : "false" ;
 }

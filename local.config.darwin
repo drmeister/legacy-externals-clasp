@@ -1,0 +1,10 @@
+#
+# Local settings
+#
+export PREFIX = $(HOME)/local/externals-clasp
+export TARGET-OS = darwin
+export PJOBS = 6
+export TOOLSET = gcc
+#export GCC-TOOLCHAIN = $(HOME)/local/gcc-4.8.3
+
+
