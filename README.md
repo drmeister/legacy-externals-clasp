@@ -1,6 +1,9 @@
 externals-clasp
 ===============
 
+This appears to require a minimum of OS X Mavericks and Xcode5.1 to run
+
+
 Libraries that clasp depends on.
 
 To build everything from within the top level directory do the following.
