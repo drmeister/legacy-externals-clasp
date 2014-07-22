@@ -20,6 +20,10 @@ CLASP_APP_RESOURCES_EXTERNALS_DIR = $(CLASP_APP_RESOURCES_DIR)
 CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/debug
 CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/release
 CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/common
+#
+# Needed by gmp fixlibgmpxx.sh scrip
+#
+export CLASP_APP_RESOURCES_EXTERNALS_COMMON_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR)/lib
 CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)/lib
 CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/lib
 
@@ -139,6 +143,7 @@ subClean:
 	make readline-clean
 	make expat-clean
 	make zlib-clean
+	make gmp-clean
 	make boost-clean
 #	make clang-clean Redundant.
 	make llvm-clean
@@ -629,7 +634,7 @@ llvm-setup-release:
 
 gmp-build:
 	(cd $(GMP_SOURCE_DIR); make install)
-	(cd $(GMP_SOURCE_DIR); source fixlibgmpxx.sh)   # fixes libgmpxx so that it uses libc++ on OS X
+#	(cd $(GMP_SOURCE_DIR); source fixlibgmpxx.sh)   # fixes libgmpxx so that it uses libc++ on OS X
 
 
 boostbuild2-build:
