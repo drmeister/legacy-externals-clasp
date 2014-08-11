@@ -62,9 +62,9 @@ ECL_SOURCE_DIR = ecl
 
 
 getllvm:
-	svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/llvm/trunk llvm3.4svn
-	(cd llvm3.4svn/tools; svn co -r $(LLVM_REVISION)  http://llvm.org/svn/llvm-project/cfe/trunk clang)
-	(cd llvm3.4svn/tools/clang/tools; svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
+	-svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/llvm/trunk llvm3.4svn
+	-(cd llvm3.4svn/tools; svn co -r $(LLVM_REVISION)  http://llvm.org/svn/llvm-project/cfe/trunk clang)
+	-(cd llvm3.4svn/tools/clang/tools; svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
 
 resetllvm:
 	rm -rf llvm3.4svn
