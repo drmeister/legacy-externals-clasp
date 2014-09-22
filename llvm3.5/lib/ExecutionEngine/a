@@ -1,0 +1,1287 @@
+  9022    brukman //===-- ExecutionEngine.cpp - Common Implementation shared by EEs ---------===//
+ 21420    brukman //
+  9298   criswell //                     The LLVM Compiler Infrastructure
+  9298   criswell //
+ 45418    lattner // This file is distributed under the University of Illinois Open Source
+ 45418    lattner // License. See LICENSE.TXT for details.
+ 21420    brukman //
+  9298   criswell //===----------------------------------------------------------------------===//
+ 21420    brukman //
+  5126    lattner // This file defines the common interface used by the various execution engine
+  5126    lattner // subclasses.
+  5126    lattner //
+  5126    lattner //===----------------------------------------------------------------------===//
+  5126    lattner 
+ 78400   jyasskin #include "llvm/ExecutionEngine/ExecutionEngine.h"
+169131  chandlerc #include "llvm/ADT/SmallString.h"
+169131  chandlerc #include "llvm/ADT/Statistic.h"
+169131  chandlerc #include "llvm/ExecutionEngine/GenericValue.h"
+198685  chandlerc #include "llvm/ExecutionEngine/JITMemoryManager.h"
+198685  chandlerc #include "llvm/ExecutionEngine/ObjectCache.h"
+171366  chandlerc #include "llvm/IR/Constants.h"
+171366  chandlerc #include "llvm/IR/DataLayout.h"
+171366  chandlerc #include "llvm/IR/DerivedTypes.h"
+171366  chandlerc #include "llvm/IR/Module.h"
+171366  chandlerc #include "llvm/IR/Operator.h"
+202821  chandlerc #include "llvm/IR/ValueHandle.h"
+214542     rafael #include "llvm/Object/Archive.h"
+207581   dblaikie #include "llvm/Object/ObjectFile.h"
+ 18357       reid #include "llvm/Support/Debug.h"
+169131  chandlerc #include "llvm/Support/DynamicLibrary.h"
+ 74922      edwin #include "llvm/Support/ErrorHandling.h"
+169131  chandlerc #include "llvm/Support/Host.h"
+ 28179    lattner #include "llvm/Support/MutexGuard.h"
+169131  chandlerc #include "llvm/Support/TargetRegistry.h"
+ 75363      edwin #include "llvm/Support/raw_ostream.h"
+131317     nobled #include "llvm/Target/TargetMachine.h"
+ 47367        asl #include <cmath>
+ 47367        asl #include <cstring>
+ 10093    lattner using namespace llvm;
+  5126    lattner 
+206845  chandlerc #define DEBUG_TYPE "jit"
+206845  chandlerc 
+ 32700    lattner STATISTIC(NumInitBytes, "Number of bytes of global vars initialized");
+ 32700    lattner STATISTIC(NumGlobals  , "Number of global vars initialized");
+  9903      gaeke 
+195064   ributzka // Pin the vtable to this file.
+195064   ributzka void ObjectCache::anchor() {}
+195064   ributzka void ObjectBuffer::anchor() {}
+195064   ributzka void ObjectBufferStream::anchor() {}
+195064   ributzka 
+119508    ddunbar ExecutionEngine *(*ExecutionEngine::MCJITCtor)(
+216988   dblaikie     std::unique_ptr<Module> M, std::string *ErrorStr,
+216988   dblaikie     RTDyldMemoryManager *MCJMM, std::unique_ptr<TargetMachine> TM) = nullptr;
+215967     rafael ExecutionEngine *(*ExecutionEngine::InterpCtor)(std::unique_ptr<Module> M,
+206252    ctopper                                                 std::string *ErrorStr) =nullptr;
+ 26946    lattner 
+215967     rafael ExecutionEngine::ExecutionEngine(std::unique_ptr<Module> M)
+ 83987   jyasskin   : EEState(*this),
+206252    ctopper     LazyFunctionCreator(nullptr) {
+ 85295   jyasskin   CompilingLazily         = false;
+ 56557  evancheng   GVCompilationDisabled   = false;
+ 52414  evancheng   SymbolSearchingDisabled = false;
+206561     lhames 
+206561     lhames   // IR module verification is enabled by default in debug builds, and disabled
+206561     lhames   // by default in release builds.
+206561     lhames #ifndef NDEBUG
+206561     lhames   VerifyModules = true;
+206561     lhames #else
+206561     lhames   VerifyModules = false;
+206561     lhames #endif
+206561     lhames 
+ 94686   jyasskin   assert(M && "Module is null?");
+215967     rafael   Modules.push_back(std::move(M));
+  9181    brukman }
+  9181    brukman 
+  8345      gaeke ExecutionEngine::~ExecutionEngine() {
+ 34887       reid   clearAllGlobalMappings();
+  8345      gaeke }
+  8345      gaeke 
+ 99706   jyasskin namespace {
+118973    ddunbar /// \brief Helper class which uses a value handler to automatically deletes the
+118973    ddunbar /// memory block when the GlobalVariable is destroyed.
+ 99706   jyasskin class GVMemoryBlock : public CallbackVH {
+ 99706   jyasskin   GVMemoryBlock(const GlobalVariable *GV)
+ 99706   jyasskin     : CallbackVH(const_cast<GlobalVariable*>(GV)) {}
+ 99706   jyasskin 
+ 99706   jyasskin public:
+118973    ddunbar   /// \brief Returns the address the GlobalVariable should be written into.  The
+118973    ddunbar   /// GVMemoryBlock object prefixes that.
+165402   mvillmow   static char *Create(const GlobalVariable *GV, const DataLayout& TD) {
+135375    lattner     Type *ElTy = GV->getType()->getElementType();
+ 99706   jyasskin     size_t GVSize = (size_t)TD.getTypeAllocSize(ElTy);
+ 99706   jyasskin     void *RawMemory = ::operator new(
+165402   mvillmow       DataLayout::RoundUpAlignment(sizeof(GVMemoryBlock),
+ 99706   jyasskin                                    TD.getPreferredAlignment(GV))
+ 99706   jyasskin       + GVSize);
+ 99706   jyasskin     new(RawMemory) GVMemoryBlock(GV);
+ 99706   jyasskin     return static_cast<char*>(RawMemory) + sizeof(GVMemoryBlock);
+ 99706   jyasskin   }
+ 99706   jyasskin 
+203344    ctopper   void deleted() override {
+ 99706   jyasskin     // We allocated with operator new and with some extra memory hanging off the
+ 99706   jyasskin     // end, so don't just delete this.  I'm not sure if this is actually
+ 99706   jyasskin     // required.
+ 99706   jyasskin     this->~GVMemoryBlock();
+ 99706   jyasskin     ::operator delete(this);
+ 99706   jyasskin   }
+ 99706   jyasskin };
+ 99706   jyasskin }  // anonymous namespace
+ 99706   jyasskin 
+118973    ddunbar char *ExecutionEngine::getMemoryForGV(const GlobalVariable *GV) {
+165402   mvillmow   return GVMemoryBlock::Create(GV, *getDataLayout());
+ 58142   geoffray }
+ 58142   geoffray 
+207581   dblaikie void ExecutionEngine::addObjectFile(std::unique_ptr<object::ObjectFile> O) {
+207581   dblaikie   llvm_unreachable("ExecutionEngine subclass doesn't implement addObjectFile.");
+207581   dblaikie }
+207581   dblaikie 
+216484     rafael void
+216484     rafael ExecutionEngine::addObjectFile(object::OwningBinary<object::ObjectFile> O) {
+216484     rafael   llvm_unreachable("ExecutionEngine subclass doesn't implement addObjectFile.");
+216484     rafael }
+216484     rafael 
+216002     rafael void ExecutionEngine::addArchive(object::OwningBinary<object::Archive> A) {
+214539     rafael   llvm_unreachable("ExecutionEngine subclass doesn't implement addArchive.");
+214539     rafael }
+214539     rafael 
+ 94686   jyasskin bool ExecutionEngine::removeModule(Module *M) {
+215967     rafael   for (auto I = Modules.begin(), E = Modules.end(); I != E; ++I) {
+215967     rafael     Module *Found = I->get();
+ 94686   jyasskin     if (Found == M) {
+215967     rafael       I->release();
+ 43002     dpatel       Modules.erase(I);
+ 94686   jyasskin       clearGlobalMappingsFromModule(M);
+ 94686   jyasskin       return true;
+ 43002     dpatel     }
+ 43002     dpatel   }
+ 94686   jyasskin   return false;
+ 43002     dpatel }
+ 43002     dpatel 
+ 29721    lattner Function *ExecutionEngine::FindFunctionNamed(const char *FnName) {
+ 29721    lattner   for (unsigned i = 0, e = Modules.size(); i != e; ++i) {
+ 94686   jyasskin     if (Function *F = Modules[i]->getFunction(FnName))
+ 29721    lattner       return F;
+ 29721    lattner   }
+206252    ctopper   return nullptr;
+ 29721    lattner }
+ 29721    lattner 
+ 29721    lattner 
+211054    zturner void *ExecutionEngineState::RemoveMapping(const GlobalValue *ToUnmap) {
+ 84975   jyasskin   GlobalAddressMapTy::iterator I = GlobalAddressMap.find(ToUnmap);
+ 83678   jyasskin   void *OldVal;
+118973    ddunbar 
+118973    ddunbar   // FIXME: This is silly, we shouldn't end up with a mapping -> 0 in the
+118973    ddunbar   // GlobalAddressMap.
+ 83678   jyasskin   if (I == GlobalAddressMap.end())
+206252    ctopper     OldVal = nullptr;
+ 83678   jyasskin   else {
+ 83678   jyasskin     OldVal = I->second;
+ 83678   jyasskin     GlobalAddressMap.erase(I);
+ 83678   jyasskin   }
+ 83678   jyasskin 
+ 83678   jyasskin   GlobalAddressReverseMap.erase(OldVal);
+ 83678   jyasskin   return OldVal;
+ 83678   jyasskin }
+ 83678   jyasskin 
+ 28179    lattner void ExecutionEngine::addGlobalMapping(const GlobalValue *GV, void *Addr) {
+211401    zturner   MutexGuard locked(lock);
+ 56303  evancheng 
+118973    ddunbar   DEBUG(dbgs() << "JIT: Map \'" << GV->getName()
+ 77145    ddunbar         << "\' to [" << Addr << "]\n";);
+211054    zturner   void *&CurVal = EEState.getGlobalAddressMap()[GV];
+206252    ctopper   assert((!CurVal || !Addr) && "GlobalMapping already established!");
+ 28179    lattner   CurVal = Addr;
+118973    ddunbar 
+118973    ddunbar   // If we are using the reverse mapping, add it too.
+211054    zturner   if (!EEState.getGlobalAddressReverseMap().empty()) {
+ 78400   jyasskin     AssertingVH<const GlobalValue> &V =
+211054    zturner       EEState.getGlobalAddressReverseMap()[Addr];
+206252    ctopper     assert((!V || !GV) && "GlobalMapping already established!");
+ 28179    lattner     V = GV;
+ 28179    lattner   }
+ 28179    lattner }
+ 28179    lattner 
+ 28179    lattner void ExecutionEngine::clearAllGlobalMappings() {
+211401    zturner   MutexGuard locked(lock);
+118973    ddunbar 
+211054    zturner   EEState.getGlobalAddressMap().clear();
+211054    zturner   EEState.getGlobalAddressReverseMap().clear();
+ 28179    lattner }
+ 28179    lattner 
+ 51384      sampo void ExecutionEngine::clearGlobalMappingsFromModule(Module *M) {
+211401    zturner   MutexGuard locked(lock);
+118973    ddunbar 
+118973    ddunbar   for (Module::iterator FI = M->begin(), FE = M->end(); FI != FE; ++FI)
+211054    zturner     EEState.RemoveMapping(FI);
+118973    ddunbar   for (Module::global_iterator GI = M->global_begin(), GE = M->global_end();
+118973    ddunbar        GI != GE; ++GI)
+211054    zturner     EEState.RemoveMapping(GI);
+ 51384      sampo }
+ 51384      sampo 
+ 49206    lattner void *ExecutionEngine::updateGlobalMapping(const GlobalValue *GV, void *Addr) {
+211401    zturner   MutexGuard locked(lock);
+ 49206    lattner 
+ 84975   jyasskin   ExecutionEngineState::GlobalAddressMapTy &Map =
+211054    zturner     EEState.getGlobalAddressMap();
+ 49206    lattner 
+ 28179    lattner   // Deleting from the mapping?
+206252    ctopper   if (!Addr)
+211054    zturner     return EEState.RemoveMapping(GV);
+118973    ddunbar 
+ 84975   jyasskin   void *&CurVal = Map[GV];
+ 49206    lattner   void *OldVal = CurVal;
+ 49206    lattner 
+211054    zturner   if (CurVal && !EEState.getGlobalAddressReverseMap().empty())
+211054    zturner     EEState.getGlobalAddressReverseMap().erase(CurVal);
+ 28179    lattner   CurVal = Addr;
+118973    ddunbar 
+118973    ddunbar   // If we are using the reverse mapping, add it too.
+211054    zturner   if (!EEState.getGlobalAddressReverseMap().empty()) {
+ 78400   jyasskin     AssertingVH<const GlobalValue> &V =
+211054    zturner       EEState.getGlobalAddressReverseMap()[Addr];
+206252    ctopper     assert((!V || !GV) && "GlobalMapping already established!");
+ 28179    lattner     V = GV;
+ 28179    lattner   }
+ 49206    lattner   return OldVal;
+ 28179    lattner }
+ 28179    lattner 
+ 28179    lattner void *ExecutionEngine::getPointerToGlobalIfAvailable(const GlobalValue *GV) {
+211401    zturner   MutexGuard locked(lock);
+118973    ddunbar 
+ 84975   jyasskin   ExecutionEngineState::GlobalAddressMapTy::iterator I =
+211054    zturner     EEState.getGlobalAddressMap().find(GV);
+211054    zturner   return I != EEState.getGlobalAddressMap().end() ? I->second : nullptr;
+ 28179    lattner }
+ 28179    lattner 
+ 10674    lattner const GlobalValue *ExecutionEngine::getGlobalValueAtAddress(void *Addr) {
+211401    zturner   MutexGuard locked(lock);
+ 22404       reid 
+ 10674    lattner   // If we haven't computed the reverse mapping yet, do so first.
+211054    zturner   if (EEState.getGlobalAddressReverseMap().empty()) {
+ 84975   jyasskin     for (ExecutionEngineState::GlobalAddressMapTy::iterator
+211054    zturner          I = EEState.getGlobalAddressMap().begin(),
+211054    zturner          E = EEState.getGlobalAddressMap().end(); I != E; ++I)
+211054    zturner       EEState.getGlobalAddressReverseMap().insert(std::make_pair(
+118958    ddunbar                                                           I->second, I->first));
+ 10674    lattner   }
+ 10616    lattner 
+ 78400   jyasskin   std::map<void *, AssertingVH<const GlobalValue> >::iterator I =
+211054    zturner     EEState.getGlobalAddressReverseMap().find(Addr);
+211054    zturner   return I != EEState.getGlobalAddressReverseMap().end() ? I->second : nullptr;
+ 10674    lattner }
+ 10674    lattner 
+ 99589   jyasskin namespace {
+ 99589   jyasskin class ArgvArray {
+216362     nobled   std::unique_ptr<char[]> Array;
+216362     nobled   std::vector<std::unique_ptr<char[]>> Values;
+ 99589   jyasskin public:
+ 99589   jyasskin   /// Turn a vector of strings into a nice argv style array of pointers to null
+ 99589   jyasskin   /// terminated strings.
+ 99589   jyasskin   void *reset(LLVMContext &C, ExecutionEngine *EE,
+ 99589   jyasskin               const std::vector<std::string> &InputArgv);
+ 99589   jyasskin };
+ 99589   jyasskin }  // anonymous namespace
+ 99589   jyasskin void *ArgvArray::reset(LLVMContext &C, ExecutionEngine *EE,
+ 99589   jyasskin                        const std::vector<std::string> &InputArgv) {
+216362     nobled   Values.clear();  // Free the old contents.
+216362     nobled   Values.reserve(InputArgv.size());
+167222  chandlerc   unsigned PtrSize = EE->getDataLayout()->getPointerSize();
+216362     nobled   Array = make_unique<char[]>((InputArgv.size()+1)*PtrSize);
+ 10616    lattner 
+216362     nobled   DEBUG(dbgs() << "JIT: ARGV = " << (void*)Array.get() << "\n");
+135375    lattner   Type *SBytePtr = Type::getInt8PtrTy(C);
+ 10616    lattner 
+ 10616    lattner   for (unsigned i = 0; i != InputArgv.size(); ++i) {
+ 10616    lattner     unsigned Size = InputArgv[i].size()+1;
+216427     nobled     auto Dest = make_unique<char[]>(Size);
+216427     nobled     DEBUG(dbgs() << "JIT: ARGV[" << i << "] = " << (void*)Dest.get() << "\n");
+ 21420    brukman 
+216427     nobled     std::copy(InputArgv[i].begin(), InputArgv[i].end(), Dest.get());
+ 10616    lattner     Dest[Size-1] = 0;
+ 21420    brukman 
+ 99589   jyasskin     // Endian safe: Array[i] = (PointerTy)Dest;
+216427     nobled     EE->StoreValueToMemory(PTOGV(Dest.get()),
+216427     nobled                            (GenericValue*)(&Array[i*PtrSize]), SBytePtr);
+216427     nobled     Values.push_back(std::move(Dest));
+ 10616    lattner   }
+ 10616    lattner 
+ 10616    lattner   // Null terminate it
+206252    ctopper   EE->StoreValueToMemory(PTOGV(nullptr),
+216362     nobled                          (GenericValue*)(&Array[InputArgv.size()*PtrSize]),
+ 10616    lattner                          SBytePtr);
+216362     nobled   return Array.get();
+ 10616    lattner }
+ 10616    lattner 
+215967     rafael void ExecutionEngine::runStaticConstructorsDestructors(Module &module,
+ 82600    lattner                                                        bool isDtors) {
+ 26619    lattner   const char *Name = isDtors ? "llvm.global_dtors" : "llvm.global_ctors";
+215967     rafael   GlobalVariable *GV = module.getNamedGlobal(Name);
+ 27941    lattner 
+118973    ddunbar   // If this global has internal linkage, or if it has a use, then it must be
+118973    ddunbar   // an old-style (llvmgcc3) static ctor with __main linked in and in use.  If
+118973    ddunbar   // this is the case, don't execute any of the global ctors, __main will do
+118973    ddunbar   // it.
+118973    ddunbar   if (!GV || GV->isDeclaration() || GV->hasLocalLinkage()) return;
+118973    ddunbar 
+129025   nicholas   // Should be an array of '{ i32, void ()* }' structs.  The first value is
+118973    ddunbar   // the init priority, which we ignore.
+148802    lattner   ConstantArray *InitList = dyn_cast<ConstantArray>(GV->getInitializer());
+206252    ctopper   if (!InitList)
+129307   nicholas     return;
+118973    ddunbar   for (unsigned i = 0, e = InitList->getNumOperands(); i != e; ++i) {
+148802    lattner     ConstantStruct *CS = dyn_cast<ConstantStruct>(InitList->getOperand(i));
+206252    ctopper     if (!CS) continue;
+118973    ddunbar 
+118973    ddunbar     Constant *FP = CS->getOperand(1);
+118973    ddunbar     if (FP->isNullValue())
+129307   nicholas       continue;  // Found a sentinal value, ignore.
+118973    ddunbar 
+118973    ddunbar     // Strip off constant expression casts.
+118973    ddunbar     if (ConstantExpr *CE = dyn_cast<ConstantExpr>(FP))
+118973    ddunbar       if (CE->isCast())
+118973    ddunbar         FP = CE->getOperand(0);
+118973    ddunbar 
+118973    ddunbar     // Execute the ctor/dtor function!
+118973    ddunbar     if (Function *F = dyn_cast<Function>(FP))
+118973    ddunbar       runFunction(F, std::vector<GenericValue>());
+118973    ddunbar 
+118973    ddunbar     // FIXME: It is marginally lame that we just do nothing here if we see an
+118973    ddunbar     // entry we don't recognize. It might not be unreasonable for the verifier
+118973    ddunbar     // to not even allow this and just assert here.
+118973    ddunbar   }
+ 26619    lattner }
+ 26619    lattner 
+ 56849  evancheng void ExecutionEngine::runStaticConstructorsDestructors(bool isDtors) {
+ 56849  evancheng   // Execute global ctors/dtors for each module in the program.
+215967     rafael   for (std::unique_ptr<Module> &M : Modules)
+215967     rafael     runStaticConstructorsDestructors(*M, isDtors);
+ 56849  evancheng }
+ 56849  evancheng 
+ 55350        djg #ifndef NDEBUG
+ 45039   baldrick /// isTargetNullPtr - Return whether the target pointer stored at Loc is null.
+ 45039   baldrick static bool isTargetNullPtr(ExecutionEngine *EE, void *Loc) {
+167222  chandlerc   unsigned PtrSize = EE->getDataLayout()->getPointerSize();
+ 45039   baldrick   for (unsigned i = 0; i < PtrSize; ++i)
+ 45039   baldrick     if (*(i + (uint8_t*)Loc))
+ 45039   baldrick       return false;
+ 45039   baldrick   return true;
+ 45039   baldrick }
+ 55350        djg #endif
+ 45039   baldrick 
+ 10616    lattner int ExecutionEngine::runFunctionAsMain(Function *Fn,
+ 10616    lattner                                        const std::vector<std::string> &argv,
+ 10616    lattner                                        const char * const * envp) {
+ 10616    lattner   std::vector<GenericValue> GVArgs;
+ 10616    lattner   GenericValue GVArgc;
+ 34946       reid   GVArgc.IntVal = APInt(32, argv.size());
+ 37404        asl 
+ 37404        asl   // Check main() type
+ 15801    lattner   unsigned NumArgs = Fn->getFunctionType()->getNumParams();
+135375    lattner   FunctionType *FTy = Fn->getFunctionType();
+135375    lattner   Type* PPInt8Ty = Type::getInt8PtrTy(Fn->getContext())->getPointerTo();
+118973    ddunbar 
+118973    ddunbar   // Check the argument types.
+118973    ddunbar   if (NumArgs > 3)
+118973    ddunbar     report_fatal_error("Invalid number of arguments of main() supplied");
+118973    ddunbar   if (NumArgs >= 3 && FTy->getParamType(2) != PPInt8Ty)
+118973    ddunbar     report_fatal_error("Invalid type for third argument of main() supplied");
+118973    ddunbar   if (NumArgs >= 2 && FTy->getParamType(1) != PPInt8Ty)
+118973    ddunbar     report_fatal_error("Invalid type for second argument of main() supplied");
+118973    ddunbar   if (NumArgs >= 1 && !FTy->getParamType(0)->isIntegerTy(32))
+118973    ddunbar     report_fatal_error("Invalid type for first argument of main() supplied");
+118973    ddunbar   if (!FTy->getReturnType()->isIntegerTy() &&
+118973    ddunbar       !FTy->getReturnType()->isVoidTy())
+118973    ddunbar     report_fatal_error("Invalid return type of main() supplied");
+118973    ddunbar 
+ 99589   jyasskin   ArgvArray CArgv;
+ 99589   jyasskin   ArgvArray CEnv;
+ 15801    lattner   if (NumArgs) {
+ 15801    lattner     GVArgs.push_back(GVArgc); // Arg #0 = argc.
+ 15801    lattner     if (NumArgs > 1) {
+ 78948   resistor       // Arg #1 = argv.
+ 99589   jyasskin       GVArgs.push_back(PTOGV(CArgv.reset(Fn->getContext(), this, argv)));
+ 45039   baldrick       assert(!isTargetNullPtr(this, GVTOP(GVArgs[1])) &&
+ 15801    lattner              "argv[0] was null after CreateArgv");
+ 15801    lattner       if (NumArgs > 2) {
+ 15801    lattner         std::vector<std::string> EnvVars;
+ 15801    lattner         for (unsigned i = 0; envp[i]; ++i)
+ 15801    lattner           EnvVars.push_back(envp[i]);
+ 78948   resistor         // Arg #2 = envp.
+ 99589   jyasskin         GVArgs.push_back(PTOGV(CEnv.reset(Fn->getContext(), this, EnvVars)));
+ 15801    lattner       }
+ 15801    lattner     }
+ 15801    lattner   }
+118973    ddunbar 
+ 34946       reid   return runFunction(Fn, GVArgs).IntVal.getZExtValue();
+ 10616    lattner }
+ 10616    lattner 
+209981        alp void EngineBuilder::InitEngine() {
+209981        alp   WhichEngine = EngineKind::Either;
+209981        alp   ErrorStr = nullptr;
+209981        alp   OptLevel = CodeGenOpt::Default;
+209981        alp   MCJMM = nullptr;
+209981        alp   JMM = nullptr;
+209981        alp   Options = TargetOptions();
+209981        alp   RelocModel = Reloc::Default;
+209981        alp   CMModel = CodeModel::JITDefault;
+209981        alp 
+209981        alp // IR module verification is enabled by default in debug builds, and disabled
+209981        alp // by default in release builds.
+209981        alp #ifndef NDEBUG
+209981        alp   VerifyModules = true;
+209981        alp #else
+209981        alp   VerifyModules = false;
+209981        alp #endif
+209981        alp }
+209981        alp 
+153342   resistor ExecutionEngine *EngineBuilder::create(TargetMachine *TM) {
+203083  ace2001ac   std::unique_ptr<TargetMachine> TheTM(TM); // Take ownership.
+154288        d0k 
+ 48046   nicholas   // Make sure we can resolve symbols in the program as well. The zero arg
+ 48046   nicholas   // to the function tells DynamicLibrary to load the program, not a library.
+206252    ctopper   if (sys::DynamicLibrary::LoadLibraryPermanently(nullptr, ErrorStr))
+206252    ctopper     return nullptr;
+ 48046   nicholas 
+181820     fpizlo   assert(!(JMM && MCJMM));
+181820     fpizlo   
+ 76276        rnk   // If the user specified a memory manager but didn't specify which engine to
+ 76276        rnk   // create, we assume they only want the JIT, and we fail if they only want
+ 76276        rnk   // the interpreter.
+181820     fpizlo   if (JMM || MCJMM) {
+ 82600    lattner     if (WhichEngine & EngineKind::JIT)
+ 76276        rnk       WhichEngine = EngineKind::JIT;
+ 82600    lattner     else {
+ 82601    lattner       if (ErrorStr)
+ 82601    lattner         *ErrorStr = "Cannot create an interpreter with a memory manager.";
+206252    ctopper       return nullptr;
+ 76276        rnk     }
+ 76276        rnk   }
+  8343      gaeke 
+ 76276        rnk   // Unless the interpreter was explicitly selected or the JIT is not linked,
+ 76276        rnk   // try making a JIT.
+154288        d0k   if ((WhichEngine & EngineKind::JIT) && TheTM) {
+146355     nobled     Triple TT(M->getTargetTriple());
+153342   resistor     if (!TM->getTarget().hasJIT()) {
+153342   resistor       errs() << "WARNING: This target JIT is not designed for the host"
+153342   resistor              << " you are running.  If bad things happen, please choose"
+153342   resistor              << " a different -march switch.\n";
+153342   resistor     }
+146355     nobled 
+206561     lhames     ExecutionEngine *EE = nullptr;
+216982   echristo     if (ExecutionEngine::MCJITCtor)
+215967     rafael       EE = ExecutionEngine::MCJITCtor(std::move(M), ErrorStr,
+216988   dblaikie                                       MCJMM ? MCJMM : JMM, std::move(TheTM));
+206561     lhames     if (EE) {
+206561     lhames       EE->setVerifyModules(VerifyModules);
+206561     lhames       return EE;
+ 82600    lattner     }
+ 76276        rnk   }
+ 76276        rnk 
+ 76276        rnk   // If we can't make a JIT and we didn't request one specifically, try making
+ 76276        rnk   // an interpreter instead.
+ 82600    lattner   if (WhichEngine & EngineKind::Interpreter) {
+ 82600    lattner     if (ExecutionEngine::InterpCtor)
+215967     rafael       return ExecutionEngine::InterpCtor(std::move(M), ErrorStr);
+ 82601    lattner     if (ErrorStr)
+ 82601    lattner       *ErrorStr = "Interpreter has not been linked in.";
+206252    ctopper     return nullptr;
+ 76276        rnk   }
+ 82601    lattner 
+216982   echristo   if ((WhichEngine & EngineKind::JIT) && !ExecutionEngine::MCJITCtor) {
+ 82601    lattner     if (ErrorStr)
+ 82601    lattner       *ErrorStr = "JIT has not been linked in.";
+118973    ddunbar   }
+118973    ddunbar 
+206252    ctopper   return nullptr;
+  8343      gaeke }
+  8343      gaeke 
+  5126    lattner void *ExecutionEngine::getPointerToGlobal(const GlobalValue *GV) {
+  7818      gaeke   if (Function *F = const_cast<Function*>(dyn_cast<Function>(GV)))
+  5126    lattner     return getPointerToFunction(F);
+  5126    lattner 
+211401    zturner   MutexGuard locked(lock);
+211054    zturner   if (void *P = EEState.getGlobalAddressMap()[GV])
+118973    ddunbar     return P;
+ 26030      jeffc 
+ 26030      jeffc   // Global variable might have been added since interpreter started.
+ 26030      jeffc   if (GlobalVariable *GVar =
+ 26030      jeffc           const_cast<GlobalVariable *>(dyn_cast<GlobalVariable>(GV)))
+ 26030      jeffc     EmitGlobalVariable(GVar);
+ 26030      jeffc   else
+ 75640      edwin     llvm_unreachable("Global hasn't had an address allocated yet!");
+118973    ddunbar 
+211054    zturner   return EEState.getGlobalAddressMap()[GV];
+  5126    lattner }
+  5126    lattner 
+118973    ddunbar /// \brief Converts a Constant* into a GenericValue, including handling of
+118973    ddunbar /// ConstantExpr values.
+  5126    lattner GenericValue ExecutionEngine::getConstantValue(const Constant *C) {
+ 31931       reid   // If its undefined, return the garbage.
+ 93509       foad   if (isa<UndefValue>(C)) {
+ 93509       foad     GenericValue Result;
+ 93509       foad     switch (C->getType()->getTypeID()) {
+178469      nadav     default:
+178469      nadav       break;
+ 93509       foad     case Type::IntegerTyID:
+ 93509       foad     case Type::X86_FP80TyID:
+ 93509       foad     case Type::FP128TyID:
+ 93509       foad     case Type::PPC_FP128TyID:
+ 93509       foad       // Although the value is undefined, we still have to construct an APInt
+ 93509       foad       // with the correct bit width.
+ 93509       foad       Result.IntVal = APInt(C->getType()->getPrimitiveSizeInBits(), 0);
+ 93509       foad       break;
+190599     delena     case Type::StructTyID: {
+190599     delena       // if the whole struct is 'undef' just reserve memory for the value.
+190599     delena       if(StructType *STy = dyn_cast<StructType>(C->getType())) {
+190599     delena         unsigned int elemNum = STy->getNumElements();
+190599     delena         Result.AggregateVal.resize(elemNum);
+190599     delena         for (unsigned int i = 0; i < elemNum; ++i) {
+190599     delena           Type *ElemTy = STy->getElementType(i);
+190599     delena           if (ElemTy->isIntegerTy())
+190599     delena             Result.AggregateVal[i].IntVal = 
+190599     delena               APInt(ElemTy->getPrimitiveSizeInBits(), 0);
+190599     delena           else if (ElemTy->isAggregateType()) {
+190599     delena               const Constant *ElemUndef = UndefValue::get(ElemTy);
+190599     delena               Result.AggregateVal[i] = getConstantValue(ElemUndef);
+190599     delena             }
+190599     delena           }
+190599     delena         }
+190599     delena       }
+190599     delena       break;
+178469      nadav     case Type::VectorTyID:
+178469      nadav       // if the whole vector is 'undef' just reserve memory for the value.
+178469      nadav       const VectorType* VTy = dyn_cast<VectorType>(C->getType());
+178469      nadav       const Type *ElemTy = VTy->getElementType();
+178469      nadav       unsigned int elemNum = VTy->getNumElements();
+178469      nadav       Result.AggregateVal.resize(elemNum);
+178469      nadav       if (ElemTy->isIntegerTy())
+178469      nadav         for (unsigned int i = 0; i < elemNum; ++i)
+190599     delena           Result.AggregateVal[i].IntVal =
+178469      nadav             APInt(ElemTy->getPrimitiveSizeInBits(), 0);
+ 93509       foad       break;
+ 93509       foad     }
+ 93509       foad     return Result;
+ 93509       foad   }
+  5880    lattner 
+118973    ddunbar   // Otherwise, if the value is a ConstantExpr...
+ 31931       reid   if (const ConstantExpr *CE = dyn_cast<ConstantExpr>(C)) {
+ 34988       reid     Constant *Op0 = CE->getOperand(0);
+  5880    lattner     switch (CE->getOpcode()) {
+  5880    lattner     case Instruction::GetElementPtr: {
+118973    ddunbar       // Compute the index
+ 34988       reid       GenericValue Result = getConstantValue(Op0);
+201581     rafael       APInt Offset(DL->getPointerSizeInBits(), 0);
+201581     rafael       cast<GEPOperator>(CE)->accumulateConstantOffset(*DL, Offset);
+ 21420    brukman 
+ 34946       reid       char* tmp = (char*) Result.PointerVal;
+171259     nlopes       Result = PTOGV(tmp + Offset.getSExtValue());
+  5880    lattner       return Result;
+  5880    lattner     }
+ 34988       reid     case Instruction::Trunc: {
+ 34988       reid       GenericValue GV = getConstantValue(Op0);
+ 34988       reid       uint32_t BitWidth = cast<IntegerType>(CE->getType())->getBitWidth();
+ 34988       reid       GV.IntVal = GV.IntVal.trunc(BitWidth);
+ 34988       reid       return GV;
+ 34988       reid     }
+ 34988       reid     case Instruction::ZExt: {
+ 34988       reid       GenericValue GV = getConstantValue(Op0);
+ 34988       reid       uint32_t BitWidth = cast<IntegerType>(CE->getType())->getBitWidth();
+ 34988       reid       GV.IntVal = GV.IntVal.zext(BitWidth);
+ 34988       reid       return GV;
+ 34988       reid     }
+ 34988       reid     case Instruction::SExt: {
+ 34988       reid       GenericValue GV = getConstantValue(Op0);
+ 34988       reid       uint32_t BitWidth = cast<IntegerType>(CE->getType())->getBitWidth();
+ 34988       reid       GV.IntVal = GV.IntVal.sext(BitWidth);
+ 34988       reid       return GV;
+ 34988       reid     }
+ 34988       reid     case Instruction::FPTrunc: {
+ 42043   johannes       // FIXME long double
+ 34988       reid       GenericValue GV = getConstantValue(Op0);
+ 34988       reid       GV.FloatVal = float(GV.DoubleVal);
+ 34988       reid       return GV;
+ 34988       reid     }
+ 34988       reid     case Instruction::FPExt:{
+ 42043   johannes       // FIXME long double
+ 34988       reid       GenericValue GV = getConstantValue(Op0);
+ 34988       reid       GV.DoubleVal = double(GV.FloatVal);
+ 34988       reid       return GV;
+ 34988       reid     }
+ 34988       reid     case Instruction::UIToFP: {
+ 34988       reid       GenericValue GV = getConstantValue(Op0);
+ 83297    lattner       if (CE->getType()->isFloatTy())
+ 34988       reid         GV.FloatVal = float(GV.IntVal.roundToDouble());
+ 83297    lattner       else if (CE->getType()->isDoubleTy())
+ 34988       reid         GV.DoubleVal = GV.IntVal.roundToDouble();
+ 83297    lattner       else if (CE->getType()->isX86_FP80Ty()) {
+120910        d0k         APFloat apf = APFloat::getZero(APFloat::x87DoubleExtended);
+118973    ddunbar         (void)apf.convertFromAPInt(GV.IntVal,
+ 47739        djg                                    false,
+ 47739        djg                                    APFloat::rmNearestTiesToEven);
+ 57325   johannes         GV.IntVal = apf.bitcastToAPInt();
+ 42043   johannes       }
+ 34988       reid       return GV;
+ 34988       reid     }
+ 34988       reid     case Instruction::SIToFP: {
+ 34988       reid       GenericValue GV = getConstantValue(Op0);
+ 83297    lattner       if (CE->getType()->isFloatTy())
+ 34988       reid         GV.FloatVal = float(GV.IntVal.signedRoundToDouble());
+ 83297    lattner       else if (CE->getType()->isDoubleTy())
+ 34988       reid         GV.DoubleVal = GV.IntVal.signedRoundToDouble();
+ 83297    lattner       else if (CE->getType()->isX86_FP80Ty()) {
+120910        d0k         APFloat apf = APFloat::getZero(APFloat::x87DoubleExtended);
+118973    ddunbar         (void)apf.convertFromAPInt(GV.IntVal,
+ 47739        djg                                    true,
+ 47739        djg                                    APFloat::rmNearestTiesToEven);
+ 57325   johannes         GV.IntVal = apf.bitcastToAPInt();
+ 42043   johannes       }
+ 34988       reid       return GV;
+ 34988       reid     }
+ 34988       reid     case Instruction::FPToUI: // double->APInt conversion handles sign
+ 34988       reid     case Instruction::FPToSI: {
+ 34988       reid       GenericValue GV = getConstantValue(Op0);
+ 34988       reid       uint32_t BitWidth = cast<IntegerType>(CE->getType())->getBitWidth();
+ 83297    lattner       if (Op0->getType()->isFloatTy())
+ 34988       reid         GV.IntVal = APIntOps::RoundFloatToAPInt(GV.FloatVal, BitWidth);
+ 83297    lattner       else if (Op0->getType()->isDoubleTy())
+ 34988       reid         GV.IntVal = APIntOps::RoundDoubleToAPInt(GV.DoubleVal, BitWidth);
+ 83297    lattner       else if (Op0->getType()->isX86_FP80Ty()) {
+173138 tnorthover         APFloat apf = APFloat(APFloat::x87DoubleExtended, GV.IntVal);
+ 42043   johannes         uint64_t v;
+ 57329   johannes         bool ignored;
+ 42043   johannes         (void)apf.convertToInteger(&v, BitWidth,
+118973    ddunbar                                    CE->getOpcode()==Instruction::FPToSI,
+ 57329   johannes                                    APFloat::rmTowardZero, &ignored);
+ 42043   johannes         GV.IntVal = v; // endian?
+ 42043   johannes       }
+ 34988       reid       return GV;
+ 34988       reid     }
+ 31931       reid     case Instruction::PtrToInt: {
+ 34988       reid       GenericValue GV = getConstantValue(Op0);
+201581     rafael       uint32_t PtrWidth = DL->getTypeSizeInBits(Op0->getType());
+167057   efriedma       assert(PtrWidth <= 64 && "Bad pointer width");
+ 34988       reid       GV.IntVal = APInt(PtrWidth, uintptr_t(GV.PointerVal));
+201581     rafael       uint32_t IntWidth = DL->getTypeSizeInBits(CE->getType());
+167057   efriedma       GV.IntVal = GV.IntVal.zextOrTrunc(IntWidth);
+ 31931       reid       return GV;
+ 31931       reid     }
+ 34988       reid     case Instruction::IntToPtr: {
+ 34988       reid       GenericValue GV = getConstantValue(Op0);
+201581     rafael       uint32_t PtrWidth = DL->getTypeSizeInBits(CE->getType());
+167057   efriedma       GV.IntVal = GV.IntVal.zextOrTrunc(PtrWidth);
+ 34988       reid       assert(GV.IntVal.getBitWidth() <= 64 && "Bad pointer width");
+ 34988       reid       GV.PointerVal = PointerTy(uintptr_t(GV.IntVal.getZExtValue()));
+ 34988       reid       return GV;
+ 34988       reid     }
+ 31931       reid     case Instruction::BitCast: {
+ 34988       reid       GenericValue GV = getConstantValue(Op0);
+135375    lattner       Type* DestTy = CE->getType();
+ 34988       reid       switch (Op0->getType()->getTypeID()) {
+ 75640      edwin         default: llvm_unreachable("Invalid bitcast operand");
+ 34988       reid         case Type::IntegerTyID:
+ 96223   baldrick           assert(DestTy->isFloatingPointTy() && "invalid bitcast");
+ 83297    lattner           if (DestTy->isFloatTy())
+ 34988       reid             GV.FloatVal = GV.IntVal.bitsToFloat();
+ 83297    lattner           else if (DestTy->isDoubleTy())
+ 34988       reid             GV.DoubleVal = GV.IntVal.bitsToDouble();
+ 34988       reid           break;
+118973    ddunbar         case Type::FloatTyID:
+ 96223   baldrick           assert(DestTy->isIntegerTy(32) && "Invalid bitcast");
+120261       foad           GV.IntVal = APInt::floatToBits(GV.FloatVal);
+ 34988       reid           break;
+ 34988       reid         case Type::DoubleTyID:
+ 96223   baldrick           assert(DestTy->isIntegerTy(64) && "Invalid bitcast");
+120261       foad           GV.IntVal = APInt::doubleToBits(GV.DoubleVal);
+ 34988       reid           break;
+ 34988       reid         case Type::PointerTyID:
+ 96344   baldrick           assert(DestTy->isPointerTy() && "Invalid bitcast");
+ 34988       reid           break; // getConstantValue(Op0)  above already converted it
+ 34988       reid       }
+ 34988       reid       return GV;
+ 31931       reid     }
+  6203    lattner     case Instruction::Add:
+ 72897        djg     case Instruction::FAdd:
+ 34988       reid     case Instruction::Sub:
+ 72897        djg     case Instruction::FSub:
+ 34988       reid     case Instruction::Mul:
+ 72897        djg     case Instruction::FMul:
+ 34988       reid     case Instruction::UDiv:
+ 34988       reid     case Instruction::SDiv:
+ 34988       reid     case Instruction::URem:
+ 34988       reid     case Instruction::SRem:
+ 34988       reid     case Instruction::And:
+ 34988       reid     case Instruction::Or:
+ 34988       reid     case Instruction::Xor: {
+ 34988       reid       GenericValue LHS = getConstantValue(Op0);
+ 34988       reid       GenericValue RHS = getConstantValue(CE->getOperand(1));
+ 34988       reid       GenericValue GV;
+ 14760    lattner       switch (CE->getOperand(0)->getType()->getTypeID()) {
+ 75640      edwin       default: llvm_unreachable("Bad add type!");
+ 33113       reid       case Type::IntegerTyID:
+ 34988       reid         switch (CE->getOpcode()) {
+ 75640      edwin           default: llvm_unreachable("Invalid integer opcode");
+ 34988       reid           case Instruction::Add: GV.IntVal = LHS.IntVal + RHS.IntVal; break;
+ 34988       reid           case Instruction::Sub: GV.IntVal = LHS.IntVal - RHS.IntVal; break;
+ 34988       reid           case Instruction::Mul: GV.IntVal = LHS.IntVal * RHS.IntVal; break;
+ 34988       reid           case Instruction::UDiv:GV.IntVal = LHS.IntVal.udiv(RHS.IntVal); break;
+ 34988       reid           case Instruction::SDiv:GV.IntVal = LHS.IntVal.sdiv(RHS.IntVal); break;
+ 34988       reid           case Instruction::URem:GV.IntVal = LHS.IntVal.urem(RHS.IntVal); break;
+ 34988       reid           case Instruction::SRem:GV.IntVal = LHS.IntVal.srem(RHS.IntVal); break;
+ 34988       reid           case Instruction::And: GV.IntVal = LHS.IntVal & RHS.IntVal; break;
+ 34988       reid           case Instruction::Or:  GV.IntVal = LHS.IntVal | RHS.IntVal; break;
+ 34988       reid           case Instruction::Xor: GV.IntVal = LHS.IntVal ^ RHS.IntVal; break;
+ 34988       reid         }
+  6203    lattner         break;
+ 14760    lattner       case Type::FloatTyID:
+ 34988       reid         switch (CE->getOpcode()) {
+ 75640      edwin           default: llvm_unreachable("Invalid float opcode");
+ 72897        djg           case Instruction::FAdd:
+ 34988       reid             GV.FloatVal = LHS.FloatVal + RHS.FloatVal; break;
+ 72897        djg           case Instruction::FSub:
+ 34988       reid             GV.FloatVal = LHS.FloatVal - RHS.FloatVal; break;
+ 72897        djg           case Instruction::FMul:
+ 34988       reid             GV.FloatVal = LHS.FloatVal * RHS.FloatVal; break;
+118973    ddunbar           case Instruction::FDiv:
+ 34988       reid             GV.FloatVal = LHS.FloatVal / RHS.FloatVal; break;
+118973    ddunbar           case Instruction::FRem:
+103876    lattner             GV.FloatVal = std::fmod(LHS.FloatVal,RHS.FloatVal); break;
+ 34988       reid         }
+ 14760    lattner         break;
+ 14760    lattner       case Type::DoubleTyID:
+ 34988       reid         switch (CE->getOpcode()) {
+ 75640      edwin           default: llvm_unreachable("Invalid double opcode");
+ 72897        djg           case Instruction::FAdd:
+ 34988       reid             GV.DoubleVal = LHS.DoubleVal + RHS.DoubleVal; break;
+ 72897        djg           case Instruction::FSub:
+ 34988       reid             GV.DoubleVal = LHS.DoubleVal - RHS.DoubleVal; break;
+ 72897        djg           case Instruction::FMul:
+ 34988       reid             GV.DoubleVal = LHS.DoubleVal * RHS.DoubleVal; break;
+118973    ddunbar           case Instruction::FDiv:
+ 34988       reid             GV.DoubleVal = LHS.DoubleVal / RHS.DoubleVal; break;
+118973    ddunbar           case Instruction::FRem:
+103876    lattner             GV.DoubleVal = std::fmod(LHS.DoubleVal,RHS.DoubleVal); break;
+ 34988       reid         }
+ 14760    lattner         break;
+ 42043   johannes       case Type::X86_FP80TyID:
+ 42043   johannes       case Type::PPC_FP128TyID:
+ 42043   johannes       case Type::FP128TyID: {
+173138 tnorthover         const fltSemantics &Sem = CE->getOperand(0)->getType()->getFltSemantics();
+173138 tnorthover         APFloat apfLHS = APFloat(Sem, LHS.IntVal);
+ 42043   johannes         switch (CE->getOpcode()) {
+118958    ddunbar           default: llvm_unreachable("Invalid long double opcode");
+ 72897        djg           case Instruction::FAdd:
+173138 tnorthover             apfLHS.add(APFloat(Sem, RHS.IntVal), APFloat::rmNearestTiesToEven);
+ 57325   johannes             GV.IntVal = apfLHS.bitcastToAPInt();
+ 42043   johannes             break;
+ 72897        djg           case Instruction::FSub:
+173138 tnorthover             apfLHS.subtract(APFloat(Sem, RHS.IntVal),
+173138 tnorthover                             APFloat::rmNearestTiesToEven);
+ 57325   johannes             GV.IntVal = apfLHS.bitcastToAPInt();
+ 42043   johannes             break;
+ 72897        djg           case Instruction::FMul:
+173138 tnorthover             apfLHS.multiply(APFloat(Sem, RHS.IntVal),
+173138 tnorthover                             APFloat::rmNearestTiesToEven);
+ 57325   johannes             GV.IntVal = apfLHS.bitcastToAPInt();
+ 42043   johannes             break;
+118973    ddunbar           case Instruction::FDiv:
+173138 tnorthover             apfLHS.divide(APFloat(Sem, RHS.IntVal),
+173138 tnorthover                           APFloat::rmNearestTiesToEven);
+ 57325   johannes             GV.IntVal = apfLHS.bitcastToAPInt();
+ 42043   johannes             break;
+118973    ddunbar           case Instruction::FRem:
+173138 tnorthover             apfLHS.mod(APFloat(Sem, RHS.IntVal),
+173138 tnorthover                        APFloat::rmNearestTiesToEven);
+ 57325   johannes             GV.IntVal = apfLHS.bitcastToAPInt();
+ 42043   johannes             break;
+ 42043   johannes           }
+ 42043   johannes         }
+ 42043   johannes         break;
+ 14760    lattner       }
+ 34988       reid       return GV;
+ 34988       reid     }
+  5880    lattner     default:
+  6203    lattner       break;
+  5880    lattner     }
+118973    ddunbar 
+118973    ddunbar     SmallString<256> Msg;
+118973    ddunbar     raw_svector_ostream OS(Msg);
+118973    ddunbar     OS << "ConstantExpr not handled: " << *CE;
+118973    ddunbar     report_fatal_error(OS.str());
+  6203    lattner   }
+ 21420    brukman 
+118973    ddunbar   // Otherwise, we have a simple constant.
+ 34988       reid   GenericValue Result;
+ 14201    lattner   switch (C->getType()->getTypeID()) {
+118973    ddunbar   case Type::FloatTyID:
+118973    ddunbar     Result.FloatVal = cast<ConstantFP>(C)->getValueAPF().convertToFloat();
+ 33113       reid     break;
+ 34946       reid   case Type::DoubleTyID:
+ 41747   johannes     Result.DoubleVal = cast<ConstantFP>(C)->getValueAPF().convertToDouble();
+ 34946       reid     break;
+ 42043   johannes   case Type::X86_FP80TyID:
+ 42043   johannes   case Type::FP128TyID:
+ 42043   johannes   case Type::PPC_FP128TyID:
+ 57325   johannes     Result.IntVal = cast <ConstantFP>(C)->getValueAPF().bitcastToAPInt();
+ 42043   johannes     break;
+ 34946       reid   case Type::IntegerTyID:
+ 34946       reid     Result.IntVal = cast<ConstantInt>(C)->getValue();
+ 34946       reid     break;
+  5126    lattner   case Type::PointerTyID:
+ 14951       reid     if (isa<ConstantPointerNull>(C))
+206252    ctopper       Result.PointerVal = nullptr;
+ 14951       reid     else if (const Function *F = dyn_cast<Function>(C))
+ 14951       reid       Result = PTOGV(getPointerToFunctionOrStub(const_cast<Function*>(F)));
+ 85488    lattner     else if (const GlobalVariable *GV = dyn_cast<GlobalVariable>(C))
+ 14951       reid       Result = PTOGV(getOrEmitGlobalVariable(const_cast<GlobalVariable*>(GV)));
+ 14951       reid     else
+ 75640      edwin       llvm_unreachable("Unknown constant pointer type!");
+  5126    lattner     break;
+178469      nadav   case Type::VectorTyID: {
+178469      nadav     unsigned elemNum;
+178469      nadav     Type* ElemTy;
+178469      nadav     const ConstantDataVector *CDV = dyn_cast<ConstantDataVector>(C);
+178469      nadav     const ConstantVector *CV = dyn_cast<ConstantVector>(C);
+178469      nadav     const ConstantAggregateZero *CAZ = dyn_cast<ConstantAggregateZero>(C);
+178469      nadav 
+178469      nadav     if (CDV) {
+178469      nadav         elemNum = CDV->getNumElements();
+178469      nadav         ElemTy = CDV->getElementType();
+178469      nadav     } else if (CV || CAZ) {
+178469      nadav         VectorType* VTy = dyn_cast<VectorType>(C->getType());
+178469      nadav         elemNum = VTy->getNumElements();
+178469      nadav         ElemTy = VTy->getElementType();
+178469      nadav     } else {
+178469      nadav         llvm_unreachable("Unknown constant vector type!");
+178469      nadav     }
+178469      nadav 
+178469      nadav     Result.AggregateVal.resize(elemNum);
+178469      nadav     // Check if vector holds floats.
+178469      nadav     if(ElemTy->isFloatTy()) {
+178469      nadav       if (CAZ) {
+178469      nadav         GenericValue floatZero;
+178469      nadav         floatZero.FloatVal = 0.f;
+178469      nadav         std::fill(Result.AggregateVal.begin(), Result.AggregateVal.end(),
+178469      nadav                   floatZero);
+178469      nadav         break;
+178469      nadav       }
+178469      nadav       if(CV) {
+178469      nadav         for (unsigned i = 0; i < elemNum; ++i)
+178469      nadav           if (!isa<UndefValue>(CV->getOperand(i)))
+178469      nadav             Result.AggregateVal[i].FloatVal = cast<ConstantFP>(
+178469      nadav               CV->getOperand(i))->getValueAPF().convertToFloat();
+178469      nadav         break;
+178469      nadav       }
+178469      nadav       if(CDV)
+178469      nadav         for (unsigned i = 0; i < elemNum; ++i)
+178469      nadav           Result.AggregateVal[i].FloatVal = CDV->getElementAsFloat(i);
+178469      nadav 
+178469      nadav       break;
+178469      nadav     }
+178469      nadav     // Check if vector holds doubles.
+178469      nadav     if (ElemTy->isDoubleTy()) {
+178469      nadav       if (CAZ) {
+178469      nadav         GenericValue doubleZero;
+178469      nadav         doubleZero.DoubleVal = 0.0;
+178469      nadav         std::fill(Result.AggregateVal.begin(), Result.AggregateVal.end(),
+178469      nadav                   doubleZero);
+178469      nadav         break;
+178469      nadav       }
+178469      nadav       if(CV) {
+178469      nadav         for (unsigned i = 0; i < elemNum; ++i)
+178469      nadav           if (!isa<UndefValue>(CV->getOperand(i)))
+178469      nadav             Result.AggregateVal[i].DoubleVal = cast<ConstantFP>(
+178469      nadav               CV->getOperand(i))->getValueAPF().convertToDouble();
+178469      nadav         break;
+178469      nadav       }
+178469      nadav       if(CDV)
+178469      nadav         for (unsigned i = 0; i < elemNum; ++i)
+178469      nadav           Result.AggregateVal[i].DoubleVal = CDV->getElementAsDouble(i);
+178469      nadav 
+178469      nadav       break;
+178469      nadav     }
+178469      nadav     // Check if vector holds integers.
+178469      nadav     if (ElemTy->isIntegerTy()) {
+178469      nadav       if (CAZ) {
+178469      nadav         GenericValue intZero;     
+178469      nadav         intZero.IntVal = APInt(ElemTy->getScalarSizeInBits(), 0ull);
+178469      nadav         std::fill(Result.AggregateVal.begin(), Result.AggregateVal.end(),
+178469      nadav                   intZero);
+178469      nadav         break;
+178469      nadav       }
+178469      nadav       if(CV) {
+178469      nadav         for (unsigned i = 0; i < elemNum; ++i)
+178469      nadav           if (!isa<UndefValue>(CV->getOperand(i)))
+178469      nadav             Result.AggregateVal[i].IntVal = cast<ConstantInt>(
+178469      nadav                                             CV->getOperand(i))->getValue();
+178469      nadav           else {
+178469      nadav             Result.AggregateVal[i].IntVal =
+178469      nadav               APInt(CV->getOperand(i)->getType()->getPrimitiveSizeInBits(), 0);
+178469      nadav           }
+178469      nadav         break;
+178469      nadav       }
+178469      nadav       if(CDV)
+178469      nadav         for (unsigned i = 0; i < elemNum; ++i)
+178469      nadav           Result.AggregateVal[i].IntVal = APInt(
+178469      nadav             CDV->getElementType()->getPrimitiveSizeInBits(),
+178469      nadav             CDV->getElementAsInteger(i));
+178469      nadav 
+178469      nadav       break;
+178469      nadav     }
+178469      nadav     llvm_unreachable("Unknown constant pointer type!");
+178469      nadav   }
+178469      nadav   break;
+178469      nadav 
+  5126    lattner   default:
+118973    ddunbar     SmallString<256> Msg;
+118973    ddunbar     raw_svector_ostream OS(Msg);
+118973    ddunbar     OS << "ERROR: Constant unimplemented for type: " << *C->getType();
+118973    ddunbar     report_fatal_error(OS.str());
+  5126    lattner   }
+118973    ddunbar 
+  5126    lattner   return Result;
+  5126    lattner }
+  5126    lattner 
+ 45039   baldrick /// StoreIntToMemory - Fills the StoreBytes bytes of memory starting from Dst
+ 45039   baldrick /// with the integer held in IntVal.
+ 45039   baldrick static void StoreIntToMemory(const APInt &IntVal, uint8_t *Dst,
+ 45039   baldrick                              unsigned StoreBytes) {
+ 45039   baldrick   assert((IntVal.getBitWidth()+7)/8 >= StoreBytes && "Integer too small!");
+163258   rdivacky   const uint8_t *Src = (const uint8_t *)IntVal.getRawData();
+ 45039   baldrick 
+179527     rafael   if (sys::IsLittleEndianHost) {
+ 45039   baldrick     // Little-endian host - the source is ordered from LSB to MSB.  Order the
+ 45039   baldrick     // destination from LSB to MSB: Do a straight copy.
+ 45039   baldrick     memcpy(Dst, Src, StoreBytes);
+118973    ddunbar   } else {
+ 45039   baldrick     // Big-endian host - the source is an array of 64 bit words ordered from
+ 45039   baldrick     // LSW to MSW.  Each word is ordered from MSB to LSB.  Order the destination
+ 45039   baldrick     // from MSB to LSB: Reverse the word order, but not the bytes in a word.
+ 45039   baldrick     while (StoreBytes > sizeof(uint64_t)) {
+ 45039   baldrick       StoreBytes -= sizeof(uint64_t);
+ 45039   baldrick       // May not be aligned so use memcpy.
+ 45039   baldrick       memcpy(Dst + StoreBytes, Src, sizeof(uint64_t));
+ 45039   baldrick       Src += sizeof(uint64_t);
+ 45039   baldrick     }
+ 45039   baldrick 
+ 45039   baldrick     memcpy(Dst, Src + sizeof(uint64_t) - StoreBytes, StoreBytes);
+ 45039   baldrick   }
+ 45039   baldrick }
+ 45039   baldrick 
+ 58684  evancheng void ExecutionEngine::StoreValueToMemory(const GenericValue &Val,
+135375    lattner                                          GenericValue *Ptr, Type *Ty) {
+165402   mvillmow   const unsigned StoreBytes = getDataLayout()->getTypeStoreSize(Ty);
+ 45039   baldrick 
+ 34946       reid   switch (Ty->getTypeID()) {
+178469      nadav   default:
+178469      nadav     dbgs() << "Cannot store value of type " << *Ty << "!\n";
+178469      nadav     break;
+ 45039   baldrick   case Type::IntegerTyID:
+ 45039   baldrick     StoreIntToMemory(Val.IntVal, (uint8_t*)Ptr, StoreBytes);
+ 34946       reid     break;
+ 34946       reid   case Type::FloatTyID:
+ 34946       reid     *((float*)Ptr) = Val.FloatVal;
+ 34946       reid     break;
+ 34946       reid   case Type::DoubleTyID:
+ 34946       reid     *((double*)Ptr) = Val.DoubleVal;
+ 34946       reid     break;
+ 67636   johannes   case Type::X86_FP80TyID:
+ 67636   johannes     memcpy(Ptr, Val.IntVal.getRawData(), 10);
+ 67636   johannes     break;
+ 45039   baldrick   case Type::PointerTyID:
+ 45039   baldrick     // Ensure 64 bit target pointers are fully initialized on 32 bit hosts.
+ 45039   baldrick     if (StoreBytes != sizeof(PointerTy))
+130395  chandlerc       memset(&(Ptr->PointerVal), 0, StoreBytes);
+ 45039   baldrick 
+ 34946       reid     *((PointerTy*)Ptr) = Val.PointerVal;
+ 34946       reid     break;
+178469      nadav   case Type::VectorTyID:
+178469      nadav     for (unsigned i = 0; i < Val.AggregateVal.size(); ++i) {
+178469      nadav       if (cast<VectorType>(Ty)->getElementType()->isDoubleTy())
+178469      nadav         *(((double*)Ptr)+i) = Val.AggregateVal[i].DoubleVal;
+178469      nadav       if (cast<VectorType>(Ty)->getElementType()->isFloatTy())
+178469      nadav         *(((float*)Ptr)+i) = Val.AggregateVal[i].FloatVal;
+178469      nadav       if (cast<VectorType>(Ty)->getElementType()->isIntegerTy()) {
+178469      nadav         unsigned numOfBytes =(Val.AggregateVal[i].IntVal.getBitWidth()+7)/8;
+178469      nadav         StoreIntToMemory(Val.AggregateVal[i].IntVal, 
+178469      nadav           (uint8_t*)Ptr + numOfBytes*i, numOfBytes);
+178469      nadav       }
+178469      nadav     }
+178469      nadav     break;
+ 34946       reid   }
+ 45039   baldrick 
+179527     rafael   if (sys::IsLittleEndianHost != getDataLayout()->isLittleEndian())
+ 45039   baldrick     // Host and target are different endian - reverse the stored bytes.
+ 45039   baldrick     std::reverse((uint8_t*)Ptr, StoreBytes + (uint8_t*)Ptr);
+  5126    lattner }
+  5126    lattner 
+ 45039   baldrick /// LoadIntFromMemory - Loads the integer stored in the LoadBytes bytes starting
+ 45039   baldrick /// from Src into IntVal, which is assumed to be wide enough and to hold zero.
+ 45039   baldrick static void LoadIntFromMemory(APInt &IntVal, uint8_t *Src, unsigned LoadBytes) {
+ 45039   baldrick   assert((IntVal.getBitWidth()+7)/8 >= LoadBytes && "Integer too small!");
+172470    greened   uint8_t *Dst = reinterpret_cast<uint8_t *>(
+172470    greened                    const_cast<uint64_t *>(IntVal.getRawData()));
+ 45039   baldrick 
+179527     rafael   if (sys::IsLittleEndianHost)
+ 45039   baldrick     // Little-endian host - the destination must be ordered from LSB to MSB.
+ 45039   baldrick     // The source is ordered from LSB to MSB: Do a straight copy.
+ 45039   baldrick     memcpy(Dst, Src, LoadBytes);
+ 45039   baldrick   else {
+ 45039   baldrick     // Big-endian - the destination is an array of 64 bit words ordered from
+ 45039   baldrick     // LSW to MSW.  Each word must be ordered from MSB to LSB.  The source is
+ 45039   baldrick     // ordered from MSB to LSB: Reverse the word order, but not the bytes in
+ 45039   baldrick     // a word.
+ 45039   baldrick     while (LoadBytes > sizeof(uint64_t)) {
+ 45039   baldrick       LoadBytes -= sizeof(uint64_t);
+ 45039   baldrick       // May not be aligned so use memcpy.
+ 45039   baldrick       memcpy(Dst, Src + LoadBytes, sizeof(uint64_t));
+ 45039   baldrick       Dst += sizeof(uint64_t);
+ 45039   baldrick     }
+ 45039   baldrick 
+ 45039   baldrick     memcpy(Dst + sizeof(uint64_t) - LoadBytes, Src, LoadBytes);
+ 45039   baldrick   }
+ 45039   baldrick }
+ 45039   baldrick 
+  9022    brukman /// FIXME: document
+  9022    brukman ///
+ 45039   baldrick void ExecutionEngine::LoadValueFromMemory(GenericValue &Result,
+ 48151   baldrick                                           GenericValue *Ptr,
+135375    lattner                                           Type *Ty) {
+165402   mvillmow   const unsigned LoadBytes = getDataLayout()->getTypeStoreSize(Ty);
+ 45039   baldrick 
+ 34946       reid   switch (Ty->getTypeID()) {
+ 45039   baldrick   case Type::IntegerTyID:
+ 44796   baldrick     // An APInt with all words initially zero.
+ 45039   baldrick     Result.IntVal = APInt(cast<IntegerType>(Ty)->getBitWidth(), 0);
+ 45039   baldrick     LoadIntFromMemory(Result.IntVal, (uint8_t*)Ptr, LoadBytes);
+ 34946       reid     break;
+ 34946       reid   case Type::FloatTyID:
+ 34946       reid     Result.FloatVal = *((float*)Ptr);
+ 34946       reid     break;
+ 34946       reid   case Type::DoubleTyID:
+ 45039   baldrick     Result.DoubleVal = *((double*)Ptr);
+ 34946       reid     break;
+ 45039   baldrick   case Type::PointerTyID:
+ 34946       reid     Result.PointerVal = *((PointerTy*)Ptr);
+ 34946       reid     break;
+ 42043   johannes   case Type::X86_FP80TyID: {
+ 42043   johannes     // This is endian dependent, but it will only work on x86 anyway.
+ 45059   baldrick     // FIXME: Will not trap if loading a signaling NaN.
+ 67636   johannes     uint64_t y[2];
+ 67636   johannes     memcpy(y, Ptr, 10);
+135431   jyasskin     Result.IntVal = APInt(80, y);
+ 42043   johannes     break;
+ 42043   johannes   }
+178469      nadav   case Type::VectorTyID: {
+178469      nadav     const VectorType *VT = cast<VectorType>(Ty);
+178469      nadav     const Type *ElemT = VT->getElementType();
+178469      nadav     const unsigned numElems = VT->getNumElements();
+178469      nadav     if (ElemT->isFloatTy()) {
+178469      nadav       Result.AggregateVal.resize(numElems);
+178469      nadav       for (unsigned i = 0; i < numElems; ++i)
+178469      nadav         Result.AggregateVal[i].FloatVal = *((float*)Ptr+i);
+178469      nadav     }
+178469      nadav     if (ElemT->isDoubleTy()) {
+178469      nadav       Result.AggregateVal.resize(numElems);
+178469      nadav       for (unsigned i = 0; i < numElems; ++i)
+178469      nadav         Result.AggregateVal[i].DoubleVal = *((double*)Ptr+i);
+178469      nadav     }
+178469      nadav     if (ElemT->isIntegerTy()) {
+178469      nadav       GenericValue intZero;
+178469      nadav       const unsigned elemBitWidth = cast<IntegerType>(ElemT)->getBitWidth();
+178469      nadav       intZero.IntVal = APInt(elemBitWidth, 0);
+178469      nadav       Result.AggregateVal.resize(numElems, intZero);
+178469      nadav       for (unsigned i = 0; i < numElems; ++i)
+178469      nadav         LoadIntFromMemory(Result.AggregateVal[i].IntVal,
+178469      nadav           (uint8_t*)Ptr+((elemBitWidth+7)/8)*i, (elemBitWidth+7)/8);
+178469      nadav     }
+178469      nadav   break;
+178469      nadav   }
+ 34946       reid   default:
+118973    ddunbar     SmallString<256> Msg;
+118973    ddunbar     raw_svector_ostream OS(Msg);
+118973    ddunbar     OS << "Cannot load value of type " << *Ty << "!";
+118973    ddunbar     report_fatal_error(OS.str());
+ 34946       reid   }
+  6042    lattner }
+  6042    lattner 
+  5126    lattner void ExecutionEngine::InitializeMemory(const Constant *Init, void *Addr) {
+ 92621    greened   DEBUG(dbgs() << "JIT: Initializing " << Addr << " ");
+ 54442   johannes   DEBUG(Init->dump());
+148802    lattner   if (isa<UndefValue>(Init))
+ 17055    lattner     return;
+148802    lattner   
+148802    lattner   if (const ConstantVector *CP = dyn_cast<ConstantVector>(Init)) {
+ 25481   bocchino     unsigned ElementSize =
+165402   mvillmow       getDataLayout()->getTypeAllocSize(CP->getType()->getElementType());
+ 25481   bocchino     for (unsigned i = 0, e = CP->getNumOperands(); i != e; ++i)
+ 25481   bocchino       InitializeMemory(CP->getOperand(i), (char*)Addr+i*ElementSize);
+ 25481   bocchino     return;
+148802    lattner   }
+148802    lattner   
+148802    lattner   if (isa<ConstantAggregateZero>(Init)) {
+165402   mvillmow     memset(Addr, 0, (size_t)getDataLayout()->getTypeAllocSize(Init->getType()));
+ 47148    lattner     return;
+148802    lattner   }
+148802    lattner   
+148802    lattner   if (const ConstantArray *CPA = dyn_cast<ConstantArray>(Init)) {
+ 21420    brukman     unsigned ElementSize =
+165402   mvillmow       getDataLayout()->getTypeAllocSize(CPA->getType()->getElementType());
+ 15487      alkis     for (unsigned i = 0, e = CPA->getNumOperands(); i != e; ++i)
+ 15487      alkis       InitializeMemory(CPA->getOperand(i), (char*)Addr+i*ElementSize);
+  5126    lattner     return;
+148802    lattner   }
+148802    lattner   
+148802    lattner   if (const ConstantStruct *CPS = dyn_cast<ConstantStruct>(Init)) {
+  5126    lattner     const StructLayout *SL =
+165402   mvillmow       getDataLayout()->getStructLayout(cast<StructType>(CPS->getType()));
+ 15487      alkis     for (unsigned i = 0, e = CPS->getNumOperands(); i != e; ++i)
+ 34156    lattner       InitializeMemory(CPS->getOperand(i), (char*)Addr+SL->getElementOffset(i));
+  5126    lattner     return;
+148802    lattner   }
+148802    lattner 
+148802    lattner   if (const ConstantDataSequential *CDS =
+148802    lattner                dyn_cast<ConstantDataSequential>(Init)) {
+148802    lattner     // CDS is already laid out in host memory order.
+148802    lattner     StringRef Data = CDS->getRawDataValues();
+148802    lattner     memcpy(Addr, Data.data(), Data.size());
+148802    lattner     return;
+148802    lattner   }
+148802    lattner 
+148802    lattner   if (Init->getType()->isFirstClassType()) {
+ 51293        djg     GenericValue Val = getConstantValue(Init);
+ 51293        djg     StoreValueToMemory(Val, (GenericValue*)Addr, Init->getType());
+ 51293        djg     return;
+  5126    lattner   }
+  5126    lattner 
+118973    ddunbar   DEBUG(dbgs() << "Bad Type: " << *Init->getType() << "\n");
+ 75640      edwin   llvm_unreachable("Unknown constant type to initialize memory with!");
+  5126    lattner }
+  5126    lattner 
+  5126    lattner /// EmitGlobals - Emit all of the global variables to memory, storing their
+  5126    lattner /// addresses into GlobalAddress.  This must make sure to copy the contents of
+  5126    lattner /// their initializers into the memory.
+  5126    lattner void ExecutionEngine::emitGlobals() {
+  5126    lattner   // Loop over all of the global variables in the program, allocating the memory
+ 29721    lattner   // to hold them.  If there is more than one module, do a prepass over globals
+ 29721    lattner   // to figure out how the different modules should link together.
+135375    lattner   std::map<std::pair<std::string, Type*>,
+ 29721    lattner            const GlobalValue*> LinkedGlobalsMap;
+ 21420    brukman 
+ 29721    lattner   if (Modules.size() != 1) {
+ 29721    lattner     for (unsigned m = 0, e = Modules.size(); m != e; ++m) {
+ 94686   jyasskin       Module &M = *Modules[m];
+208346     rafael       for (const auto &GV : M.globals()) {
+208346     rafael         if (GV.hasLocalLinkage() || GV.isDeclaration() ||
+208346     rafael             GV.hasAppendingLinkage() || !GV.hasName())
+ 29721    lattner           continue;// Ignore external globals and globals with internal linkage.
+118973    ddunbar 
+118973    ddunbar         const GlobalValue *&GVEntry =
+208346     rafael           LinkedGlobalsMap[std::make_pair(GV.getName(), GV.getType())];
+ 29721    lattner 
+ 29721    lattner         // If this is the first time we've seen this global, it is the canonical
+ 29721    lattner         // version.
+ 29721    lattner         if (!GVEntry) {
+208346     rafael           GVEntry = &GV;
+ 29721    lattner           continue;
+ 29721    lattner         }
+118973    ddunbar 
+ 29721    lattner         // If the existing global is strong, never replace it.
+199218     nrieck         if (GVEntry->hasExternalLinkage())
+ 29721    lattner           continue;
+118973    ddunbar 
+ 29721    lattner         // Otherwise, we know it's linkonce/weak, replace it if this is a strong
+ 51118   johannes         // symbol.  FIXME is this right for common?
+208346     rafael         if (GV.hasExternalLinkage() || GVEntry->hasExternalWeakLinkage())
+208346     rafael           GVEntry = &GV;
+  5880    lattner       }
+  5126    lattner     }
+ 29721    lattner   }
+118973    ddunbar 
+ 29721    lattner   std::vector<const GlobalValue*> NonCanonicalGlobals;
+ 29721    lattner   for (unsigned m = 0, e = Modules.size(); m != e; ++m) {
+ 94686   jyasskin     Module &M = *Modules[m];
+208346     rafael     for (const auto &GV : M.globals()) {
+ 29721    lattner       // In the multi-module case, see what this global maps to.
+ 29721    lattner       if (!LinkedGlobalsMap.empty()) {
+118973    ddunbar         if (const GlobalValue *GVEntry =
+208346     rafael               LinkedGlobalsMap[std::make_pair(GV.getName(), GV.getType())]) {
+ 29721    lattner           // If something else is the canonical global, ignore this one.
+208346     rafael           if (GVEntry != &GV) {
+208346     rafael             NonCanonicalGlobals.push_back(&GV);
+ 29721    lattner             continue;
+ 29721    lattner           }
+ 29721    lattner         }
+ 29721    lattner       }
+118973    ddunbar 
+208346     rafael       if (!GV.isDeclaration()) {
+208346     rafael         addGlobalMapping(&GV, getMemoryForGV(&GV));
+ 29721    lattner       } else {
+ 29721    lattner         // External variable reference. Try to use the dynamic loader to
+ 29721    lattner         // get a pointer to it.
+ 29721    lattner         if (void *SymAddr =
+208346     rafael             sys::DynamicLibrary::SearchForAddressOfSymbol(GV.getName()))
+208346     rafael           addGlobalMapping(&GV, SymAddr);
+ 29721    lattner         else {
+100709    lattner           report_fatal_error("Could not resolve external global address: "
+208346     rafael                             +GV.getName());
+ 29721    lattner         }
+ 29721    lattner       }
+ 29721    lattner     }
+118973    ddunbar 
+ 29721    lattner     // If there are multiple modules, map the non-canonical globals to their
+ 29721    lattner     // canonical location.
+ 29721    lattner     if (!NonCanonicalGlobals.empty()) {
+ 29721    lattner       for (unsigned i = 0, e = NonCanonicalGlobals.size(); i != e; ++i) {
+ 29721    lattner         const GlobalValue *GV = NonCanonicalGlobals[i];
+ 29721    lattner         const GlobalValue *CGV =
+ 29721    lattner           LinkedGlobalsMap[std::make_pair(GV->getName(), GV->getType())];
+ 29721    lattner         void *Ptr = getPointerToGlobalIfAvailable(CGV);
+ 29721    lattner         assert(Ptr && "Canonical global wasn't codegen'd!");
+ 57484     nlopes         addGlobalMapping(GV, Ptr);
+ 29721    lattner       }
+ 29721    lattner     }
+118973    ddunbar 
+118973    ddunbar     // Now that all of the globals are set up in memory, loop through them all
+ 33113       reid     // and initialize their contents.
+208346     rafael     for (const auto &GV : M.globals()) {
+208346     rafael       if (!GV.isDeclaration()) {
+ 29721    lattner         if (!LinkedGlobalsMap.empty()) {
+118973    ddunbar           if (const GlobalValue *GVEntry =
+208346     rafael                 LinkedGlobalsMap[std::make_pair(GV.getName(), GV.getType())])
+208346     rafael             if (GVEntry != &GV)  // Not the canonical variable.
+ 29721    lattner               continue;
+ 29721    lattner         }
+208346     rafael         EmitGlobalVariable(&GV);
+ 29721    lattner       }
+ 29721    lattner     }
+ 29721    lattner   }
+  5126    lattner }
+ 10547    lattner 
+ 10547    lattner // EmitGlobalVariable - This method emits the specified global variable to the
+ 10547    lattner // address specified in GlobalAddresses, or allocates new memory if it's not
+ 10547    lattner // already in the map.
+ 10549    lattner void ExecutionEngine::EmitGlobalVariable(const GlobalVariable *GV) {
+ 10674    lattner   void *GA = getPointerToGlobalIfAvailable(GV);
+ 11191    lattner 
+206252    ctopper   if (!GA) {
+ 10547    lattner     // If it's not already specified, allocate memory for the global.
+ 58142   geoffray     GA = getMemoryForGV(GV);
+194831    akaylor 
+194831    akaylor     // If we failed to allocate memory for this global, return.
+206252    ctopper     if (!GA) return;
+194831    akaylor 
+ 10674    lattner     addGlobalMapping(GV, GA);
+ 10547    lattner   }
+118973    ddunbar 
+ 58142   geoffray   // Don't initialize if it's thread local, let the client do it.
+ 58142   geoffray   if (!GV->isThreadLocal())
+ 58142   geoffray     InitializeMemory(GV->getInitializer(), GA);
+118973    ddunbar 
+135375    lattner   Type *ElTy = GV->getType()->getElementType();
+165402   mvillmow   size_t GVSize = (size_t)getDataLayout()->getTypeAllocSize(ElTy);
+ 19391    lattner   NumInitBytes += (unsigned)GVSize;
+ 10547    lattner   ++NumGlobals;
+ 10547    lattner }
+ 83987   jyasskin 
+ 84975   jyasskin ExecutionEngineState::ExecutionEngineState(ExecutionEngine &EE)
+ 84975   jyasskin   : EE(EE), GlobalAddressMap(this) {
+ 84975   jyasskin }
+ 83987   jyasskin 
+211401    zturner sys::Mutex *
+118973    ddunbar ExecutionEngineState::AddressMapConfig::getMutex(ExecutionEngineState *EES) {
+ 84975   jyasskin   return &EES->EE.lock;
+ 83987   jyasskin }
+118973    ddunbar 
+118973    ddunbar void ExecutionEngineState::AddressMapConfig::onDelete(ExecutionEngineState *EES,
+118973    ddunbar                                                       const GlobalValue *Old) {
+ 84975   jyasskin   void *OldVal = EES->GlobalAddressMap.lookup(Old);
+ 84975   jyasskin   EES->GlobalAddressReverseMap.erase(OldVal);
+ 84975   jyasskin }
+ 83987   jyasskin 
+118973    ddunbar void ExecutionEngineState::AddressMapConfig::onRAUW(ExecutionEngineState *,
+118973    ddunbar                                                     const GlobalValue *,
+118973    ddunbar                                                     const GlobalValue *) {
+149967    ctopper   llvm_unreachable("The ExecutionEngine doesn't know how to handle a"
+149967    ctopper                    " RAUW on a value it has a global mapping for.");
+ 83987   jyasskin }

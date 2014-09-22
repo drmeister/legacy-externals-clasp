@@ -59,12 +59,25 @@ READLINE_VERSION=6.2
 OPENMPI_SOURCE_DIR = openmpi-1.6.5
 MPS_SOURCE_DIR = mps-temporary
 ECL_SOURCE_DIR = ecl
+#export LLVM_REVISION = 212390
+#export LLVM_SOURCE_DIR = llvm3.4svn
+export LLVM_REVISION = 218184
+export LLVM_SOURCE_DIR = llvm3.5
 
+BOEHM_SOURCE_DIR = boehm-7.2
+EXPAT_SOURCE_DIR = expat-2.0.1
+ZLIB_SOURCE_DIR = zlib-1.2.8
+GMP_SOURCE_DIR = gmp-5.0.5
+BOOST_SOURCE_DIR = boost
+#export BOOST_BUILD_SOURCE_DIR = boost-build-system
+BOOST_BUILD_SOURCE_DIR = $(BOOST_SOURCE_DIR)/tools/build/v2
+LLDB_SOURCE_DIR = lldb
 
 getllvm:
-	svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/llvm/trunk llvm3.4svn
-	(cd llvm3.4svn/tools; svn co -r $(LLVM_REVISION)  http://llvm.org/svn/llvm-project/cfe/trunk clang)
-	(cd llvm3.4svn/tools/clang/tools; svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
+	svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/llvm/trunk $(LLVM_SOURCE_DIR)
+	(cd $(LLVM_SOURCE_DIR)/tools; svn co -r $(LLVM_REVISION)  http://llvm.org/svn/llvm-project/cfe/trunk clang)
+	(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
+
 
 resetllvm:
 	rm -rf llvm3.4svn
@@ -74,23 +87,6 @@ all-dependencies:
 	make setup
 	make subAll
 
-export LLVM_REVISION = 212390
-
-# export LLVM_SOURCE_DIR = llvm-$(LLVM_REVISION)
-export LLVM_SOURCE_DIR = llvm3.4svn
-
-
-BOEHM_SOURCE_DIR = boehm-7.2
-
-
-
-EXPAT_SOURCE_DIR = expat-2.0.1
-ZLIB_SOURCE_DIR = zlib-1.2.8
-GMP_SOURCE_DIR = gmp-5.0.5
-BOOST_SOURCE_DIR = boost
-#export BOOST_BUILD_SOURCE_DIR = boost-build-system
-BOOST_BUILD_SOURCE_DIR = $(BOOST_SOURCE_DIR)/tools/build/v2
-LLDB_SOURCE_DIR = lldb
 
 printenv:
 	echo EXTERNALS_DIR=$(EXTERNALS_DIR)

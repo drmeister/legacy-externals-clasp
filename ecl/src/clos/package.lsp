@@ -15,3 +15,7 @@
   (:import-from "SI" "UNBOUND" "GET-SYSPROP" "PUT-SYSPROP" "REM-SYSPROP"
 		"SIMPLE-PROGRAM-ERROR"))
 
+
+(eval-when (:execute :compile-toplevel)
+  (princ (list "Meister debugging: *features* -->" *features*))
+  (terpri))

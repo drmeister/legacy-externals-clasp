@@ -15,6 +15,10 @@
 (eval-when (eval compile load)
   (si::select-package "SI"))
 
+(eval-when (:execute :compile-toplevel)
+  (princ (list "Meister debugging: *features* -->" *features*))
+  (terpri))
+
 ;;; ----------------------------------------------------------------------
 ;;;
 (*make-special '*dump-defun-definitions*)
