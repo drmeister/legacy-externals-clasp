@@ -29,7 +29,7 @@ CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_
 
 
 all:
-	make getllvm
+	make gitllvm
 	make allnoget
 
 allnoget:
@@ -64,8 +64,6 @@ MPS_SOURCE_DIR = mps-temporary
 ECL_SOURCE_DIR = ecl
 #export LLVM_REVISION = 212390
 #export LLVM_SOURCE_DIR = llvm3.4svn
-export LLVM_REVISION = 218184
-export LLVM_SOURCE_DIR = llvm3.5
 
 BOEHM_SOURCE_DIR = boehm-7.2
 EXPAT_SOURCE_DIR = expat-2.0.1
@@ -76,12 +74,21 @@ BOOST_SOURCE_DIR = boost
 BOOST_BUILD_SOURCE_DIR = $(BOOST_SOURCE_DIR)/tools/build/v2
 LLDB_SOURCE_DIR = lldb
 
+export LLVM_REVISION = 218184
+export LLVM_SOURCE_DIR = llvm
 getllvm:
 	svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/llvm/trunk $(LLVM_SOURCE_DIR)
 	(cd $(LLVM_SOURCE_DIR)/tools; svn co -r $(LLVM_REVISION)  http://llvm.org/svn/llvm-project/cfe/trunk clang)
 	(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
 
 
+gitllvm:
+	-git clone -b release_35 --depth 1 http://llvm.org/git/llvm.git llvm
+	-(cd llvm/tools; git clone -b release_35 --depth 1 http://llvm.org/git/clang.git clang)
+	-(cd llvm/tools/clang/tools; git clone -b release_35 --depth 1 http://llvm.org/git/clang-tools-extra.git extra)
+# Here I would download clang-tools-extra if necessary
+
+ 
 resetllvm:
 	rm -rf llvm3.4svn
 
