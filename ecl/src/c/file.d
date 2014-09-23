@@ -15,6 +15,8 @@
     See file '../Copyright' for full details.
 */
 
+#define FILE_LOG_HERE() printf("%s:%d:%s\n", __FILE__, __LINE__, __FUNCTION__);
+#define FILE_LOG(msg) printf("%s:%d:%s ", __FILE__, __LINE__, __FUNCTION__); printf msg;
 /*
 	IMPLEMENTATION-DEPENDENT
 
@@ -169,6 +171,7 @@ not_input_unread_char(cl_object strm, ecl_character c)
 static int
 not_input_listen(cl_object strm)
 {
+    FILE_LOG_HERE();
 	not_an_input_stream(strm);
 	return -1;
 }
@@ -269,6 +272,8 @@ closed_stream_unread_char(cl_object strm, ecl_character c)
 static int
 closed_stream_listen(cl_object strm)
 {
+    FILE_LOG_HERE();
+
 	FEclosed_stream(strm);
 	return 0;
 }
@@ -1541,6 +1546,7 @@ str_in_peek_char(cl_object strm)
 static int
 str_in_listen(cl_object strm)
 {
+    FILE_LOG_HERE();
 	if (STRING_INPUT_POSITION(strm) < STRING_INPUT_LIMIT(strm))
 		return ECL_LISTEN_AVAILABLE;
 	else
@@ -1719,6 +1725,7 @@ two_way_write_vector(cl_object strm, cl_object data, cl_index start, cl_index n)
 static int
 two_way_listen(cl_object strm)
 {
+    FILE_LOG_HERE();
 	return ecl_listen_stream(TWO_WAY_STREAM_INPUT(strm));
 }
 
@@ -2684,28 +2691,35 @@ io_file_write_byte8(cl_object strm, unsigned char *c, cl_index n)
 static int
 io_file_listen(cl_object strm)
 {
-	if (strm->stream.byte_stack != ECL_NIL)
-		return ECL_LISTEN_AVAILABLE;
-	if (strm->stream.flags & ECL_STREAM_MIGHT_SEEK) {
-		cl_env_ptr the_env = ecl_process_env();
-		int f = IO_FILE_DESCRIPTOR(strm);
-		ecl_off_t disp, new;
-		ecl_disable_interrupts_env(the_env);
-		disp = lseek(f, 0, SEEK_CUR);
-		ecl_enable_interrupts_env(the_env);
-		if (disp != (ecl_off_t)-1) {
-			ecl_disable_interrupts_env(the_env);
-			new = lseek(f, 0, SEEK_END);
-			ecl_enable_interrupts_env(the_env);
-			lseek(f, disp, SEEK_SET);
-			if (new == disp) {
-				return ECL_LISTEN_NO_CHAR;
-			} else if (new != (ecl_off_t)-1) {
-				return ECL_LISTEN_AVAILABLE;
-			}
-		}
-	}
-	return file_listen(strm, IO_FILE_DESCRIPTOR(strm));
+    FILE_LOG_HERE();
+    if (strm->stream.byte_stack != ECL_NIL)
+        return ECL_LISTEN_AVAILABLE;
+    FILE_LOG_HERE();
+    if (strm->stream.flags & ECL_STREAM_MIGHT_SEEK) {
+        FILE_LOG_HERE();
+        cl_env_ptr the_env = ecl_process_env();
+        int f = IO_FILE_DESCRIPTOR(strm);
+        ecl_off_t disp, new;
+        ecl_disable_interrupts_env(the_env);
+        disp = lseek(f, 0, SEEK_CUR);
+        ecl_enable_interrupts_env(the_env);
+        if (disp != (ecl_off_t)-1) {
+            FILE_LOG_HERE();
+            ecl_disable_interrupts_env(the_env);
+            new = lseek(f, 0, SEEK_END);
+            ecl_enable_interrupts_env(the_env);
+            lseek(f, disp, SEEK_SET);
+            if (new == disp) {
+                FILE_LOG_HERE();
+                return ECL_LISTEN_NO_CHAR;
+            } else if (new != (ecl_off_t)-1) {
+                FILE_LOG_HERE();
+                return ECL_LISTEN_AVAILABLE;
+            }
+        }
+    }
+    FILE_LOG_HERE();
+    return file_listen(strm, IO_FILE_DESCRIPTOR(strm));
 }
 
 #if defined(ECL_MS_WINDOWS_HOST)
@@ -4582,6 +4596,7 @@ ecl_unread_char(ecl_character c, cl_object strm)
 int
 ecl_listen_stream(cl_object strm)
 {
+    FILE_LOG_HERE();
 	return stream_dispatch_table(strm)->listen(strm);
 }
 
@@ -5213,8 +5228,10 @@ ecl_open_stream(cl_object fn, enum ecl_smmode smm, cl_object if_exists,
 static int
 file_listen(cl_object stream, int fileno)
 {
+    FILE_LOG_HERE();
 #if !defined(ECL_MS_WINDOWS_HOST)
 # if defined(HAVE_SELECT)
+    FILE_LOG_HERE();
 	fd_set fds;
 	int retv;
 	struct timeval tv = { 0, 0 };
@@ -5227,20 +5244,26 @@ file_listen(cl_object stream, int fileno)
 	FD_ZERO(&fds);
 	FD_SET(fileno, &fds);
 	retv = select(fileno + 1, &fds, NULL, NULL, &tv);
-	if (ecl_unlikely(retv < 0))
+	if (ecl_unlikely(retv < 0)) {
+            FILE_LOG_HERE();
 		file_libc_error(@[stream-error], stream, "Error while listening to stream.", 0);
-	else if (retv > 0)
+        } else if (retv > 0) {
+            FILE_LOG_HERE();
 		return ECL_LISTEN_AVAILABLE;
-	else
+        } else {
+            FILE_LOG_HERE();
 		return ECL_LISTEN_NO_CHAR;
+        }
 # elif defined(FIONREAD)
 	{
+            FILE_LOG_HERE();
 		long c = 0;
 		ioctl(fileno, FIONREAD, &c);
 		return (c > 0)? ECL_LISTEN_AVAILABLE : ECL_LISTEN_NO_CHAR;
 	}
 # endif /* FIONREAD */
 #else
+        FILE_LOG_HERE();
 	HANDLE hnd = (HANDLE)_get_osfhandle(fileno);
 	switch (GetFileType(hnd)) {
 		case FILE_TYPE_CHAR: {
@@ -5292,37 +5315,42 @@ file_listen(cl_object stream, int fileno)
 			break;
 	}
 #endif
+    FILE_LOG_HERE();
 	return -3;
 }
 
 static int
 flisten(cl_object stream, FILE *fp)
 {
-	int aux;
-	if (feof(fp))
-		return ECL_LISTEN_EOF;
+    FILE_LOG_HERE();
+    int aux;
+    if (feof(fp))
+        return ECL_LISTEN_EOF;
 #ifdef FILE_CNT
-	if (FILE_CNT(fp) > 0)
-		return ECL_LISTEN_AVAILABLE;
+    if (FILE_CNT(fp) > 0)
+        return ECL_LISTEN_AVAILABLE;
 #endif
-	aux = file_listen(stream, fileno(fp));
-	if (aux != -3)
-		return aux;
-	/* This code is portable, and implements the expected behavior for regular files.
-	   It will fail on noninteractive streams. */
-	{
-		/* regular file */
-		ecl_off_t old_pos = ecl_ftello(fp), end_pos;
-		unlikely_if (ecl_fseeko(fp, 0, SEEK_END) != 0)
-			file_libc_error(@[file-error], stream,
-					"Unable to check file position", 0);
-		end_pos = ecl_ftello(fp);
-		unlikely_if (ecl_fseeko(fp, old_pos, SEEK_SET) != 0)
-			file_libc_error(@[file-error], stream,
-					"Unable to check file position", 0);
-		return (end_pos > old_pos ? ECL_LISTEN_AVAILABLE : ECL_LISTEN_EOF);
-	}
-	return !ECL_LISTEN_AVAILABLE;
+    aux = file_listen(stream, fileno(fp));
+    FILE_LOG(("file_listen = %d\n", aux ));
+    if (aux != -3) {
+        FILE_LOG(("returning from file_listen with aux=%d\n", aux ));
+        return aux;
+    }       
+    /* This code is portable, and implements the expected behavior for regular files.
+       It will fail on noninteractive streams. */
+    {
+        /* regular file */
+        ecl_off_t old_pos = ecl_ftello(fp), end_pos;
+        unlikely_if (ecl_fseeko(fp, 0, SEEK_END) != 0)
+            file_libc_error(@[file-error], stream,
+                            "Unable to check file position", 0);
+        end_pos = ecl_ftello(fp);
+        unlikely_if (ecl_fseeko(fp, old_pos, SEEK_SET) != 0)
+            file_libc_error(@[file-error], stream,
+                            "Unable to check file position", 0);
+        return (end_pos > old_pos ? ECL_LISTEN_AVAILABLE : ECL_LISTEN_EOF);
+    }
+    return !ECL_LISTEN_AVAILABLE;
 }
 
 cl_object

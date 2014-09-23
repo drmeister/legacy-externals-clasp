@@ -30,6 +30,9 @@ CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_
 
 all:
 	make getllvm
+	make allnoget
+
+allnoget:
 	make setup
 	make subAll
 	make subBundle
