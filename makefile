@@ -75,18 +75,28 @@ BOOST_BUILD_SOURCE_DIR = $(BOOST_SOURCE_DIR)/tools/build/v2
 LLDB_SOURCE_DIR = lldb
 
 export LLVM_REVISION = 218184
-export LLVM_SOURCE_DIR = llvm
 getllvm:
 	svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/llvm/trunk $(LLVM_SOURCE_DIR)
 	(cd $(LLVM_SOURCE_DIR)/tools; svn co -r $(LLVM_REVISION)  http://llvm.org/svn/llvm-project/cfe/trunk clang)
 	(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
 
 
+#gitllvm:
+#	-git clone -b release_35 --depth 1 http://llvm.org/git/llvm.git llvm
+#	-(cd llvm/tools; git clone -b release_35 --depth 1 http://llvm.org/git/clang.git clang)
+#	-(cd llvm/tools/clang/tools; git clone -b release_35 --depth 1 http://llvm.org/git/clang-tools-extra.git extra)
+
+export LLVM_SOURCE_DIR = llvm
+export LLVM_REVISION = 3025b00b7f127c3bcd04c31e8b9cab4639ad6510
+export CLANG_REVISION = f867c44a02ea000621af47a520bd6502772d186d
+export EXTRAS_REVISION = 4958bddcf7f82e6651c5496983fe438883749f2c
 gitllvm:
-	-git clone -b release_35 --depth 1 http://llvm.org/git/llvm.git llvm
-	-(cd llvm/tools; git clone -b release_35 --depth 1 http://llvm.org/git/clang.git clang)
-	-(cd llvm/tools/clang/tools; git clone -b release_35 --depth 1 http://llvm.org/git/clang-tools-extra.git extra)
-# Here I would download clang-tools-extra if necessary
+	-git clone --depth 1 http://llvm.org/git/llvm.git $(LLVM_SOURCE_DIR)
+	-(cd $(LLVM_SOURCE_DIR); git checkout $(LLVM_REVISION))
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 http://llvm.org/git/clang.git clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang; git checkout $(CLANG_REVISION))
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 http://llvm.org/git/clang-tools-extra.git extra)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools/extra; git checkout $(EXTRA_REVISION))
 
  
 resetllvm:
