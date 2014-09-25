@@ -19,7 +19,7 @@ To build everything from within the top level directory do the following.
 
 Other useful make targets:
 
-make setup - configures all libraries
+make setup - configures all libraries<br>
 make subAll - makes all libraries
 
 
