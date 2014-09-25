@@ -115,6 +115,8 @@ printenv:
 	echo CLASP_APP_INSTALL_ROOT=$(CLASP_APP_INSTALL_ROOT)
 	echo BJAM=$(BJAM)
 
+bjamversion:
+	bjam -v
 
 
 
