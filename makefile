@@ -294,7 +294,7 @@ boost-build-debug:
 
 
 boost-build-release:
-	(cd $(BOOST_SOURCE_DIR); bjam toolset=$(BOOST_TOOLSET)   \
+	(cd $(BOOST_SOURCE_DIR); $(BJAM) toolset=$(BOOST_TOOLSET)   \
 				$(BOOST_CXXFLAGS) $(BOOST_LDFLAGS) \
 				--with-filesystem --with-date_time	\
 				--with-serialization --with-iostreams	\
@@ -371,7 +371,7 @@ boost-setup:
 	echo do nothing
 
 boost-build-a-n:
-	(cd $(BOOST_SOURCE_DIR); bjam toolset=$(BOOST_TOOLSET) -a -n  \
+	(cd $(BOOST_SOURCE_DIR); $(BJAM) toolset=$(BOOST_TOOLSET) -a -n  \
 				cxxflags="$(CXXFLAGS)" linkflags="$(LDFLAGS)" \
 				--with-filesystem --with-date_time	\
 				--with-serialization --with-iostreams	\
@@ -384,8 +384,8 @@ boost-build-a-n:
 
 
 boost-clean:
-	-(cd $(BOOST_SOURCE_DIR); bjam --toolset=$(BOOST_TOOLSET) --clean debug)
-	-(cd $(BOOST_SOURCE_DIR); bjam --toolset=$(BOOST_TOOLSET) --clean release)
+	-(cd $(BOOST_SOURCE_DIR); $(BJAM) --toolset=$(BOOST_TOOLSET) --clean debug)
+	-(cd $(BOOST_SOURCE_DIR); $(BJAM) --toolset=$(BOOST_TOOLSET) --clean release)
 
 
 
