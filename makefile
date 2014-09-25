@@ -168,7 +168,15 @@ subClean:
 	make gmp-clean
 	make boost-clean
 #	make clang-clean Redundant.
-	rm -rf ./llvm
+	make llvm-clean
+
+
+#
+# This removes the llvm source
+#
+really-clean:
+	make subClean
+	rm -rf ./$(LLVM_SOURCE_DIR)
 
 
 
@@ -514,7 +522,8 @@ subBundle sb:
 # This first link allows LibTooling to find the clang include directories relative to the clasp executable path
 #	install -d $(CLASP_APP_BIN_DIR)
 #	-ln -s $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/lib $(CLASP_APP_BIN_DIR)/../lib
-	echo IF YOU GOT HERE EVERYTHING IS GOING TO BE JUST FINE!!!
+	@echo IF YOU GOT HERE EVERYTHING IS GOING TO BE JUST FINE!!!
+	@echo PROCEED WITH CONFIDENCE TO BUILD CLASP!!!
 
 
 
