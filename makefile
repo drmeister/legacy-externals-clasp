@@ -110,9 +110,10 @@ all-dependencies:
 
 
 printenv:
+	printenv
 	echo EXTERNALS_DIR=$(EXTERNALS_DIR)
 	echo CLASP_APP_INSTALL_ROOT=$(CLASP_APP_INSTALL_ROOT)
-	printenv
+	echo BJAM=$(BJAM)
 
 
 
