@@ -3,25 +3,26 @@
 
 Clasp can be found at:   https://github.com/drmeister/clasp
 
-These are the external libraries that Clasp depends on.<br>
-If there are legal issues with incorporating these libraries in this repository please tell me and I will fix it.<br>
-They are all publically available on the internet.
+These are the external libraries that Clasp depends on. If there are legal issues with incorporating these libraries in this repository please tell me and I will fix it.  All of these libraries are publically available on the internet.
 
-Libraries that Clasp depends on.
-
-To build everything from within the top level directory do the following.
+To build everything from within the top level directory (externals-clasp/) do the following.
 
 1) Copy local.config.darwin or local.config.linux to local.config
 
-2) Edit local.config (ignored by the git repo) and configure it for your system
+2) Edit local.config and configure it for your system
 
 3) make
+
+4) Go to the Clasp library and configure and build it.
+
+5) If you need to start over "make clean" will remove all built files.
 
 The libraries are built and put into the $PREFIX (see local.config) directory
 
 Other useful make targets:
 
-make setup - configures all libraries<br>
-make subAll - makes all libraries
-
+make setup      - configures all libraries<br>
+make subAll     - makes all libraries<br>
+make clean      - Clean out all built files under this directory, but not the $PREFIX target directory.<br>
+make llvm-debug - Build the debug version of the LLVM library.
 
