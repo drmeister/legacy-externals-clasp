@@ -15,8 +15,6 @@ To build everything from within the top level directory (externals-clasp/) do th
 
 4) Go to the Clasp library and configure and build it.
 
-5) If you need to start over "make clean" will remove all built files.
-
 The libraries are built and put into the $PREFIX (see local.config) directory
 
 Other useful make targets:
