@@ -150,6 +150,8 @@ subAll sa:
 #	-make ez_setup
 #	-make pyOpenGl-cleanBuild
 
+clean:
+	make subClean
 
 subClean:
 #	make openmpi-clean
