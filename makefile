@@ -138,7 +138,7 @@ setup:
 
 subAll sa:
 	make boehm-build
-	make llvm-build
+	make llvm-release
 	make boost-build
 	make ecl-build
 	make gmp-build
