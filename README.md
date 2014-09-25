@@ -1,6 +1,8 @@
 **externals-clasp**
 ===============
 
+Clasp can be found at:   https://github.com/drmeister/clasp
+
 These are the external libraries that Clasp depends on.<br>
 If there are legal issues with incorporating these libraries in this repository please tell me and I will fix it.<br>
 They are all publically available on the internet.
