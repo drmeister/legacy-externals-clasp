@@ -116,7 +116,8 @@ printenv:
 	echo BJAM=$(BJAM)
 
 bjamversion:
-	bjam -v
+	@echo BJAM path = $(BJAM)
+	$(BJAM) -v
 
 
 
