@@ -48,7 +48,6 @@ endif
 
 export REQUIRES_RTTI=$(CLASP_REQUIRES_RTTI)
 BOEHM_VERSION=7.2
-DMALLOC_VERSION=5.5.2
 CC = $(CLASP_CC)
 
 ifneq ($(CXXFLAGS),)
@@ -156,7 +155,6 @@ clean:
 subClean:
 #	make openmpi-clean
 	make ecl-clean
-	make dmalloc-clean
 	make boehm-clean
 	make readline-clean
 	make expat-clean
@@ -409,26 +407,6 @@ zlib-clean:
 	-(cd $(ZLIB_SOURCE_DIR); make clean )
 
 
-
-
-
-dmalloc-setup:
-	(cd dmalloc-$(DMALLOC_VERSION); \
-		./configure --enable-cxx --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR);)
-dmalloc-build:
-	make dmalloc-compile
-	make dmalloc-install
-
-dmalloc-compile:
-	(cd dmalloc-$(DMALLOC_VERSION); make -j1 cxx light | tee ../logs/_dmalloc.log)
-
-dmalloc-install:
-	(cd dmalloc-$(DMALLOC_VERSION); make -j1 light installcxx install | tee ../logs/_dmalloc_install.log)
-
-
-
-dmalloc-clean:
-	-(cd dmalloc-$(DMALLOC_VERSION); make clean )
 
 
 
