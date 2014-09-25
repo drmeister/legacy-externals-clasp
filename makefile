@@ -12,6 +12,8 @@ include local.config
 BOOST_TOOLSET = $(TOOLSET)
 export PATH := $(PATH):$(PREFIX)/release/bin:$(PREFIX)/common/bin
 
+BJAM = $(PREFIX)/release/bin/bjam
+
 TOP = `pwd`
 
 CLASP_REQUIRES_RTTI=1
