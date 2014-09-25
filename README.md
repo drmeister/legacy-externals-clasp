@@ -5,7 +5,6 @@ These are the external libraries that Clasp depends on.<br>
 If there are legal issues with incorporating these libraries in this repository please tell me and I will fix it.<br>
 They are all publically available on the internet.
 
-
 Libraries that Clasp depends on.
 
 To build everything from within the top level directory do the following.
@@ -16,6 +15,7 @@ To build everything from within the top level directory do the following.
 
 3) make
 
+The libraries are built and put into the $PREFIX (see local.config) directory
 
 Other useful make targets:
 
