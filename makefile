@@ -168,7 +168,7 @@ subClean:
 	make gmp-clean
 	make boost-clean
 #	make clang-clean Redundant.
-	make llvm-clean
+	rm -rf ./llvm
 
 
 
