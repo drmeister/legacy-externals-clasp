@@ -1,7 +1,7 @@
 #
 # What system are you building on?   linux or darwin
 #
-export TARGET-OS = linux
+export TARGET_OS = linux
 
 #
 # This defines where externals-clasp will put the built libraries

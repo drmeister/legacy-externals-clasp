@@ -43,7 +43,7 @@ GCC_EXECUTABLE = $(GCC_TOOLCHAIN)/bin/gcc
 GXX_EXECUTABLE = $(GCC_TOOLCHAIN)/bin/g++
 
 
-ifeq ($(TARGET-OS),linux)
+ifeq ($(TARGET_OS),linux)
 CLASP_CXXFLAGS="-std=c++11"
 else
 CLASP_CXXFLAGS="-std=c++11 -stdlib=libc++"
@@ -524,7 +524,7 @@ subBundle sb:
 #
 ##
 
-ifeq ($(TARGET-OS),linux)
+ifeq ($(TARGET_OS),linux)
 #
 # Set clang-setup --prefix to $(CLASP_APP_RESOURCES_DIR)
 #
@@ -609,7 +609,7 @@ endif
 #
 ##
 
-ifeq ($(TARGET-OS),darwin)
+ifeq ($(TARGET_OS),darwin)
 
 export RPATH_RELEASE_FIX = @executable_path/../Resources/externals/release/lib
 export RPATH_DEBUG_FIX = @executable_path/../Resources/externals/debug/lib
@@ -729,7 +729,7 @@ endif
 #
 ##
 
-ifeq ($(TARGET-OS),kraken)
+ifeq ($(TARGET_OS),kraken)
 subAll sa:
 	make boost-jam
 	make boost
