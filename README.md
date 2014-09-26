@@ -13,9 +13,9 @@ To build everything from within the top level directory (externals-clasp/) do th
 
 2) Edit local.config and configure it for your system<br>
   The following configuration variables are important:<br>
-      **EXTERNALS_BUILD_TARGET_DIR**   - this defines where make will put all of the built libraries
-      **TARGET-OS**                    - Currently either _linux_ or _darwin_
-      **PJOBS**                        - The number of processors you have available to build with
+      **EXTERNALS_BUILD_TARGET_DIR**   - this defines where make will put all of the built libraries<br>
+      **TARGET-OS**                    - Currently either _linux_ or _darwin_<br>
+      **PJOBS**                        - The number of processors you have available to build with<br>
       **GCC_TOOLCHAIN**                - Important on Linux systems.  gcc and g++ must be found in $(**GCC_TOOLCHAIN**)/bin/
       
 3) Type:  _make_    - this will download llvm/clang, build everything and install it in $(**EXTERNALS_BUILD_TARGET_DIR**)
