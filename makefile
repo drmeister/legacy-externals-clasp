@@ -12,7 +12,7 @@ include local.config
 BOOST_TOOLSET = $(TOOLSET)
 export PATH := $(PATH):$(EXTERNALS_BUILD_TARGET_DIR)/release/bin:$(EXTERNALS_BUILD_TARGET_DIR)/common/bin
 
-BJAM = $(EXTERNALS_BUILD_TARGET_DIR)/common/bin/bjam
+BJAM = $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/bin/bjam
 
 TOP = `pwd`
 
