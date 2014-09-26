@@ -164,10 +164,12 @@ subClean:
 #
 # This removes the llvm source
 #
-clean:
+really-clean:
 	make subClean
 	rm -rf ./$(LLVM_SOURCE_DIR)
 
+clean:
+	make subClean
 
 
 rpath-fix:
