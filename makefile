@@ -83,17 +83,11 @@ getllvm:
 	(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
 
 
-export LLVM_SOURCE_DIR = llvm
-export LLVM_REVISION = 3025b00b7f127c3bcd04c31e8b9cab4639ad6510
-export CLANG_REVISION = f867c44a02ea000621af47a520bd6502772d186d
-export EXTRAS_REVISION = 4958bddcf7f82e6651c5496983fe438883749f2c
+export LLVM_SOURCE_DIR = llvm36
 gitllvm:
-	-git clone --depth 1 http://llvm.org/git/llvm.git $(LLVM_SOURCE_DIR)
-#	-(cd $(LLVM_SOURCE_DIR); git checkout $(LLVM_REVISION))
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 http://llvm.org/git/clang.git clang)
-#	-(cd $(LLVM_SOURCE_DIR)/tools/clang; git checkout $(CLANG_REVISION))
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 http://llvm.org/git/clang-tools-extra.git extra)
-#	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools/extra; git checkout $(EXTRAS_REVISION))
+	-git clone --depth 1 -b llvm_36_clasp_01 https://github.com/drmeister/llvm.git $(LLVM_SOURCE_DIR)
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b clang_36_clasp_01 https://github.com/drmeister/clang.git clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b clang-tools-extra_36_clasp_01 https://github.com/drmeister/clang-tools-extra.git extras)
 
  
 resetllvm:
