@@ -34,3 +34,9 @@ make subAll     - makes all libraries<br>
 make clean      - Clean out all built files under this directory, but not the $PREFIX target directory.<br>
 make llvm-debug - Build the debug version of the LLVM library.
 
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
