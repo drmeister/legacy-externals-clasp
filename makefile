@@ -12,7 +12,7 @@ include local.config
 BOOST_TOOLSET = $(TOOLSET)
 export PATH := $(PATH):$(EXTERNALS_BUILD_TARGET_DIR)/release/bin:$(EXTERNALS_BUILD_TARGET_DIR)/common/bin
 
-BJAM = $(EXTERNALS_BUILD_TARGET_DIR)/release/bin/bjam
+BJAM = $(EXTERNALS_BUILD_TARGET_DIR)/common/bin/bjam
 
 TOP = `pwd`
 
@@ -89,11 +89,11 @@ export CLANG_REVISION = f867c44a02ea000621af47a520bd6502772d186d
 export EXTRAS_REVISION = 4958bddcf7f82e6651c5496983fe438883749f2c
 gitllvm:
 	-git clone --depth 1 http://llvm.org/git/llvm.git $(LLVM_SOURCE_DIR)
-	-(cd $(LLVM_SOURCE_DIR); git checkout $(LLVM_REVISION))
+#	-(cd $(LLVM_SOURCE_DIR); git checkout $(LLVM_REVISION))
 	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 http://llvm.org/git/clang.git clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang; git checkout $(CLANG_REVISION))
+#	-(cd $(LLVM_SOURCE_DIR)/tools/clang; git checkout $(CLANG_REVISION))
 	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 http://llvm.org/git/clang-tools-extra.git extra)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools/extra; git checkout $(EXTRAS_REVISION))
+#	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools/extra; git checkout $(EXTRAS_REVISION))
 
  
 resetllvm:
@@ -279,7 +279,7 @@ boost-build:
 boost-build-debug:
 	echo LDFLAGS=$(LDFLAGS)    processed = $(BOOST_LDFLAGS)
 	(cd $(BOOST_SOURCE_DIR); \
-				bjam toolset=$(BOOST_TOOLSET)  \
+				$(BJAM) toolset=$(BOOST_TOOLSET)  \
 				$(BOOST_CXXFLAGS) $(BOOST_LDFLAGS) \
 				--with-filesystem --with-date_time	\
 				--with-serialization --with-iostreams	\
