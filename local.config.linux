@@ -1,13 +1,18 @@
 #
-# Local settings
+# What system are you building on?   linux or darwin
 #
+export TARGET-OS = linux
 
 #
 # This defines where externals-clasp will put the built libraries
 # that clasp needs
 #
 export EXTERNALS_BUILD_TARGET_DIR = $(HOME)/local/externals-clasp
-export TARGET-OS = linux
+
+#
+# This defines how many processors you have available to build with
+# More processors = faster build
+#
 export PJOBS = 16
 
 #
@@ -16,5 +21,9 @@ export PJOBS = 16
 # the g++ executable needs to be at $(GCC_TOOLCHAIN)/bin/g++
 #
 export GCC_TOOLCHAIN = $(HOME)/local/gcc-4.8.3
+
+#
+# ------- Only change if you know what you are doing -------
+#
 export TOOLSET = gcc
 
