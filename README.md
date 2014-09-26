@@ -1,13 +1,15 @@
 **externals-clasp**
 ===============
 
-<a href="http://drmeister.wordpress.com/2014/09/26/building-clasp-and-externals-clasp/">Note to those brave souls building clasp and externals-clasp on Sep 25, 2014</a>
+<a href="http://drmeister.wordpress.com/2014/09/26/building-clasp-and-externals-clasp/">Note to those brave souls building clasp and externals-clasp on Sep 26, 2014</a>
 
 Clasp can be found at:   https://github.com/drmeister/clasp
 
 These are the external libraries that Clasp depends on. If there are legal issues with incorporating these libraries in this repository please tell me and I will fix it.  All of these libraries are publically available on the internet.
 
 **Building externals-clasp**
+
+_You need to have gcc 4.8 or higher to build externals-clasp._
 
 To build everything from within the top level directory (externals-clasp/) do the following.
 
