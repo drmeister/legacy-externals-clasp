@@ -13,9 +13,9 @@ To build everything from within the top level directory (externals-clasp/) do th
 
 2) Edit local.config and configure it for your system<br>
   The following configuration variables are important:
-  
+| Variable  |   Description |
+| ------------- | --------------|
 | **EXTERNALS_BUILD_TARGET_DIR**        | This defines where make will put all of the built libraries  |
-| ------------- |:-------------:|
 | col 3 is      | right-aligned |
 | col 2 is      | centered      |
 | zebra stripes | are neat      |
