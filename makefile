@@ -89,6 +89,12 @@ gitllvm:
 	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b clang_36_clasp_01 https://github.com/drmeister/clang.git clang)
 	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b clang-tools-extra_36_clasp_01 https://github.com/drmeister/clang-tools-extra.git extras)
 
+
+git_make_submodules:
+	-git submodule add http://llvm.org/git/llvm.git llvm
+	-git submodule add http://llvm.org/git/clang.git $(LLVM_SOURCE_DIR)/tools/clang
+	-git submodule add http://llvm.org/git/clang-tools-extra.git $(LLVM_SOURCE_DIR)/tools/clang/tools/extras
+
  
 resetllvm:
 	rm -rf llvm3.4svn
