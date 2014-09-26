@@ -95,6 +95,12 @@ gitllvm:
 	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 http://llvm.org/git/clang-tools-extra.git extra)
 #	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools/extra; git checkout $(EXTRAS_REVISION))
 
+
+git_make_submodules:
+	-git submodule add http://llvm.org/git/llvm.git llvm
+	-git submodule add http://llvm.org/git/clang.git $(LLVM_SOURCE_DIR)/tools/clang
+	-git submodule add http://llvm.org/git/clang-tools-extra.git $(LLVM_SOURCE_DIR)/tools/clang/tools/extras
+
  
 resetllvm:
 	rm -rf llvm3.4svn
