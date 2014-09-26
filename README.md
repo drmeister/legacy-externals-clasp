@@ -1,6 +1,8 @@
 **externals-clasp**
 ===============
 
+<a href="http://drmeister.wordpress.com/2014/09/26/building-clasp-and-externals-clasp/">Note to those brave souls building clasp and externals-clasp on Sep 25, 2014</a>
+
 Clasp can be found at:   https://github.com/drmeister/clasp
 
 These are the external libraries that Clasp depends on. If there are legal issues with incorporating these libraries in this repository please tell me and I will fix it.  All of these libraries are publically available on the internet.
@@ -18,19 +20,11 @@ To build everything from within the top level directory (externals-clasp/) do th
 | ------------- | --------------|
 | **EXTERNALS_BUILD_TARGET_DIR**  | This defines where make will put all of the built libraries  |
 |   | I use $HOME/local/externals-clasp |
-| col 3 is      | right-aligned |
-| col 2 is      | centered      |
-| zebra stripes | are neat      |
-
-
-|**EXTERNALS_BUILD_TARGET_DIR**   |this defines where make will put all of the built libraries|
-|
-| ||
-|**TARGET-OS**                    |Currently either _linux_ or _darwin_|
-|**PJOBS**                        |- The number of processors you have available to build with|
-|**GCC_TOOLCHAIN**                |- Important on Linux systems. | 
-|                                 |- gcc and g++ must be found in $(**GCC_TOOLCHAIN**)/bin/<br>
-|                                  |- On a linux system with an up-to-date (>= 4.8) gcc/g++ you can use /usr
+|**TARGET_OS**                    |Currently either _linux_ or _darwin_|
+|**PJOBS**                        |The number of processors you have available to build with|
+|**GCC_TOOLCHAIN**                |Important on Linux systems. | 
+|                                 |gcc and g++ must be found in $(**GCC_TOOLCHAIN**)/bin/ |
+|                                 |On a linux system with an up-to-date (>= 4.8) gcc/g++ you can use /usr |
   
 3) Type:  _make_    - this will download llvm/clang, build everything and install it in $(**EXTERNALS_BUILD_TARGET_DIR**)
 
