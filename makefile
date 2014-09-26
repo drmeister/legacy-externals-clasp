@@ -10,14 +10,14 @@ include local.config
 # Shouldn't need changes below here
 #
 BOOST_TOOLSET = $(TOOLSET)
-export PATH := $(PATH):$(PREFIX)/release/bin:$(PREFIX)/common/bin
+export PATH := $(PATH):$(EXTERNALS_BUILD_TARGET_DIR)/release/bin:$(EXTERNALS_BUILD_TARGET_DIR)/common/bin
 
-BJAM = $(PREFIX)/release/bin/bjam
+BJAM = $(EXTERNALS_BUILD_TARGET_DIR)/release/bin/bjam
 
 TOP = `pwd`
 
 CLASP_REQUIRES_RTTI=1
-CLASP_APP_RESOURCES_DIR = $(PREFIX)
+CLASP_APP_RESOURCES_DIR = $(EXTERNALS_BUILD_TARGET_DIR)
 CLASP_APP_RESOURCES_EXTERNALS_DIR = $(CLASP_APP_RESOURCES_DIR)
 CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/debug
 CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/release
@@ -39,7 +39,8 @@ allnoget:
 	make subAll
 	make subBundle
 
-
+GCC_EXECUTABLE = $(GCC_TOOLCHAIN)/bin/gcc
+GXX_EXECUTABLE = $(GCC_TOOLCHAIN)/bin/g++
 
 
 ifeq ($(TARGET-OS),linux)
@@ -122,7 +123,7 @@ bjamversion:
 
 
 setup:
-	install -d $(PREFIX)
+	install -d $(EXTERNALS_BUILD_TARGET_DIR)
 	install -d $(CLASP_APP_RESOURCES_DIR)
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_DIR)
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)
@@ -551,9 +552,9 @@ llvm-setup-debug:
 	(cd $(LLVM_SOURCE_DIR)/build-debug; \
 		../configure --enable-targets=x86_64 --enable-debug-symbols --enable-debug-runtime \
 		--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
-		--with-gcc-toolchain=$(GCC-TOOLCHAIN) \
-		CC=$(HOME)/local/gcc-4.8.3/bin/gcc \
-		CXX=$(HOME)/local/gcc-4.8.3/bin/g++ \
+		--with-gcc-toolchain=$(GCC_TOOLCHAIN) \
+		CC=$(GCC_EXECUTABLE) \
+		CXX=$(GXX_EXECUTABLE) \
 		CXXFLAGS="-static-libstdc++ -static-libgcc" \
 		CFLAGS="-static-libgcc" \
 		--enable-shared=no --enable-cxx11 )
@@ -566,8 +567,8 @@ llvm-setup-release:
 		../configure --enable-targets=x86_64  --enable-optimized --enable-assertions \
 		--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) \
 		--with-gcc-toolchain=$(GCC-TOOLCHAIN) \
-		CC=$(HOME)/local/gcc-4.8.3/bin/gcc \
-		CXX=$(HOME)/local/gcc-4.8.3/bin/g++ \
+		CC=$(GCC_EXECUTABLE) \
+		CXX=$(GXX_EXECUTABLE) \
 		CXXFLAGS="-static-libstdc++ -static-libgcc" \
 		CFLAGS="-static-libgcc" \
 		--enable-shared=no --enable-cxx11 )

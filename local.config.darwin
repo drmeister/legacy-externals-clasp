@@ -1,10 +1,20 @@
 #
 # Local settings
 #
-export PREFIX = $(HOME)/local/externals-clasp
+
+#
+# This defines where externals-clasp will put the built libraries
+# that clasp needs
+#
+export EXTERNALS_BUILD_TARGET_DIR = $(HOME)/local/externals-clasp
 export TARGET-OS = darwin
 export PJOBS = 6
 export TOOLSET = clang
-#export GCC-TOOLCHAIN = $(HOME)/local/gcc-4.8.3
+
+
+#
+# OS X systems don't need GCC-TOOLCHAIN
+#
+#export GCC_TOOLCHAIN = $(HOME)/local/gcc-4.8.3
 
 
