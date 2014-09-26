@@ -27,6 +27,8 @@ To build everything from within the top level directory (externals-clasp/) do th
 |**GCC_TOOLCHAIN**                |Important on Linux systems. | 
 |                                 |gcc and g++ must be found in $(**GCC_TOOLCHAIN**)/bin/ |
 |                                 |On a linux system with an up-to-date (>= 4.8) gcc/g++ you can use /usr |
+|**GCC_EXECUTABLE**               |Set this if the gcc you use is NOT found at $(**GCC_TOOLCHAIN**)/bin/gcc |
+|**GXX_EXECUTABLE**               |Set this if the g++ you use is NOT found at $(**GCC_TOOLCHAIN**)/bin/g++ |
   
 3) Type:  _make_    - this will download llvm/clang, build everything and install it in $(**EXTERNALS_BUILD_TARGET_DIR**)
 
