@@ -161,15 +161,21 @@ subClean:
 	make llvm-clean
 
 
+clean:
+	make subClean
+ifneq ($(EXTERNALS_BUILD_TARGET_DIR),)
+	-rm -rf $(EXTERNALS_BUILD_TARGET_DIR)/release
+	-rm -rf $(EXTERNALS_BUILD_TARGET_DIR)/debug
+	-rm -rf $(EXTERNALS_BUILD_TARGET_DIR)/common
+endif
+
+
 #
 # This removes the llvm source
 #
 really-clean:
-	make subClean
+	make clean
 	rm -rf ./$(LLVM_SOURCE_DIR)
-
-clean:
-	make subClean
 
 
 rpath-fix:
