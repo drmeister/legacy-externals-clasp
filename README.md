@@ -15,7 +15,7 @@ To build everything from within the top level directory (externals-clasp/) do th
   The following configuration variables are important:
   
   
-| Tables        | Are           | Cool  |
+| **EXTERNALS_BUILD_TARGET_DIR**        | Are           | Cool  |
 | ------------- |:-------------:| -----:|
 | col 3 is      | right-aligned | $1600 |
 | col 2 is      | centered      |   $12 |
