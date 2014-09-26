@@ -12,7 +12,16 @@ To build everything from within the top level directory (externals-clasp/) do th
 1) Copy local.config.darwin or local.config.linux to local.config
 
 2) Edit local.config and configure it for your system<br>
-  The following configuration variables are important:<br>
+  The following configuration variables are important:
+  
+  
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
+
 |**EXTERNALS_BUILD_TARGET_DIR**   |this defines where make will put all of the built libraries|
 |
 | |I use $HOME/local/externals-clasp|
@@ -36,8 +45,3 @@ make clean      - Clean out all built files under this directory, but not the $P
 make llvm-debug - Build the debug version of the LLVM library.
 
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
