@@ -83,11 +83,6 @@ getllvm:
 	(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
 
 
-#gitllvm:
-#	-git clone -b release_35 --depth 1 http://llvm.org/git/llvm.git llvm
-#	-(cd llvm/tools; git clone -b release_35 --depth 1 http://llvm.org/git/clang.git clang)
-#	-(cd llvm/tools/clang/tools; git clone -b release_35 --depth 1 http://llvm.org/git/clang-tools-extra.git extra)
-
 export LLVM_SOURCE_DIR = llvm
 export LLVM_REVISION = 3025b00b7f127c3bcd04c31e8b9cab4639ad6510
 export CLANG_REVISION = f867c44a02ea000621af47a520bd6502772d186d
@@ -98,7 +93,7 @@ gitllvm:
 	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 http://llvm.org/git/clang.git clang)
 	-(cd $(LLVM_SOURCE_DIR)/tools/clang; git checkout $(CLANG_REVISION))
 	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 http://llvm.org/git/clang-tools-extra.git extra)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools/extra; git checkout $(EXTRA_REVISION))
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools/extra; git checkout $(EXTRAS_REVISION))
 
  
 resetllvm:
@@ -133,7 +128,6 @@ setup:
 	make boehm-setup        
 	make llvm-setup		
 	make boost-setup
-	make ecl-setup        
 	make gmp-setup
 	make expat-setup
 	make zlib-setup
@@ -146,7 +140,6 @@ subAll sa:
 	make boehm-build
 	make llvm-release
 	make boost-build
-	make ecl-build
 	make gmp-build
 	make expat-build
 	make zlib-build
@@ -156,12 +149,8 @@ subAll sa:
 #	-make ez_setup
 #	-make pyOpenGl-cleanBuild
 
-clean:
-	make subClean
-
 subClean:
 #	make openmpi-clean
-	make ecl-clean
 	make boehm-clean
 	make readline-clean
 	make expat-clean
@@ -175,7 +164,7 @@ subClean:
 #
 # This removes the llvm source
 #
-really-clean:
+clean:
 	make subClean
 	rm -rf ./$(LLVM_SOURCE_DIR)
 
