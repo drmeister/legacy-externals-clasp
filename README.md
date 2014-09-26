@@ -13,11 +13,11 @@ To build everything from within the top level directory (externals-clasp/) do th
 
 2) Edit local.config and configure it for your system<br>
   The following configuration variables are important:<br>
-      |**EXTERNALS_BUILD_TARGET_DIR**   |- this defines where make will put all of the built libraries<br>
-      |:--------------------------------:|- I use $HOME/local/externals-clasp<br>
-      |**TARGET-OS**                    |- Currently either _linux_ or _darwin_<br>
-      |**PJOBS**                        |- The number of processors you have available to build with<br>
-      |**GCC_TOOLCHAIN**                |- Important on Linux systems.  
+      |**EXTERNALS_BUILD_TARGET_DIR**   |- this defines where make will put all of the built libraries|
+      |:--------------------------------:|- I use $HOME/local/externals-clasp|
+      |**TARGET-OS**                    |- Currently either _linux_ or _darwin_|
+      |**PJOBS**                        |- The number of processors you have available to build with|
+      |**GCC_TOOLCHAIN**                |- Important on Linux systems. | 
       |                                 |- gcc and g++ must be found in $(**GCC_TOOLCHAIN**)/bin/<br>
                                         |- On a linux system with an up-to-date (>= 4.8) gcc/g++ you can use /usr
       
