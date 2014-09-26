@@ -21,7 +21,8 @@ export PJOBS = 16
 # the g++ executable needs to be at $(GCC_TOOLCHAIN)/bin/g++
 #
 export GCC_TOOLCHAIN = $(HOME)/local/gcc-4.8.3
-
+#export GCC_EXECUTABLE = <put something here if gcc is not $(GCC_TOOLCHAIN)/bin/gcc>
+#export GXX_EXECUTABLE = <put something here if g++ is not $(GCC_TOOLCHAIN)/bin/g++>
 #
 # ------- Only change if you know what you are doing -------
 #
