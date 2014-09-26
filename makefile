@@ -39,8 +39,12 @@ allnoget:
 	make subAll
 	make subBundle
 
-GCC_EXECUTABLE = $(GCC_TOOLCHAIN)/bin/gcc
-GXX_EXECUTABLE = $(GCC_TOOLCHAIN)/bin/g++
+ifeq ($(GCC_EXECUTABLE),)
+export GCC_EXECUTABLE = $(GCC_TOOLCHAIN)/bin/gcc
+endif
+ifeq ($(GCC_EXECUTABLE),)
+export GXX_EXECUTABLE = $(GCC_TOOLCHAIN)/bin/g++
+endif
 
 
 ifeq ($(TARGET_OS),linux)
