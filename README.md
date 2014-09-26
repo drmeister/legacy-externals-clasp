@@ -19,10 +19,10 @@ To build everything from within the top level directory (externals-clasp/) do th
 | **EXTERNALS_BUILD_TARGET_DIR**  | This defines where make will put all of the built libraries  |
 |   | I use $HOME/local/externals-clasp |
 |**TARGET-OS**                    |Currently either _linux_ or _darwin_|
-|**PJOBS**                        |- The number of processors you have available to build with|
-|**GCC_TOOLCHAIN**                |- Important on Linux systems. | 
-|                                 |- gcc and g++ must be found in $(**GCC_TOOLCHAIN**)/bin/<br>
-|                                  |- On a linux system with an up-to-date (>= 4.8) gcc/g++ you can use /usr
+|**PJOBS**                        |The number of processors you have available to build with|
+|**GCC_TOOLCHAIN**                |Important on Linux systems. | 
+|                                 |gcc and g++ must be found in $(**GCC_TOOLCHAIN**)/bin/ |
+|                                 |On a linux system with an up-to-date (>= 4.8) gcc/g++ you can use /usr |
   
 3) Type:  _make_    - this will download llvm/clang, build everything and install it in $(**EXTERNALS_BUILD_TARGET_DIR**)
 
