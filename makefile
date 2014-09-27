@@ -559,7 +559,7 @@ llvm-setup-release:
 
 
 boostbuild2-build:
-	(cd $(BOOST_BUILD_SOURCE_DIR); ./bootstrap.sh; ./b2 toolset=gcc install --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR))
+	(cd $(BOOST_BUILD_SOURCE_DIR); ./bootstrap.sh; ./b2 toolset=gcc install --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) --ignore-site-config)
 
 
 gmp-build:
