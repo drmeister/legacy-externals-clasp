@@ -37,7 +37,7 @@ To build everything from within the top level directory (externals-clasp/) do th
 The libraries are built and put into the $PREFIX (see local.config) directory
 
 Other useful make targets:
-
+make            - this is the same as:  make clean; make setup; make subAll
 make setup      - configures all libraries<br>
 make subAll     - makes all libraries<br>
 make clean      - Clean out all built files under this directory, but not the $PREFIX target directory.<br>
