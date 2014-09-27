@@ -20,7 +20,7 @@ export PJOBS = 6
 export TOOLSET = clang
  
 #
-# OS X systems don't need GCC-TOOLCHAIN
+# OS X systems don't need GCC_TOOLCHAIN
 #
 #export GCC_TOOLCHAIN = $(HOME)/local/gcc-4.8.3
 

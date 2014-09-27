@@ -42,7 +42,7 @@ allnoget:
 ifeq ($(GCC_EXECUTABLE),)
 export GCC_EXECUTABLE = $(GCC_TOOLCHAIN)/bin/gcc
 endif
-ifeq ($(GCC_EXECUTABLE),)
+ifeq ($(GXX_EXECUTABLE),)
 export GXX_EXECUTABLE = $(GCC_TOOLCHAIN)/bin/g++
 endif
 
@@ -337,29 +337,6 @@ clang-setup:
 	make clang-setup-release
 
 
-clang:
-	make clang-release
-
-
-clang-clean:
-	make clang-clean-release
-
-clang-clean-release:
-	-(rm -rf $(LLVM_SOURCE_DIR)/clang-build;)
-
-
-clang-release:
-	(cd $(LLVM_SOURCE_DIR)/clang-build; export REQUIRES_RTTI=1; make -j$(PJOBS) REQUIRES_RTTI=1 ; make install) 2>&1 | tee ../logs/_clang.log
-
-
-
-clang-setup-release:
-	-mkdir -p $(LLVM_SOURCE_DIR)/clang-build
-	(cd $(LLVM_SOURCE_DIR)/clang-build; export REQUIRES_RTTI=1; \
-		../configure --enable-optimized --enable-shared \
-		--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR);)
-
-
 gmp-clean:
 	(cd $(GMP_SOURCE_DIR); make clean ; rm -f gen-fib)
 
@@ -552,6 +529,7 @@ ifeq ($(TARGET_OS),linux)
 
 #linux
 llvm-setup-debug:
+	echo GCC_TOOLCHAIN = $(GCC_TOOLCHAIN)
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-debug
 	(cd $(LLVM_SOURCE_DIR)/build-debug; \
 		../configure --enable-targets=x86_64 --enable-debug-symbols --enable-debug-runtime \
@@ -570,7 +548,7 @@ llvm-setup-release:
 	(cd $(LLVM_SOURCE_DIR)/build-release; \
 		../configure --enable-targets=x86_64  --enable-optimized --enable-assertions \
 		--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) \
-		--with-gcc-toolchain=$(GCC-TOOLCHAIN) \
+		--with-gcc-toolchain=$(GCC_TOOLCHAIN) \
 		CC=$(GCC_EXECUTABLE) \
 		CXX=$(GXX_EXECUTABLE) \
 		CXXFLAGS="-static-libstdc++ -static-libgcc" \
