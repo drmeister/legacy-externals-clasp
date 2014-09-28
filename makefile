@@ -303,7 +303,7 @@ boost-build-debug:
 				include=../$(ZLIB_SOURCE_DIR) linkflags=-L../$(ZLIB_SOURCE_DIR)\
 				--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
 				debug link=static \
-				-j$(PJOBS) install )
+				-j$(PJOBS) install --ignore-site-config )
 
 
 boost-build-release:
@@ -318,7 +318,7 @@ boost-build-release:
 				link=static \
 				release \
 				-j$(PJOBS) \
-				install )
+				install --ignore-site-config )
 
 #				include=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR) \
 
@@ -370,12 +370,13 @@ boost-build-a-n:
 				--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
 				debug  \
 				-j$(PJOBS) \
+				--ignore-site-config \
 				install ) | tee logs/_boost.log 
 
 
 boost-clean:
-	-(cd $(BOOST_SOURCE_DIR); $(BJAM) --toolset=$(BOOST_TOOLSET) --clean debug)
-	-(cd $(BOOST_SOURCE_DIR); $(BJAM) --toolset=$(BOOST_TOOLSET) --clean release)
+	-(cd $(BOOST_SOURCE_DIR); $(BJAM) --toolset=$(BOOST_TOOLSET) --clean debug --ignore-site-config)
+	-(cd $(BOOST_SOURCE_DIR); $(BJAM) --toolset=$(BOOST_TOOLSET) --clean release --ignore-site-config)
 
 
 
@@ -632,7 +633,7 @@ gmp-build:
 
 
 boostbuild2-build:
-	(cd $(BOOST_BUILD_SOURCE_DIR); ./bootstrap.sh; ./b2 toolset=clang-darwin install --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR))
+	(cd $(BOOST_BUILD_SOURCE_DIR); ./bootstrap.sh; ./b2 toolset=clang-darwin install --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) --ignore-site-config)
 
 
 
@@ -765,6 +766,7 @@ boost-fresh:
 			--with-thread \
 			--with-regex \
 			--debug-configuration \
+			--ignore-site-config \
 			link=static \
 			install \
 			2>&1 | tee ../logs/_boost.log )
@@ -784,6 +786,7 @@ boost-build:
 			--with-thread \
 			--with-regex \
 			--debug-configuration \
+			--ignore-site-config \
 			link=static \
 			install \
 			2>&1 | tee ../logs/_boost.log )
@@ -803,6 +806,7 @@ boost-n:
 			--with-mpi \
 			--with-regex \
 			--with-thread \
+			--ignore-site-config \
 			link=static \
 			install )
 
@@ -812,7 +816,7 @@ boost-rpath-fix:
 	echo Nothing to fix
 
 boost-clean:
-	-(cd $(BOOST_SOURCE_DIR); $(BJAM) --toolset=$(BOOST_TOOLSET) --cleanAll clean)
+	-(cd $(BOOST_SOURCE_DIR); $(BJAM) --toolset=$(BOOST_TOOLSET) --cleanAll clean --ignore-site-config)
 
 
 
