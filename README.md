@@ -1,7 +1,7 @@
 **externals-clasp**
 ===============
 
-<a href="http://drmeister.wordpress.com/2014/09/26/building-clasp-and-externals-clasp/">Note to those brave souls building clasp and externals-clasp on Sep 26, 2014</a>
+<a href="http://drmeister.wordpress.com/2014/09/26/building-clasp-and-externals-clasp/">Note to those brave souls building early releases of Clasp</a>
 
 Clasp can be found at:   https://github.com/drmeister/clasp
 
