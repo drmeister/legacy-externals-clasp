@@ -99,7 +99,7 @@ git_make_submodules:
 	-git submodule add http://llvm.org/git/clang.git $(LLVM_SOURCE_DIR)/tools/clang
 	-git submodule add http://llvm.org/git/clang-tools-extra.git $(LLVM_SOURCE_DIR)/tools/clang/tools/extras
 
- 
+
 resetllvm:
 	rm -rf llvm3.4svn
 
@@ -128,9 +128,9 @@ setup:
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)
 	make subClean
-	make boostbuild2-build  
-	make boehm-setup        
-	make llvm-setup		
+	make boostbuild2-build
+	make boehm-setup
+	make llvm-setup
 	make boost-setup
 	make ecl-setup
 	make gmp-setup
@@ -167,6 +167,9 @@ subClean:
 #	make clang-clean Redundant.
 	make llvm-clean
 
+
+shell:
+	bash
 
 clean:
 	make subClean
@@ -371,7 +374,7 @@ boost-build-a-n:
 				debug  \
 				-j$(PJOBS) \
 				--ignore-site-config \
-				install ) | tee logs/_boost.log 
+				install ) | tee logs/_boost.log
 
 
 boost-clean:
@@ -684,7 +687,7 @@ boost-rpath-fix:
 #	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_filesystem.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_filesystem.dylib
 #	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_date_time.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_date_time.dylib
 #	-install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_mpi.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_mpi.dylib
-#	-install_name_tool -change libboost_serialization.dylib $(RPATH_RELEASE_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_mpi.dylib 
+#	-install_name_tool -change libboost_serialization.dylib $(RPATH_RELEASE_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_mpi.dylib
 ##	-install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_thread.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_thread.dylib
 #	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_serialization.dylib
 ##	install_name_tool -id $(RPATH_RELEASE_FIX)/libboost_python.dylib $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR)/libboost_python.dylib
@@ -698,7 +701,7 @@ boost-rpath-fix:
 #	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_filesystem.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_filesystem.dylib
 #	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_date_time.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_date_time.dylib
 #	-install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_mpi.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_mpi.dylib
-#	-install_name_tool -change libboost_serialization.dylib $(RPATH_DEBUG_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_mpi.dylib 
+#	-install_name_tool -change libboost_serialization.dylib $(RPATH_DEBUG_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_mpi.dylib
 ##	-install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_thread.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_thread.dylib
 #	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_serialization.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_serialization.dylib
 ##	install_name_tool -id $(RPATH_DEBUG_FIX)/libboost_python.dylib $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_LIB_DIR)/libboost_python.dylib
@@ -978,5 +981,3 @@ wxPython-install:
 wxPython-clean:
 	make wxPython-nuke
 	(cd $(WXPYTHON_SOURCE_DIR)/wxPython; python setup.py clean)
-
-
