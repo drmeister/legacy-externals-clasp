@@ -132,7 +132,7 @@ setup:
 	make boehm-setup
 	make llvm-setup
 	make boost-setup
-	make ecl-setup
+#	make ecl-setup
 	make gmp-setup
 	make expat-setup
 	make zlib-setup
@@ -146,7 +146,7 @@ subAll sa:
 	make llvm-release
 	make boost-build
 	make gmp-build
-	make ecl-build
+#	make ecl-build
 	make expat-build
 	make zlib-build
 	make readline-build
@@ -160,7 +160,7 @@ subClean:
 	make boehm-clean
 	make readline-clean
 	make expat-clean
-	make ecl-clean
+#	make ecl-clean
 	make zlib-clean
 	make gmp-clean
 	make boost-clean
