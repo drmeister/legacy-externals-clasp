@@ -635,6 +635,10 @@ extern __attribute__((weak)) void GC_callback_reachable_object( GC_word* ptr, si
 }
 
 
+// Added by Christian Schafmeister June 2014
+// From Ivan Maidanski and posted to bdwgc-request@lists.opendylan.com
+// on June 6, 2014
+//
 STATIC void GC_mercury_do_enumerate_reachable_objects(struct hblk *hbp,
    word dummy)
 {
@@ -670,4 +674,3 @@ GC_INNER void GC_mercury_enumerate_reachable_objects(void)
     GC_ASSERT(GC_callback_reachable_object);
     GC_apply_to_all_blocks(GC_mercury_do_enumerate_reachable_objects, (word)0);
 }
-
