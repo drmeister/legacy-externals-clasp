@@ -32,6 +32,7 @@ CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_
 
 all:
 	make gitllvm
+	make gitboehm
 	make allnoget
 
 allnoget:
@@ -71,7 +72,7 @@ ECL_SOURCE_DIR = ecl
 #export LLVM_REVISION = 212390
 #export LLVM_SOURCE_DIR = llvm3.4svn
 
-BOEHM_SOURCE_DIR = boehm-7.2
+BOEHM_SOURCE_DIR = bdwgc
 EXPAT_SOURCE_DIR = expat-2.0.1
 ZLIB_SOURCE_DIR = zlib-1.2.8
 GMP_SOURCE_DIR = gmp-6.0.0
@@ -92,6 +93,13 @@ gitllvm:
 	-git clone --depth 1 -b llvm_36_clasp_01 https://github.com/drmeister/llvm.git $(LLVM_SOURCE_DIR)
 	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b clang_36_clasp_01 https://github.com/drmeister/clang.git clang)
 	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b clang-tools-extra_36_clasp_01 https://github.com/drmeister/clang-tools-extra.git extras)
+
+
+gitboehm:
+	-git clone --depth 1 https://github.com/drmeister/bdwgc.git $(BOEHM_SOURCE_DIR)
+	-(cd $(BOEHM_SOURCE_DIR); git clone git://github.com/ivmai/libatomic_ops.git;)
+	-(cd $(BOEHM_SOURCE_DIR); autoreconf -vif; )
+	-(cd $(BOEHM_SOURCE_DIR); automake --add-missing )
 
 
 git_make_submodules:
