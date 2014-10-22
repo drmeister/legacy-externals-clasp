@@ -634,7 +634,16 @@ typedef void (*GC_reachable_object_callback)( GC_word* ptr, size_t sz);
 
 GC_reachable_object_callback global_reachable_object_callback = NULL;
 
+<<<<<<< HEAD
 STATIC void GC_do_enumerate_reachable_objects(struct hblk *hbp, word dummy)
+=======
+// Added by Christian Schafmeister June 2014
+// From Ivan Maidanski and posted to bdwgc-request@lists.opendylan.com
+// on June 6, 2014
+//
+STATIC void GC_mercury_do_enumerate_reachable_objects(struct hblk *hbp,
+   word dummy)
+>>>>>>> 5ce869c0d12b598b9010cf3d6a433fae3a1f1ce0
 {
     struct hblkhdr * hhdr = HDR(hbp);
     size_t sz = hhdr -> hb_sz;
@@ -668,4 +677,3 @@ extern void GC_enumerate_reachable_objects(GC_reachable_object_callback callback
     global_reachable_object_callback = callback;
     GC_apply_to_all_blocks(GC_do_enumerate_reachable_objects, (word)0 );
 }
-

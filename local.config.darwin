@@ -13,15 +13,13 @@ export EXTERNALS_BUILD_TARGET_DIR = $(HOME)/local/externals-clasp
 # This defines how many processors you have available to build with
 # More processors = faster build
 #
-export PJOBS = 6
+export PJOBS = 2
 
 
 #------- Only change below if you really need to -----
 export TOOLSET = clang
- 
+
 #
 # OS X systems don't need GCC_TOOLCHAIN
 #
 #export GCC_TOOLCHAIN = $(HOME)/local/gcc-4.8.3
-
-
