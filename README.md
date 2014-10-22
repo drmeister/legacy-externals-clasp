@@ -34,6 +34,15 @@ To build everything from within the top level directory (externals-clasp/) do th
 
 4) Go to the Clasp library and configure and build it.
 
+
+## On OS X
+You need to install automake and libtool
+brew install automake<br>
+brew install libtool<br>
+brew install pkg-config
+
+
+
 The libraries are built and put into the $PREFIX (see local.config) directory
 
 Other useful make targets:<br>

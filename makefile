@@ -196,6 +196,9 @@ really-clean:
 ifneq ($(LLVM_SOURCE_DIR),)
 	rm -rf ./$(LLVM_SOURCE_DIR)
 endif
+ifneq ($(BOEHM_SOURCE_DIR),)
+	rm -rf ./$(BOEHM_SOURCE_DIR)
+endif
 
 
 rpath-fix:
