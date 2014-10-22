@@ -149,7 +149,7 @@ setup:
 #	make clang-setup This is redundant, it gets configured with llvm
 #	make lldb-setup
 
-subAll sa:
+build subAll sa:
 	make boehm-build
 	make llvm-release
 	make boost-build
