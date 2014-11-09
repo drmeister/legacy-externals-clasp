@@ -36,7 +36,7 @@ To build everything from within the top level directory (externals-clasp/) do th
 
 
 ## On OS X
-You need to install automake and libtool
+You need to install automake and libtool<br>
 brew install automake<br>
 brew install libtool<br>
 brew install pkg-config
