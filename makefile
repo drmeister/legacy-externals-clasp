@@ -189,9 +189,9 @@ shell:
 clean:
 	make subClean
 ifneq ($(EXTERNALS_BUILD_TARGET_DIR),)
-	-rm -rf $(EXTERNALS_BUILD_TARGET_DIR)/release
-	-rm -rf $(EXTERNALS_BUILD_TARGET_DIR)/debug
-	-rm -rf $(EXTERNALS_BUILD_TARGET_DIR)/common
+	-(find $(EXTERNALS_BUILD_TARGET_DIR)/release -type f -print0 | xargs -0 rm -f)
+	-(find $(EXTERNALS_BUILD_TARGET_DIR)/debug -type f -print0 | xargs -0 rm -f)
+	-(find $(EXTERNALS_BUILD_TARGET_DIR)/common -type f -print0 | xargs -0 rm -f)
 endif
 
 
