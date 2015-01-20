@@ -1,3 +1,4 @@
+
 # Copy local.config.template local.config
 # Edit local.config for your local configuration
 
@@ -31,7 +32,7 @@ CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_
 
 
 all:
-	make gitllvm
+	make gitllvm36_1
 	make gitboehm
 	make allnoget
 
@@ -89,10 +90,16 @@ getllvm:
 
 
 export LLVM_SOURCE_DIR = llvm36
-gitllvm:
-	-git clone --depth 1 -b llvm_36_clasp_01 https://github.com/drmeister/llvm.git $(LLVM_SOURCE_DIR)
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b clang_36_clasp_01 https://github.com/drmeister/clang.git clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b clang-tools-extra_36_clasp_01 https://github.com/drmeister/clang-tools-extra.git extras)
+gitllvm36_0:
+	-git clone --depth 1 -b llvm_36_clasp_01 https://github.com/drmeister/llvm36_0.git $(LLVM_SOURCE_DIR)
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b clang_36_clasp_01 https://github.com/drmeister/clang36_0.git clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b clang-tools-extra_36_clasp_01 https://github.com/drmeister/clang-tools-extra36_0.git extras)
+
+
+gitllvm36_1:
+	-git clone --depth 1 -b master https://github.com/drmeister/llvm36_1.git $(LLVM_SOURCE_DIR)
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b master https://github.com/drmeister/clang36_1.git clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b master https://github.com/drmeister/clang-tools-extra36_1.git extras)
 
 
 gitboehm:
