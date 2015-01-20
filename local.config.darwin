@@ -22,4 +22,4 @@ export TOOLSET = clang
 #
 # OS X systems don't need GCC_TOOLCHAIN
 #
-#export GCC_TOOLCHAIN = $(HOME)/local/gcc-4.8.3
+export GCC_TOOLCHAIN = /usr
