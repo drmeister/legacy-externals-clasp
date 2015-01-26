@@ -41,10 +41,8 @@ STATIC size_t GC_n_faulted = 0;
 
 void GC_record_fault(struct hblk * h)
 {
-    word page = (word)h;
+    word page = ROUNDUP_PAGESIZE((word)h);
 
-    page += GC_page_size - 1;
-    page &= ~(GC_page_size - 1);
     if (GC_n_faulted >= NSUMS) ABORT("write fault log overflowed");
     GC_faulted[GC_n_faulted++] = page;
 }
@@ -52,10 +50,8 @@ void GC_record_fault(struct hblk * h)
 STATIC GC_bool GC_was_faulted(struct hblk *h)
 {
     size_t i;
-    word page = (word)h;
+    word page = ROUNDUP_PAGESIZE((word)h);
 
-    page += GC_page_size - 1;
-    page &= ~(GC_page_size - 1);
     for (i = 0; i < GC_n_faulted; ++i) {
         if (GC_faulted[i] == page) return TRUE;
     }
@@ -68,7 +64,7 @@ STATIC word GC_checksum(struct hblk *h)
     word *lim = (word *)(h+1);
     word result = 0;
 
-    while (p < lim) {
+    while ((word)p < (word)lim) {
         result += *p++;
     }
     return(result | 0x80000000 /* doesn't look like pointer */);
@@ -108,7 +104,7 @@ STATIC void GC_update_check_page(struct hblk *h, int index)
     pe -> new_sum = GC_checksum(h);
 #   if !defined(MSWIN32) && !defined(MSWINCE)
         if (pe -> new_sum != 0x80000000 && !GC_page_was_ever_dirty(h)) {
-            GC_err_printf("GC_page_was_ever_dirty(%p) is wrong\n", h);
+            GC_err_printf("GC_page_was_ever_dirty(%p) is wrong\n", (void *)h);
         }
 #   endif
     if (GC_page_was_dirty(h)) {
@@ -146,8 +142,7 @@ STATIC void GC_update_check_page(struct hblk *h, int index)
 
 word GC_bytes_in_used_blocks = 0;
 
-/*ARGSUSED*/
-STATIC void GC_add_block(struct hblk *h, word dummy)
+STATIC void GC_add_block(struct hblk *h, word dummy GC_ATTR_UNUSED)
 {
    hdr * hhdr = HDR(h);
    size_t bytes = hhdr -> hb_sz;
@@ -163,12 +158,11 @@ STATIC void GC_check_blocks(void)
 
     GC_bytes_in_used_blocks = 0;
     GC_apply_to_all_blocks(GC_add_block, (word)0);
-    if (GC_print_stats)
-      GC_log_printf("GC_bytes_in_used_blocks = %lu,"
-                    " bytes_in_free_blocks = %lu, heapsize = %lu\n",
-                    (unsigned long)GC_bytes_in_used_blocks,
-                    (unsigned long)bytes_in_free_blocks,
-                    (unsigned long)GC_heapsize);
+    GC_COND_LOG_PRINTF("GC_bytes_in_used_blocks = %lu,"
+                       " bytes_in_free_blocks = %lu, heapsize = %lu\n",
+                       (unsigned long)GC_bytes_in_used_blocks,
+                       (unsigned long)bytes_in_free_blocks,
+                       (unsigned long)GC_heapsize);
     if (GC_bytes_in_used_blocks + bytes_in_free_blocks != GC_heapsize) {
         GC_err_printf("LOST SOME BLOCKS!!\n");
     }
@@ -194,17 +188,15 @@ void GC_check_dirty(void)
     for (i = 0; i < GC_n_heap_sects; i++) {
         start = GC_heap_sects[i].hs_start;
         for (h = (struct hblk *)start;
-             h < (struct hblk *)(start + GC_heap_sects[i].hs_bytes);
-             h++) {
+             (word)h < (word)(start + GC_heap_sects[i].hs_bytes); h++) {
              GC_update_check_page(h, index);
              index++;
              if (index >= NSUMS) goto out;
         }
     }
 out:
-    if (GC_print_stats)
-      GC_log_printf("Checked %lu clean and %lu dirty pages\n",
-                    (unsigned long)GC_n_clean, (unsigned long)GC_n_dirty);
+    GC_COND_LOG_PRINTF("Checked %lu clean and %lu dirty pages\n",
+                       (unsigned long)GC_n_clean, (unsigned long)GC_n_dirty);
     if (GC_n_dirty_errors > 0) {
         GC_err_printf("Found %d dirty bit errors (%d were faulted)\n",
                       GC_n_dirty_errors, GC_n_faulted_dirty_errors);

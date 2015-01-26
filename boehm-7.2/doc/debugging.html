@@ -13,8 +13,7 @@ It applies both to debugging issues in client code that manifest themselves
 as collector misbehavior, and to debugging the collector itself.
 <P>
 If you suspect a bug in the collector itself, it is strongly recommended
-that you try the latest collector release, even if it is labelled as "alpha",
-before proceeding.
+that you try the latest collector release before proceeding.
 <H2>Bus Errors and Segmentation Violations</h2>
 <P>
 If the fault occurred in GC_find_limit, or with incremental collection enabled,
@@ -82,7 +81,7 @@ void * big_realloc(void *p, size_t new_size)
 {
     size_t old_size = GC_size(p);
     void * result;
- 
+
     if (new_size &lt;= 10000) return(GC_realloc(p, new_size));
     if (new_size &lt;= old_size) return(p);
     result = GC_malloc_ignore_off_page(new_size);
@@ -303,7 +302,3 @@ the collector can avoid scanning them.
 </ol>
 </body>
 </html>
-
-
-
-

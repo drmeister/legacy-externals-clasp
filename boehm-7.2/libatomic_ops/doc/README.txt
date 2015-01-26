@@ -90,12 +90,19 @@ AO_t fetch_and_add1(volatile AO_t *addr)
         Equivalent to AO_fetch_and_add(addr, 1).
 AO_t fetch_and_sub1(volatile AO_t *addr)
         Equivalent to AO_fetch_and_add(addr, (AO_t)(-1)).
-void or(volatile AO_t *addr, AO_t incr)
-        Atomically or incr into *addr.
+void and(volatile AO_t *addr, AO_t value)
+        Atomically 'and' value into *addr.
+void or(volatile AO_t *addr, AO_t value)
+        Atomically 'or' value into *addr.
+void xor(volatile AO_t *addr, AO_t value)
+        Atomically 'xor' value into *addr.
 int compare_and_swap(volatile AO_t * addr, AO_t old_val, AO_t new_val)
         Atomically compare *addr to old_val, and replace *addr by new_val
         if the first comparison succeeds.  Returns nonzero if the comparison
         succeeded and *addr was updated.
+AO_t fetch_compare_and_swap(volatile AO_t * addr, AO_t old_val, AO_t new_val)
+        Atomically compare *addr to old_val, and replace *addr by new_val
+        if the first comparison succeeds; returns the original value of *addr.
 AO_TS_VAL_t test_and_set(volatile AO_TS_t * addr)
         Atomically read the binary value at *addr, and set it.  AO_TS_VAL_t
         is an enumeration type which includes two values AO_TS_SET and
@@ -173,7 +180,7 @@ _dd_acquire_read: Ordered with respect to later reads that are data
                dependencies force the hardware to execute the code
                serially.)
 
-We assume that if a store is data-dependent on an a previous load, then
+We assume that if a store is data-dependent on a previous load, then
 the two are always implicitly ordered.
 
 It is possible to test whether AO_<op><barrier> is available on the

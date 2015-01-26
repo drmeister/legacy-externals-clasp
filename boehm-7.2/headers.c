@@ -108,7 +108,7 @@ GC_INNER hdr *
 }
 
 /* Routines to dynamically allocate collector data structures that will */
-/* never be freed.                                                       */
+/* never be freed.                                                      */
 
 static ptr_t scratch_free_ptr = 0;
 
@@ -117,49 +117,48 @@ static ptr_t scratch_free_ptr = 0;
 
 GC_INNER ptr_t GC_scratch_alloc(size_t bytes)
 {
-    register ptr_t result = scratch_free_ptr;
+    ptr_t result = scratch_free_ptr;
+    word bytes_to_get;
 
-    bytes += GRANULE_BYTES-1;
-    bytes &= ~(GRANULE_BYTES-1);
-    scratch_free_ptr += bytes;
-    if (scratch_free_ptr <= GC_scratch_end_ptr) {
-        return(result);
-    }
-    {
-        word bytes_to_get = MINHINCR * HBLKSIZE;
+    bytes = ROUNDUP_GRANULE_SIZE(bytes);
+    for (;;) {
+        scratch_free_ptr += bytes;
+        if ((word)scratch_free_ptr <= (word)GC_scratch_end_ptr) {
+            /* Unallocated space of scratch buffer has enough size. */
+            return result;
+        }
 
-        if (bytes_to_get <= bytes) {
-          /* Undo the damage, and get memory directly */
-            bytes_to_get = bytes;
-#           ifdef USE_MMAP
-                bytes_to_get += GC_page_size - 1;
-                bytes_to_get &= ~(GC_page_size - 1);
-#           endif
+        if (bytes >= MINHINCR * HBLKSIZE) {
+            bytes_to_get = ROUNDUP_PAGESIZE_IF_MMAP(bytes);
             result = (ptr_t)GET_MEM(bytes_to_get);
             GC_add_to_our_memory(result, bytes_to_get);
+            /* Undo scratch free area pointer update; get memory directly. */
             scratch_free_ptr -= bytes;
-            GC_scratch_last_end_ptr = result + bytes;
-            return(result);
+            if (result != NULL) {
+                /* Update end point of last obtained area (needed only  */
+                /* by GC_register_dynamic_libraries for some targets).  */
+                GC_scratch_last_end_ptr = result + bytes;
+            }
+            return result;
         }
+
+        bytes_to_get = ROUNDUP_PAGESIZE_IF_MMAP(MINHINCR * HBLKSIZE);
+                                                /* round up for safety */
         result = (ptr_t)GET_MEM(bytes_to_get);
         GC_add_to_our_memory(result, bytes_to_get);
-        if (result == 0) {
-            if (GC_print_stats)
-                GC_log_printf("Out of memory - trying to allocate less\n");
-            scratch_free_ptr -= bytes;
-            bytes_to_get = bytes;
-#           ifdef USE_MMAP
-                bytes_to_get += GC_page_size - 1;
-                bytes_to_get &= ~(GC_page_size - 1);
-#           endif
+        if (NULL == result) {
+            WARN("Out of memory - trying to allocate requested amount"
+                 " (%" WARN_PRIdPTR " bytes)...\n", (word)bytes);
+            scratch_free_ptr -= bytes; /* Undo free area pointer update */
+            bytes_to_get = ROUNDUP_PAGESIZE_IF_MMAP(bytes);
             result = (ptr_t)GET_MEM(bytes_to_get);
             GC_add_to_our_memory(result, bytes_to_get);
             return result;
         }
+        /* Update scratch area pointers and retry.      */
         scratch_free_ptr = result;
         GC_scratch_end_ptr = scratch_free_ptr + bytes_to_get;
         GC_scratch_last_end_ptr = GC_scratch_end_ptr;
-        return(GC_scratch_alloc(bytes));
     }
 }
 
@@ -280,11 +279,11 @@ GC_INNER GC_bool GC_install_counts(struct hblk *h, size_t sz/* bytes */)
     struct hblk * hbp;
     word i;
 
-    for (hbp = h; (char *)hbp < (char *)h + sz; hbp += BOTTOM_SZ) {
+    for (hbp = h; (word)hbp < (word)h + sz; hbp += BOTTOM_SZ) {
         if (!get_index((word) hbp)) return(FALSE);
     }
     if (!get_index((word)h + sz - 1)) return(FALSE);
-    for (hbp = h + 1; (char *)hbp < (char *)h + sz; hbp += 1) {
+    for (hbp = h + 1; (word)hbp < (word)h + sz; hbp += 1) {
         i = HBLK_PTR_DIFF(hbp, h);
         SET_HDR(hbp, (hdr *)(i > MAX_JUMP? MAX_JUMP : i));
     }
@@ -304,7 +303,7 @@ GC_INNER void GC_remove_header(struct hblk *h)
 GC_INNER void GC_remove_counts(struct hblk *h, size_t sz/* bytes */)
 {
     register struct hblk * hbp;
-    for (hbp = h+1; (char *)hbp < (char *)h + sz; hbp += 1) {
+    for (hbp = h+1; (word)hbp < (word)h + sz; hbp += 1) {
         SET_HDR(hbp, 0);
     }
 }

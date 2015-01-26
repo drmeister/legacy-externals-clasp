@@ -18,13 +18,9 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- * Most of this code originally comes from Hans-Peter Nilsson.  It is included
- * here with his permission.
- *
- * This version has not been tested.  It was coped here from a GC
- * patch so that we wouldn't lose the code in the upgrade to gc7.
  */
+
+/* FIXME: seems to be untested.         */
 
 #include "../all_atomic_load_store.h"
 

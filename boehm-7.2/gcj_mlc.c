@@ -56,13 +56,12 @@ GC_INNER ptr_t * GC_gcjobjfreelist = NULL;
 
 STATIC ptr_t * GC_gcjdebugobjfreelist = NULL;
 
-/*ARGSUSED*/
-STATIC struct GC_ms_entry * GC_gcj_fake_mark_proc(word * addr,
-                                        struct GC_ms_entry *mark_stack_ptr,
-                                        struct GC_ms_entry *mark_stack_limit,
-                                        word env)
+STATIC struct GC_ms_entry * GC_gcj_fake_mark_proc(word * addr GC_ATTR_UNUSED,
+                        struct GC_ms_entry *mark_stack_ptr,
+                        struct GC_ms_entry * mark_stack_limit GC_ATTR_UNUSED,
+                        word env GC_ATTR_UNUSED)
 {
-    ABORT("No client gcj mark proc is specified");
+    ABORT_RET("No client gcj mark proc is specified");
     return mark_stack_ptr;
 }
 
@@ -89,8 +88,8 @@ GC_API void GC_CALL GC_init_gcj_malloc(int mp_index,
 #   else
       ignore_gcj_info = (0 != GETENV("GC_IGNORE_GCJ_INFO"));
 #   endif
-    if (GC_print_stats && ignore_gcj_info) {
-        GC_log_printf("Gcj-style type information is disabled!\n");
+    if (ignore_gcj_info) {
+      GC_COND_LOG_PRINTF("Gcj-style type information is disabled!\n");
     }
     GC_ASSERT(GC_mark_procs[mp_index] == (GC_mark_proc)0); /* unused */
     GC_mark_procs[mp_index] = (GC_mark_proc)(word)mp;
@@ -145,8 +144,8 @@ static void maybe_finalize(void)
    static word last_finalized_no = 0;
    DCL_LOCK_STATE;
 
-   if (GC_gc_no == last_finalized_no) return;
-   if (!GC_is_initialized) return;
+   if (GC_gc_no == last_finalized_no ||
+       !EXPECT(GC_is_initialized, TRUE)) return;
    UNLOCK();
    GC_INVOKE_FINALIZERS();
    LOCK();
@@ -160,21 +159,20 @@ static void maybe_finalize(void)
   GC_INNER void * GC_core_gcj_malloc(size_t lb,
                                      void * ptr_to_struct_containing_descr)
 #else
-  GC_API void * GC_CALL GC_gcj_malloc(size_t lb,
+  GC_API GC_ATTR_MALLOC void * GC_CALL GC_gcj_malloc(size_t lb,
                                       void * ptr_to_struct_containing_descr)
 #endif
 {
     ptr_t op;
-    ptr_t * opp;
     word lg;
     DCL_LOCK_STATE;
 
+    GC_DBG_COLLECT_AT_MALLOC(lb);
     if(SMALL_OBJ(lb)) {
         lg = GC_size_map[lb];
-        opp = &(GC_gcjobjfreelist[lg]);
         LOCK();
-        op = *opp;
-        if(EXPECT(op == 0, FALSE)) {
+        op = GC_gcjobjfreelist[lg];
+        if(EXPECT(0 == op, FALSE)) {
             maybe_finalize();
             op = (ptr_t)GENERAL_MALLOC_INNER((word)lb, GC_gcj_kind);
             if (0 == op) {
@@ -183,7 +181,7 @@ static void maybe_finalize(void)
                 return((*oom_fn)(lb));
             }
         } else {
-            *opp = obj_link(op);
+            GC_gcjobjfreelist[lg] = obj_link(op);
             GC_bytes_allocd += GRANULES_TO_BYTES(lg);
         }
         *(void **)op = ptr_to_struct_containing_descr;
@@ -206,7 +204,7 @@ static void maybe_finalize(void)
 
 /* Similar to GC_gcj_malloc, but add debug info.  This is allocated     */
 /* with GC_gcj_debug_kind.                                              */
-GC_API void * GC_CALL GC_debug_gcj_malloc(size_t lb,
+GC_API GC_ATTR_MALLOC void * GC_CALL GC_debug_gcj_malloc(size_t lb,
                 void * ptr_to_struct_containing_descr, GC_EXTRA_PARAMS)
 {
     void * result;
@@ -220,10 +218,8 @@ GC_API void * GC_CALL GC_debug_gcj_malloc(size_t lb,
     if (result == 0) {
         GC_oom_func oom_fn = GC_oom_fn;
         UNLOCK();
-        GC_err_printf("GC_debug_gcj_malloc(%ld, %p) returning NULL (",
-                      (unsigned long)lb, ptr_to_struct_containing_descr);
-        GC_err_puts(s);
-        GC_err_printf(":%d)\n", i);
+        GC_err_printf("GC_debug_gcj_malloc(%lu, %p) returning NULL (%s:%d)\n",
+                (unsigned long)lb, ptr_to_struct_containing_descr, s, i);
         return((*oom_fn)(lb));
     }
     *((void **)((ptr_t)result + sizeof(oh))) = ptr_to_struct_containing_descr;
@@ -236,19 +232,19 @@ GC_API void * GC_CALL GC_debug_gcj_malloc(size_t lb,
 }
 
 /* There is no THREAD_LOCAL_ALLOC for GC_gcj_malloc_ignore_off_page().  */
-GC_API void * GC_CALL GC_gcj_malloc_ignore_off_page(size_t lb,
+GC_API GC_ATTR_MALLOC void * GC_CALL GC_gcj_malloc_ignore_off_page(size_t lb,
                                      void * ptr_to_struct_containing_descr)
 {
     ptr_t op;
-    ptr_t * opp;
     word lg;
     DCL_LOCK_STATE;
 
+    GC_DBG_COLLECT_AT_MALLOC(lb);
     if(SMALL_OBJ(lb)) {
         lg = GC_size_map[lb];
-        opp = &(GC_gcjobjfreelist[lg]);
         LOCK();
-        if( (op = *opp) == 0 ) {
+        op = GC_gcjobjfreelist[lg];
+        if (EXPECT(0 == op, FALSE)) {
             maybe_finalize();
             op = (ptr_t)GENERAL_MALLOC_INNER_IOP(lb, GC_gcj_kind);
             if (0 == op) {
@@ -257,7 +253,7 @@ GC_API void * GC_CALL GC_gcj_malloc_ignore_off_page(size_t lb,
                 return((*oom_fn)(lb));
             }
         } else {
-            *opp = obj_link(op);
+            GC_gcjobjfreelist[lg] = obj_link(op);
             GC_bytes_allocd += GRANULES_TO_BYTES(lg);
         }
     } else {
