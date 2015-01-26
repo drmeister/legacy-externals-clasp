@@ -451,6 +451,7 @@ boehm-install:
 
 
 boehm-clean:
+	install -d $(BOEHM_SOURCE_DIR)
 	-(cd $(BOEHM_SOURCE_DIR); make clean )
 
 
