@@ -7,13 +7,13 @@ export TARGET_OS = darwin
 # This defines where externals-clasp put the built libraries
 # that clasp needs
 #
-export EXTERNALS_BUILD_TARGET_DIR = $(HOME)/local/externals-clasp
+export EXTERNALS_BUILD_TARGET_DIR = $(HOME)/.local/externals-clasp
 
 #
 # This defines how many processors you have available to build with
 # More processors = faster build
 #
-export PJOBS = 2
+export PJOBS = 4
 
 
 #------- Only change below if you really need to -----
@@ -22,4 +22,4 @@ export TOOLSET = clang
 #
 # OS X systems don't need GCC_TOOLCHAIN
 #
-export GCC_TOOLCHAIN = /usr
+#export GCC_TOOLCHAIN = /usr
