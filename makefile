@@ -74,7 +74,7 @@ ECL_SOURCE_DIR = ecl
 #export LLVM_REVISION = 212390
 #export LLVM_SOURCE_DIR = llvm3.4svn
 
-BOEHM_SOURCE_DIR = bdwgc
+BOEHM_SOURCE_DIR = boehm-7.2
 EXPAT_SOURCE_DIR = expat-2.0.1
 ZLIB_SOURCE_DIR = zlib-1.2.8
 GMP_SOURCE_DIR = gmp-6.0.0
@@ -451,6 +451,7 @@ boehm-install:
 
 
 boehm-clean:
+	install -d $(BOEHM_SOURCE_DIR)
 	-(cd $(BOEHM_SOURCE_DIR); make clean )
 
 
