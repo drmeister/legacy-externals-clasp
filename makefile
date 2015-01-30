@@ -1,4 +1,5 @@
 
+
 # Copy local.config.template local.config
 # Edit local.config for your local configuration
 
@@ -172,7 +173,7 @@ build subAll sa:
 
 subClean:
 #	make openmpi-clean
-	make boehm-clean
+	-make boehm-clean
 	make readline-clean
 	make expat-clean
 #	make ecl-clean
@@ -180,7 +181,7 @@ subClean:
 	make gmp-clean
 	make boost-clean
 #	make clang-clean Redundant.
-	make llvm-clean
+	-make llvm-clean
 
 
 shell:
@@ -188,23 +189,22 @@ shell:
 
 clean:
 	make subClean
-ifneq ($(EXTERNALS_BUILD_TARGET_DIR),)
-	-(find $(EXTERNALS_BUILD_TARGET_DIR)/release -type f -print0 | xargs -0 rm -f)
-	-(find $(EXTERNALS_BUILD_TARGET_DIR)/debug -type f -print0 | xargs -0 rm -f)
-	-(find $(EXTERNALS_BUILD_TARGET_DIR)/common -type f -print0 | xargs -0 rm -f)
-endif
+#ifneq ($(EXTERNALS_BUILD_TARGET_DIR),)
+#	-(find $(EXTERNALS_BUILD_TARGET_DIR)/release -type f -print0 | xargs -0 rm -f)
+#	-(find $(EXTERNALS_BUILD_TARGET_DIR)/debug -type f -print0 | xargs -0 rm -f)
+#	-(find $(EXTERNALS_BUILD_TARGET_DIR)/common -type f -print0 | xargs -0 rm -f)
+#endif
 
 
 #
 # This removes the llvm source
 #
 really-clean:
-	make clean
 ifneq ($(LLVM_SOURCE_DIR),)
-	rm -rf ./$(LLVM_SOURCE_DIR)
+	rm -rf ./$(LLVM_SOURCE_DIR)/*
 endif
 ifneq ($(BOEHM_SOURCE_DIR),)
-	rm -rf ./$(BOEHM_SOURCE_DIR)
+	rm -rf ./$(BOEHM_SOURCE_DIR)/*
 endif
 
 
