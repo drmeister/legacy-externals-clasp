@@ -1,13 +1,8 @@
+
 #
 # What system are you building on?   linux or darwin
 #
 export TARGET_OS = linux
-
-#
-# This defines where externals-clasp will put the built libraries
-# that clasp needs
-#
-export EXTERNALS_BUILD_TARGET_DIR = $(HOME)/local/externals-clasp
 
 #
 # This defines how many processors you have available to build with

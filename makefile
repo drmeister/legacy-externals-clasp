@@ -1,9 +1,14 @@
 
 
+
+
+
+
 # Copy local.config.template local.config
 # Edit local.config for your local configuration
 
 include local.config
+
 
 ######################################################################
 ######################################################################
@@ -12,18 +17,21 @@ include local.config
 # Shouldn't need changes below here
 #
 BOOST_TOOLSET = $(TOOLSET)
-export PATH := $(PATH):$(EXTERNALS_BUILD_TARGET_DIR)/release/bin:$(EXTERNALS_BUILD_TARGET_DIR)/common/bin
 
-BJAM = $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/bin/bjam
+TOP = $(shell pwd)
+export EXTERNALS_INTERNAL_BUILD_TARGET_DIR = $(TOP)/build
 
-TOP = `pwd`
+export PATH := $(PATH):$(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/release/bin:$(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/common/bin
+
 
 CLASP_REQUIRES_RTTI=1
-CLASP_APP_RESOURCES_DIR = $(EXTERNALS_BUILD_TARGET_DIR)
+CLASP_APP_RESOURCES_DIR = $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)
 CLASP_APP_RESOURCES_EXTERNALS_DIR = $(CLASP_APP_RESOURCES_DIR)
 CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/debug
 CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/release
 CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/common
+BJAM = $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/bin/bjam
+
 #
 # Needed by gmp fixlibgmpxx.sh scrip
 #
@@ -138,7 +146,7 @@ bjamversion:
 
 
 setup:
-	install -d $(EXTERNALS_BUILD_TARGET_DIR)
+	install -d $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)
 	install -d $(CLASP_APP_RESOURCES_DIR)
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_DIR)
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)
@@ -189,10 +197,10 @@ shell:
 
 clean:
 	make subClean
-#ifneq ($(EXTERNALS_BUILD_TARGET_DIR),)
-#	-(find $(EXTERNALS_BUILD_TARGET_DIR)/release -type f -print0 | xargs -0 rm -f)
-#	-(find $(EXTERNALS_BUILD_TARGET_DIR)/debug -type f -print0 | xargs -0 rm -f)
-#	-(find $(EXTERNALS_BUILD_TARGET_DIR)/common -type f -print0 | xargs -0 rm -f)
+#ifneq ($(EXTERNALS_INTERNAL_BUILD_TARGET_DIR),)
+#	-(find $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/release -type f -print0 | xargs -0 rm -f)
+#	-(find $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/debug -type f -print0 | xargs -0 rm -f)
+#	-(find $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/common -type f -print0 | xargs -0 rm -f)
 #endif
 
 
@@ -201,10 +209,10 @@ clean:
 #
 really-clean:
 ifneq ($(LLVM_SOURCE_DIR),)
-	rm -rf ./$(LLVM_SOURCE_DIR)/*
+	rm -rf ./$(LLVM_SOURCE_DIR)
 endif
 ifneq ($(BOEHM_SOURCE_DIR),)
-	rm -rf ./$(BOEHM_SOURCE_DIR)/*
+	rm -rf ./$(BOEHM_SOURCE_DIR)
 endif
 
 

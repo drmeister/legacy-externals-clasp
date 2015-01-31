@@ -4,12 +4,6 @@
 export TARGET_OS = darwin
 
 #
-# This defines where externals-clasp put the built libraries
-# that clasp needs
-#
-export EXTERNALS_BUILD_TARGET_DIR = $(HOME)/.local/externals-clasp
-
-#
 # This defines how many processors you have available to build with
 # More processors = faster build
 #
