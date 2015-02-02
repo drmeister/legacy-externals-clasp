@@ -41,7 +41,7 @@ CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_
 
 
 all:
-	make gitllvm36_1
+	make gitllvm36rc
 	make gitboehm
 	make allnoget
 
@@ -105,10 +105,15 @@ gitllvm36_0:
 	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b clang-tools-extra_36_clasp_01 https://github.com/drmeister/clang-tools-extra36_0.git extras)
 
 
-gitllvm36_1:
-	-git clone --depth 1 -b master https://github.com/drmeister/llvm36_1.git $(LLVM_SOURCE_DIR)
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b master https://github.com/drmeister/clang36_1.git clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b master https://github.com/drmeister/clang-tools-extra36_1.git extras)
+gitllvm37_tot:
+	-git clone --depth 1 -b master https://github.com/drmeister/llvm37_tot.git $(LLVM_SOURCE_DIR)
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b master https://github.com/drmeister/clang37_tot.git clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b master https://github.com/drmeister/clang-tools-extra37_tot.git extras)
+
+gitllvm36rc:
+	-git clone --depth 1 -b release_36 https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b release_36 https://github.com/llvm-mirror/clang clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b release_36 https://github.com/llvm-mirror/clang-tools-extra extras)
 
 
 gitboehm:
@@ -197,11 +202,11 @@ shell:
 
 clean:
 	make subClean
-#ifneq ($(EXTERNALS_INTERNAL_BUILD_TARGET_DIR),)
-#	-(find $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/release -type f -print0 | xargs -0 rm -f)
-#	-(find $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/debug -type f -print0 | xargs -0 rm -f)
-#	-(find $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/common -type f -print0 | xargs -0 rm -f)
-#endif
+ifneq ($(EXTERNALS_INTERNAL_BUILD_TARGET_DIR),)
+	-(find $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/release -type f -print0 | xargs -0 rm -f)
+	-(find $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/debug -type f -print0 | xargs -0 rm -f)
+	-(find $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/common -type f -print0 | xargs -0 rm -f)
+endif
 
 
 #
