@@ -1,11 +1,13 @@
 **externals-clasp**
 ===============
 
-<a href="http://drmeister.wordpress.com/2014/09/26/building-clasp-and-externals-clasp/">Note to those brave souls building early releases of Clasp</a>
+Update Feb 5, 2015:   **NOTE:  EXTERNALS_BUILD_TARGET_DIR is no longer required in local.config - I moved the build directory into the externals-clasp directory hierarchy to ensure that "make clean" was safe and could not destroy user files if this environment variable was set incorrectly.**
 
 Clasp can be found at:   https://github.com/drmeister/clasp
 
 These are the external libraries that Clasp depends on. If there are legal issues with incorporating these libraries in this repository please tell me and I will fix it.  All of these libraries are publically available on the internet.
+
+I am working to eliminate the need for externals-clasp when installing clasp and rely on standard libraries that are shipped with respective operating system distributions or downloadable from the internet.  Currently externals-clasp incorporates a few libraries that have been patched to add features that Clasp requires.
 
 **Building externals-clasp**
 
