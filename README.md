@@ -22,8 +22,6 @@ To build everything from within the top level directory (externals-clasp/) do th
   
 | Variable  |   Description 
 | ------------- | --------------|
-| **EXTERNALS_BUILD_TARGET_DIR**  | This defines where make will put all of the built libraries  |
-|   | I use $HOME/local/externals-clasp |
 |**TARGET_OS**                    |Currently either _linux_ or _darwin_|
 |**PJOBS**                        |The number of processors you have available to build with|
 |**GCC_TOOLCHAIN**                |Important on Linux systems. | 
