@@ -1,9 +1,3 @@
-
-
-
-
-
-
 # Copy local.config.template local.config
 # Edit local.config for your local configuration
 
@@ -30,6 +24,8 @@ CLASP_APP_RESOURCES_EXTERNALS_DIR = $(CLASP_APP_RESOURCES_DIR)
 CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/debug
 CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/release
 CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/common
+LLVM_RELEASE_TARGET = $(CLASP_APP_RESOURCES_DIR)/llvm/release
+LLVM_DEBUG_TARGET = $(CLASP_APP_RESOURCES_DIR)/llvm/debug
 BJAM = $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/bin/bjam
 
 #
@@ -91,29 +87,25 @@ BOOST_SOURCE_DIR = boost
 BOOST_BUILD_SOURCE_DIR = $(BOOST_SOURCE_DIR)/tools/build/v2
 LLDB_SOURCE_DIR = lldb
 
-export LLVM_REVISION = 218184
+export LLVM_REVISION = 234975
 getllvm:
 	svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/llvm/trunk $(LLVM_SOURCE_DIR)
 	(cd $(LLVM_SOURCE_DIR)/tools; svn co -r $(LLVM_REVISION)  http://llvm.org/svn/llvm-project/cfe/trunk clang)
 	(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
 
 
-export LLVM_SOURCE_DIR = llvm36
+export LLVM_SOURCE_DIR = llvm37
 gitllvm36_0:
 	-git clone --depth 1 -b llvm_36_clasp_01 https://github.com/drmeister/llvm36_0.git $(LLVM_SOURCE_DIR)
 	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b clang_36_clasp_01 https://github.com/drmeister/clang36_0.git clang)
 	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b clang-tools-extra_36_clasp_01 https://github.com/drmeister/clang-tools-extra36_0.git extras)
 
 
-gitllvm37_tot:
-	-git clone --depth 1 -b master https://github.com/drmeister/llvm37_tot.git $(LLVM_SOURCE_DIR)
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b master https://github.com/drmeister/clang37_tot.git clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b master https://github.com/drmeister/clang-tools-extra37_tot.git extras)
 
-gitllvm36rc:
-	-git clone --depth 1 -b release_36 https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b release_36 https://github.com/llvm-mirror/clang clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b release_36 https://github.com/llvm-mirror/clang-tools-extra extras)
+gitllvm37tot:
+	-git clone --depth 1 -b master https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b master https://github.com/llvm-mirror/clang clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b master https://github.com/llvm-mirror/clang-tools-extra extras)
 
 
 gitboehm:
@@ -567,6 +559,7 @@ ifeq ($(TARGET_OS),linux)
 
 #linux
 llvm-setup-debug:
+
 	echo GCC_TOOLCHAIN = $(GCC_TOOLCHAIN)
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-debug
 	(cd $(LLVM_SOURCE_DIR)/build-debug; \
