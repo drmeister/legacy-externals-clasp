@@ -37,7 +37,7 @@ CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_
 
 
 all:
-	make gitllvm36rc
+	make gitllvm37tot
 	make gitboehm
 	make allnoget
 
