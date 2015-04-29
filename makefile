@@ -102,6 +102,11 @@ gitllvm36_0:
 	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b clang-tools-extra_36_clasp_01 https://github.com/drmeister/clang-tools-extra36_0.git extras)
 
 
+gitllvm36:
+	-git clone --depth 1 -b release_36 https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b release_36 https://github.com/llvm-mirror/clang clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b release_36 https://github.com/llvm-mirror/clang-tools-extra extras)
+
 
 gitllvm37tot:
 	-git clone --depth 1 -b master https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
