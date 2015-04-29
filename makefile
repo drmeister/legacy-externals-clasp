@@ -1,3 +1,4 @@
+
 # Copy local.config.template local.config
 # Edit local.config for your local configuration
 
@@ -17,6 +18,7 @@ export EXTERNALS_INTERNAL_BUILD_TARGET_DIR = $(TOP)/build
 
 export PATH := $(PATH):$(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/release/bin:$(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/common/bin
 
+export LLVM_SOURCE_DIR = llvm36
 
 CLASP_REQUIRES_RTTI=1
 CLASP_APP_RESOURCES_DIR = $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)
@@ -37,7 +39,7 @@ CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_
 
 
 all:
-	make gitllvm37tot
+	make gitllvm36tot
 	make gitboehm
 	make allnoget
 
@@ -94,7 +96,6 @@ getllvm:
 	(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
 
 
-export LLVM_SOURCE_DIR = llvm37
 gitllvm36_0:
 	-git clone --depth 1 -b llvm_36_clasp_01 https://github.com/drmeister/llvm36_0.git $(LLVM_SOURCE_DIR)
 	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b clang_36_clasp_01 https://github.com/drmeister/clang36_0.git clang)
