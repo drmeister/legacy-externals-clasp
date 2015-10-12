@@ -40,8 +40,11 @@ CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_
 
 all:
 	make gitllvm36
-	make gitboehm
+#	make gitboehm
 	make allnoget
+
+devshell:
+	bash
 
 allnoget:
 	make setup
@@ -156,7 +159,7 @@ setup:
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)
 	make subClean
 	make boostbuild2-build
-	make boehm-setup
+#	make boehm-setup
 	make llvm-setup
 	make boost-setup
 #	make ecl-setup
@@ -169,7 +172,7 @@ setup:
 #	make lldb-setup
 
 build subAll sa:
-	make boehm-build
+#	make boehm-build
 	make llvm-release
 	make boost-build
 	make gmp-build
@@ -184,7 +187,7 @@ build subAll sa:
 
 subClean:
 #	make openmpi-clean
-	-make boehm-clean
+#	-make boehm-clean
 	make readline-clean
 	make expat-clean
 #	make ecl-clean
