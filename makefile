@@ -4,6 +4,7 @@
 
 include local.config
 
+export BUILTIN_INCLUDES ?= /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1
 
 ######################################################################
 ######################################################################
@@ -12,6 +13,12 @@ include local.config
 # Shouldn't need changes below here
 #
 BOOST_TOOLSET = $(TOOLSET)
+
+export TARGET_OS ?= $(shell uname)
+export TARGET_OS := $(or $(filter $(TARGET_OS), Linux), \
+			$(filter $(TARGET_OS), Darwin),\
+			$(error Invalid TARGET_OS: $(TARGET_OS)))
+
 
 TOP = $(shell pwd)
 export EXTERNALS_INTERNAL_BUILD_TARGET_DIR = $(TOP)/build
@@ -311,14 +318,25 @@ llvm-build:
 	make llvm-debug
 	make llvm-release
 
-# build llvm with VERBOSE=1 to see commands as they execute  - also set -j1 so multiple builds output aren't interleaved
-#	(cd $(LLVM_SOURCE_DIR)/build-debug; export VERBOSE=1;  make VERBOSE=1 -j$(COMPILE_PROCESSORS) ; make install) 2>&1 | tee ../_llvm-debug.log
-
 llvm-debug:
 	(cd $(LLVM_SOURCE_DIR)/build-debug; make -j$(PJOBS) ; make install)
+	make llvm-debug-symlinks
 
 llvm-release:
 	(cd $(LLVM_SOURCE_DIR)/build-release; make -j$(PJOBS) ; make install)
+	make llvm-release-symlinks
+
+llvm-release-symlinks:
+ifeq ($(TARGET_OS),Darwin)
+	install -d build/release/include/c++
+	-ln -s $(BUILTIN_INCLUDES) build/release/include/c++/v1
+endif
+
+llvm-debug-symlinks:
+ifeq ($(TARGET_OS),Darwin)
+	install -d build/debug/include/c++
+	-ln -s $(BUILTIN_INCLUDES) build/debug/include/c++/v1
+endif
 
 
 
