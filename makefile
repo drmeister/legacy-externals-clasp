@@ -70,7 +70,7 @@ export GXX_EXECUTABLE = $(GCC_TOOLCHAIN)/bin/g++
 endif
 
 
-ifeq ($(TARGET_OS),linux)
+ifeq ($(TARGET_OS),Linux)
 CLASP_CXXFLAGS="-std=c++11"
 else
 CLASP_CXXFLAGS="-std=c++11 -stdlib=libc++"
@@ -553,7 +553,7 @@ subBundle sb:
 #
 ##
 
-ifeq ($(TARGET_OS),linux)
+ifeq ($(TARGET_OS),Linux)
 #
 # Set clang-setup --prefix to $(CLASP_APP_RESOURCES_DIR)
 #
@@ -639,7 +639,7 @@ endif
 #
 ##
 
-ifeq ($(TARGET_OS),darwin)
+ifeq ($(TARGET_OS),Darwin)
 
 export RPATH_RELEASE_FIX = @executable_path/../Resources/externals/release/lib
 export RPATH_DEBUG_FIX = @executable_path/../Resources/externals/debug/lib
