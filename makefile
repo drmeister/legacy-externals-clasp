@@ -1,4 +1,3 @@
-
 # Copy local.config.template local.config
 # Edit local.config for your local configuration
 
@@ -25,7 +24,12 @@ export EXTERNALS_INTERNAL_BUILD_TARGET_DIR = $(TOP)/build
 
 export PATH := $(PATH):$(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/release/bin:$(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/common/bin
 
-export LLVM_SOURCE_DIR = llvm36
+export LLVM_VERSION_ID ?= 36
+export LLVM_VERSION_ID := $(or $(filter $(LLVM_VERSION_ID), 36 ),\
+				$(filter $(LLVM_VERSION_ID), 37 ), \
+				$(error Invalid LLVM_VERSION_ID: $(LLVM_VERSION_ID) ))
+export LLVM_VERSION = llvm$(LLVM_VERSION_ID)
+export LLVM_SOURCE_DIR = llvm$(LLVM_VERSION_ID)
 
 CLASP_REQUIRES_RTTI=1
 CLASP_APP_RESOURCES_DIR = $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)
@@ -46,7 +50,7 @@ CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_
 
 
 all:
-	make gitllvm36
+	make gitllvm
 #	make gitboehm
 	make allnoget
 
@@ -85,10 +89,6 @@ endif
 
 READLINE_VERSION=6.2
 OPENMPI_SOURCE_DIR = openmpi-1.6.5
-MPS_SOURCE_DIR = mps-temporary
-ECL_SOURCE_DIR = ecl
-#export LLVM_REVISION = 212390
-#export LLVM_SOURCE_DIR = llvm3.4svn
 
 BOEHM_SOURCE_DIR = boehm-7.2
 EXPAT_SOURCE_DIR = expat-2.0.1
@@ -99,30 +99,10 @@ BOOST_SOURCE_DIR = boost
 BOOST_BUILD_SOURCE_DIR = $(BOOST_SOURCE_DIR)/tools/build/v2
 LLDB_SOURCE_DIR = lldb
 
-export LLVM_REVISION = 234975
-getllvm:
-	svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/llvm/trunk $(LLVM_SOURCE_DIR)
-	(cd $(LLVM_SOURCE_DIR)/tools; svn co -r $(LLVM_REVISION)  http://llvm.org/svn/llvm-project/cfe/trunk clang)
-	(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
-
-
-gitllvm36_0:
-	-git clone --depth 1 -b llvm_36_clasp_01 https://github.com/drmeister/llvm36_0.git $(LLVM_SOURCE_DIR)
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b clang_36_clasp_01 https://github.com/drmeister/clang36_0.git clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b clang-tools-extra_36_clasp_01 https://github.com/drmeister/clang-tools-extra36_0.git extras)
-
-
-gitllvm36:
-	-git clone --depth 1 -b release_36 https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b release_36 https://github.com/llvm-mirror/clang clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b release_36 https://github.com/llvm-mirror/clang-tools-extra extras)
-
-
-gitllvm37tot:
-	-git clone --depth 1 -b master https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b master https://github.com/llvm-mirror/clang clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b master https://github.com/llvm-mirror/clang-tools-extra extras)
-
+gitllvm:
+	-git clone --depth 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang-tools-extra extras)
 
 gitboehm:
 	-git clone --depth 1 https://github.com/drmeister/bdwgc.git $(BOEHM_SOURCE_DIR)
@@ -586,7 +566,6 @@ ifeq ($(TARGET_OS),linux)
 
 #linux
 llvm-setup-debug:
-
 	echo GCC_TOOLCHAIN = $(GCC_TOOLCHAIN)
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-debug
 	(cd $(LLVM_SOURCE_DIR)/build-debug; \
