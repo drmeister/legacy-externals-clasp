@@ -295,8 +295,8 @@ llvm-setup:
 
 
 llvm-build:
-	make llvm-debug
 	make llvm-release
+	make llvm-debug
 
 llvm-debug:
 	(cd $(LLVM_SOURCE_DIR)/build-debug; make -j$(PJOBS) ; make install)
@@ -576,6 +576,7 @@ llvm-setup-debug:
 		CXX=$(GXX_EXECUTABLE) \
 		CXXFLAGS="-static-libstdc++ -static-libgcc" \
 		CFLAGS="-static-libgcc" \
+		LLVM_ENABLE_DOXYGEN=1 \
 		--enable-shared=no --enable-cxx11 )
 
 
