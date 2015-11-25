@@ -1,14 +1,9 @@
-
-
-
-
-
-
 # Copy local.config.template local.config
 # Edit local.config for your local configuration
 
 include local.config
 
+export BUILTIN_INCLUDES ?= /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1
 
 ######################################################################
 ######################################################################
@@ -18,11 +13,23 @@ include local.config
 #
 BOOST_TOOLSET = $(TOOLSET)
 
+export TARGET_OS ?= $(shell uname)
+export TARGET_OS := $(or $(filter $(TARGET_OS), Linux), \
+			$(filter $(TARGET_OS), Darwin),\
+			$(error Invalid TARGET_OS: $(TARGET_OS)))
+
+
 TOP = $(shell pwd)
 export EXTERNALS_INTERNAL_BUILD_TARGET_DIR = $(TOP)/build
 
 export PATH := $(PATH):$(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/release/bin:$(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/common/bin
 
+export LLVM_VERSION_ID ?= 36
+export LLVM_VERSION_ID := $(or $(filter $(LLVM_VERSION_ID), 36 ),\
+				$(filter $(LLVM_VERSION_ID), 37 ), \
+				$(error Invalid LLVM_VERSION_ID: $(LLVM_VERSION_ID) ))
+export LLVM_VERSION = llvm$(LLVM_VERSION_ID)
+export LLVM_SOURCE_DIR = llvm$(LLVM_VERSION_ID)
 
 CLASP_REQUIRES_RTTI=1
 CLASP_APP_RESOURCES_DIR = $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)
@@ -30,6 +37,8 @@ CLASP_APP_RESOURCES_EXTERNALS_DIR = $(CLASP_APP_RESOURCES_DIR)
 CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/debug
 CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/release
 CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/common
+LLVM_RELEASE_TARGET = $(CLASP_APP_RESOURCES_DIR)/llvm/release
+LLVM_DEBUG_TARGET = $(CLASP_APP_RESOURCES_DIR)/llvm/debug
 BJAM = $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/bin/bjam
 
 #
@@ -41,9 +50,12 @@ CLASP_APP_RESOURCES_EXTERNALS_RELEASE_LIB_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_
 
 
 all:
-	make gitllvm36rc
-	make gitboehm
+	make gitllvm
+#	make gitboehm
 	make allnoget
+
+devshell:
+	bash
 
 allnoget:
 	make setup
@@ -58,7 +70,7 @@ export GXX_EXECUTABLE = $(GCC_TOOLCHAIN)/bin/g++
 endif
 
 
-ifeq ($(TARGET_OS),linux)
+ifeq ($(TARGET_OS),Linux)
 CLASP_CXXFLAGS="-std=c++11"
 else
 CLASP_CXXFLAGS="-std=c++11 -stdlib=libc++"
@@ -77,10 +89,6 @@ endif
 
 READLINE_VERSION=6.2
 OPENMPI_SOURCE_DIR = openmpi-1.6.5
-MPS_SOURCE_DIR = mps-temporary
-ECL_SOURCE_DIR = ecl
-#export LLVM_REVISION = 212390
-#export LLVM_SOURCE_DIR = llvm3.4svn
 
 BOEHM_SOURCE_DIR = boehm-7.2
 EXPAT_SOURCE_DIR = expat-2.0.1
@@ -91,30 +99,10 @@ BOOST_SOURCE_DIR = boost
 BOOST_BUILD_SOURCE_DIR = $(BOOST_SOURCE_DIR)/tools/build/v2
 LLDB_SOURCE_DIR = lldb
 
-export LLVM_REVISION = 218184
-getllvm:
-	svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/llvm/trunk $(LLVM_SOURCE_DIR)
-	(cd $(LLVM_SOURCE_DIR)/tools; svn co -r $(LLVM_REVISION)  http://llvm.org/svn/llvm-project/cfe/trunk clang)
-	(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; svn co -r $(LLVM_REVISION) http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra)
-
-
-export LLVM_SOURCE_DIR = llvm36
-gitllvm36_0:
-	-git clone --depth 1 -b llvm_36_clasp_01 https://github.com/drmeister/llvm36_0.git $(LLVM_SOURCE_DIR)
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b clang_36_clasp_01 https://github.com/drmeister/clang36_0.git clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b clang-tools-extra_36_clasp_01 https://github.com/drmeister/clang-tools-extra36_0.git extras)
-
-
-gitllvm37_tot:
-	-git clone --depth 1 -b master https://github.com/drmeister/llvm37_tot.git $(LLVM_SOURCE_DIR)
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b master https://github.com/drmeister/clang37_tot.git clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b master https://github.com/drmeister/clang-tools-extra37_tot.git extras)
-
-gitllvm36rc:
-	-git clone --depth 1 -b release_36 https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b release_36 https://github.com/llvm-mirror/clang clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b release_36 https://github.com/llvm-mirror/clang-tools-extra extras)
-
+gitllvm:
+	-git clone --depth 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang-tools-extra extras)
 
 gitboehm:
 	-git clone --depth 1 https://github.com/drmeister/bdwgc.git $(BOEHM_SOURCE_DIR)
@@ -158,7 +146,7 @@ setup:
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)
 	make subClean
 	make boostbuild2-build
-	make boehm-setup
+#	make boehm-setup
 	make llvm-setup
 	make boost-setup
 #	make ecl-setup
@@ -171,7 +159,7 @@ setup:
 #	make lldb-setup
 
 build subAll sa:
-	make boehm-build
+#	make boehm-build
 	make llvm-release
 	make boost-build
 	make gmp-build
@@ -186,7 +174,7 @@ build subAll sa:
 
 subClean:
 #	make openmpi-clean
-	-make boehm-clean
+#	-make boehm-clean
 	make readline-clean
 	make expat-clean
 #	make ecl-clean
@@ -310,14 +298,25 @@ llvm-build:
 	make llvm-debug
 	make llvm-release
 
-# build llvm with VERBOSE=1 to see commands as they execute  - also set -j1 so multiple builds output aren't interleaved
-#	(cd $(LLVM_SOURCE_DIR)/build-debug; export VERBOSE=1;  make VERBOSE=1 -j$(COMPILE_PROCESSORS) ; make install) 2>&1 | tee ../_llvm-debug.log
-
 llvm-debug:
 	(cd $(LLVM_SOURCE_DIR)/build-debug; make -j$(PJOBS) ; make install)
+	make llvm-debug-symlinks
 
 llvm-release:
 	(cd $(LLVM_SOURCE_DIR)/build-release; make -j$(PJOBS) ; make install)
+	make llvm-release-symlinks
+
+llvm-release-symlinks:
+ifeq ($(TARGET_OS),Darwin)
+	install -d build/release/include/c++
+	-ln -s $(BUILTIN_INCLUDES) build/release/include/c++/v1
+endif
+
+llvm-debug-symlinks:
+ifeq ($(TARGET_OS),Darwin)
+	install -d build/debug/include/c++
+	-ln -s $(BUILTIN_INCLUDES) build/debug/include/c++/v1
+endif
 
 
 
@@ -449,7 +448,7 @@ zlib-clean:
 boehm-setup:
 	(cd $(BOEHM_SOURCE_DIR); \
 		export ALL_INTERIOR_PTRS=1; \
-		CFLAGS="-DUSE_MMAP" \
+		CFLAGS="-DUSE_MMAP -g" \
 		./configure --enable-shared=no --enable-static=yes --enable-handle-fork --enable-cplusplus --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR);)
 boehm-build:
 	make boehm-compile
@@ -554,7 +553,7 @@ subBundle sb:
 #
 ##
 
-ifeq ($(TARGET_OS),linux)
+ifeq ($(TARGET_OS),Linux)
 #
 # Set clang-setup --prefix to $(CLASP_APP_RESOURCES_DIR)
 #
@@ -640,7 +639,7 @@ endif
 #
 ##
 
-ifeq ($(TARGET_OS),darwin)
+ifeq ($(TARGET_OS),Darwin)
 
 export RPATH_RELEASE_FIX = @executable_path/../Resources/externals/release/lib
 export RPATH_DEBUG_FIX = @executable_path/../Resources/externals/debug/lib
