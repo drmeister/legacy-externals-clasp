@@ -11,7 +11,7 @@ I am working to eliminate the need for externals-clasp when installing clasp and
 
 **Building externals-clasp**
 
-_You need to have gcc 4.8 or higher to build externals-clasp._
+_You need to have gcc 4.8 or higher or llvm/clang 3.6, 3.7, or 7.0 to build externals-clasp._
 
 To build everything from within the top level directory (externals-clasp/) do the following.
 
