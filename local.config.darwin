@@ -1,7 +1,7 @@
 #
 # What system are you building on?   linux or darwin
 #
-export TARGET_OS = darwin
+export TARGET_OS = $(shell uname)
 
 #
 # This defines how many processors you have available to build with
