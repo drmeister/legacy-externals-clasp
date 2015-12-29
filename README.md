@@ -22,7 +22,7 @@ To build everything from within the top level directory (externals-clasp/) do th
   
 | Variable  |   Description 
 | ------------- | --------------|
-|**TARGET_OS**                    |Currently either _linux_ or _darwin_|
+|**TARGET_OS**                    |Currently either _Linux_ or _Darwin_|
 |**PJOBS**                        |The number of processors you have available to build with|
 |**GCC_TOOLCHAIN**                |Important on Linux systems. | 
 |                                 |gcc and g++ must be found in $(**GCC_TOOLCHAIN**)/bin/ |
