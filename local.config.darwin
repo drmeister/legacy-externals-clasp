@@ -1,9 +1,4 @@
 #
-# What system are you building on?   linux or darwin
-#
-export TARGET_OS = darwin
-
-#
 # This defines how many processors you have available to build with
 # More processors = faster build
 #
