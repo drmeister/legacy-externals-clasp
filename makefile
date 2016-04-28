@@ -24,9 +24,10 @@ export EXTERNALS_INTERNAL_BUILD_TARGET_DIR = $(TOP)/build
 
 export PATH := $(PATH):$(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/release/bin:$(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/common/bin
 
-export LLVM_VERSION_ID ?= 36
+export LLVM_VERSION_ID ?= 38
 export LLVM_VERSION_ID := $(or $(filter $(LLVM_VERSION_ID), 36 ),\
 				$(filter $(LLVM_VERSION_ID), 37 ), \
+				$(filter $(LLVM_VERSION_ID), 38 ), \
 				$(error Invalid LLVM_VERSION_ID: $(LLVM_VERSION_ID) ))
 export LLVM_VERSION = llvm$(LLVM_VERSION_ID)
 export LLVM_SOURCE_DIR = llvm$(LLVM_VERSION_ID)
@@ -102,6 +103,7 @@ LLDB_SOURCE_DIR = lldb
 gitllvm:
 	-git clone --depth 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
 	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone --depth 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/lldb lldb)
 	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone --depth 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang-tools-extra extras)
 
 gitboehm:
@@ -115,10 +117,7 @@ git_make_submodules:
 	-git submodule add http://llvm.org/git/llvm.git llvm
 	-git submodule add http://llvm.org/git/clang.git $(LLVM_SOURCE_DIR)/tools/clang
 	-git submodule add http://llvm.org/git/clang-tools-extra.git $(LLVM_SOURCE_DIR)/tools/clang/tools/extras
-
-
-resetllvm:
-	rm -rf llvm3.4svn
+	-git submodule add https://github.com/llvm-mirror/lldb.git $(LLVM_SOURCE_DIR)/tools/lldb
 
 all-dependencies:
 	make subClean
