@@ -580,8 +580,8 @@ llvm-setup-debug:
 		--with-gcc-toolchain=$(GCC_TOOLCHAIN) \
 		CC=$(GCC_EXECUTABLE) \
 		CXX=$(GXX_EXECUTABLE) \
-		CXXFLAGS="-static-libstdc++ -static-libgcc" \
-		CFLAGS="-static-libgcc" \
+		CXXFLAGS="-static-libstdc++ -static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)/include" \
+		CFLAGS="-static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)/include" \
 		--enable-shared=no --enable-cxx11 )
 
 
