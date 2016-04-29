@@ -166,13 +166,13 @@ setup:
 
 build subAll sa:
 #	make boehm-build
+	make readline-build
 	make llvm-release
 	make boost-build
 	make gmp-build
 #	make ecl-build
 	make expat-build
 	make zlib-build
-	make readline-build
 	make subBundle
 #	make openmpi-build
 #	-make ez_setup
