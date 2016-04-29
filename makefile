@@ -103,8 +103,8 @@ LLDB_SOURCE_DIR = lldb
 gitllvm:
 	-git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
 	-(cd $(LLVM_SOURCE_DIR)/tools; git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/lldb lldb)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang-tools-extra extras)
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/lldb lldb)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang-tools-extra extras)
 
 # Only get --depth 1
 gitllvm-shallow:
