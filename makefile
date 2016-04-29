@@ -103,8 +103,8 @@ LLDB_SOURCE_DIR = lldb
 gitllvm:
 	-git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
 	-(cd $(LLVM_SOURCE_DIR)/tools; git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/lldb lldb)
-	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone 1 -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang-tools-extra extras)
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/lldb lldb)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang-tools-extra extras)
 
 # Only get --depth 1
 gitllvm-shallow:
@@ -166,13 +166,13 @@ setup:
 
 build subAll sa:
 #	make boehm-build
+	make readline-build
 	make llvm-release
 	make boost-build
 	make gmp-build
 #	make ecl-build
 	make expat-build
 	make zlib-build
-	make readline-build
 	make subBundle
 #	make openmpi-build
 #	-make ez_setup
@@ -580,8 +580,8 @@ llvm-setup-debug:
 		--with-gcc-toolchain=$(GCC_TOOLCHAIN) \
 		CC=$(GCC_EXECUTABLE) \
 		CXX=$(GXX_EXECUTABLE) \
-		CXXFLAGS="-static-libstdc++ -static-libgcc" \
-		CFLAGS="-static-libgcc" \
+		CXXFLAGS="-static-libstdc++ -static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)/include" \
+		CFLAGS="-static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)/include" \
 		--enable-shared=no --enable-cxx11 )
 
 
