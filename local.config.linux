@@ -22,3 +22,8 @@ export GCC_TOOLCHAIN = $(HOME)/local/gcc-4.8.3
 # ------- Only change if you know what you are doing -------
 #
 export TOOLSET = gcc
+
+#
+# Tell it where -lpython2.7 can be found
+#
+export PYTHON_LIB=$HOME/local/lib

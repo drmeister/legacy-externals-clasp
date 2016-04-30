@@ -32,15 +32,16 @@ export LLVM_VERSION_ID := $(or $(filter $(LLVM_VERSION_ID), 36 ),\
 export LLVM_VERSION = llvm$(LLVM_VERSION_ID)
 export LLVM_SOURCE_DIR = llvm$(LLVM_VERSION_ID)
 
-CLASP_REQUIRES_RTTI=1
-CLASP_APP_RESOURCES_DIR = $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)
-CLASP_APP_RESOURCES_EXTERNALS_DIR = $(CLASP_APP_RESOURCES_DIR)
-CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/debug
-CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/release
-CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/common
-LLVM_RELEASE_TARGET = $(CLASP_APP_RESOURCES_DIR)/llvm/release
-LLVM_DEBUG_TARGET = $(CLASP_APP_RESOURCES_DIR)/llvm/debug
-BJAM = $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/bin/bjam
+export CLASP_REQUIRES_RTTI=1
+export CLASP_APP_RESOURCES_DIR = $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)
+export CLASP_APP_RESOURCES_EXTERNALS_DIR = $(CLASP_APP_RESOURCES_DIR)
+export CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/debug
+export CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/release
+export CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_DIR)/common
+export CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR = $(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR)/include
+export LLVM_RELEASE_TARGET = $(CLASP_APP_RESOURCES_DIR)/llvm/release
+export LLVM_DEBUG_TARGET = $(CLASP_APP_RESOURCES_DIR)/llvm/debug
+export BJAM = $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)/bin/bjam
 
 #
 # Needed by gmp fixlibgmpxx.sh scrip
@@ -89,6 +90,7 @@ ifneq ($(LDFLAGS),)
 endif
 
 READLINE_VERSION=6.2
+LIBEDIT_VERSION=20150325-3.1
 OPENMPI_SOURCE_DIR = openmpi-1.6.5
 
 BOEHM_SOURCE_DIR = boehm-7.2
@@ -126,6 +128,8 @@ git_make_submodules:
 	-git submodule add http://llvm.org/git/clang-tools-extra.git $(LLVM_SOURCE_DIR)/tools/clang/tools/extras
 	-git submodule add https://github.com/llvm-mirror/lldb.git $(LLVM_SOURCE_DIR)/tools/lldb
 
+
+
 all-dependencies:
 	make subClean
 	make setup
@@ -153,6 +157,7 @@ setup:
 	make subClean
 	make boostbuild2-build
 #	make boehm-setup
+	make libedit-setup
 	make llvm-setup
 	make boost-setup
 #	make ecl-setup
@@ -167,6 +172,7 @@ setup:
 build subAll sa:
 #	make boehm-build
 	make readline-build
+	make libedit-build
 	make llvm-release
 	make boost-build
 	make gmp-build
@@ -182,6 +188,7 @@ subClean:
 #	make openmpi-clean
 #	-make boehm-clean
 	make readline-clean
+	make libedit-clean
 	make expat-clean
 #	make ecl-clean
 	make zlib-clean
@@ -221,6 +228,7 @@ rpath-fix:
 	make gmp-rpath-fix
 	make zlib-rpath-fix
 	make readline-rpath-fix
+	make libedit-rpath-fix
 	make expat-rpath-fix
 
 
@@ -272,8 +280,6 @@ ecl-build:
 
 ecl-clean:
 	-(rm -rf $(ECL_SOURCE_DIR)/build)
-
-
 
 
 
@@ -502,7 +508,19 @@ readline-install:
 readline-clean:
 	-(cd readline-$(READLINE_VERSION); make clean )
 
+libedit-setup:
+	(cd libedit-$(LIBEDIT_VERSION); ./configure --enable-shared --prefix=$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_DIR);)
+#	sed -e 's/-dynamic/-dynamiclib/g' <libedit-$(LIBEDIT_VERSION)/shlib/Makefile  >libedit-$(LIBEDIT_VERSION)/shlib/Makefile.good
+#	mv libedit-$(LIBEDIT_VERSION)/shlib/Makefile.good libedit-$(LIBEDIT_VERSION)/shlib/Makefile
 
+libedit-build:
+	(cd libedit-$(LIBEDIT_VERSION); make -j$(PJOBS))
+
+libedit-install:
+	(cd libedit-$(LIBEDIT_VERSION); make -j$(PJOBS) install)
+
+libedit-clean:
+	-(cd libedit-$(LIBEDIT_VERSION); make clean )
 
 cmake-setup:
 	(cd $(CMAKE_VERSION); ./configure;)
@@ -580,8 +598,9 @@ llvm-setup-debug:
 		--with-gcc-toolchain=$(GCC_TOOLCHAIN) \
 		CC=$(GCC_EXECUTABLE) \
 		CXX=$(GXX_EXECUTABLE) \
-		CXXFLAGS="-static-libstdc++ -static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)/include" \
-		CFLAGS="-static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)/include" \
+		CXXFLAGS="-static-libstdc++ -static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
+		CFLAGS="-static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
+		LINKFLAGS="-L$(PYTHON_LIB)" \
 		--enable-shared=no --enable-cxx11 )
 
 
@@ -594,8 +613,9 @@ llvm-setup-release:
 		--with-gcc-toolchain=$(GCC_TOOLCHAIN) \
 		CC=$(GCC_EXECUTABLE) \
 		CXX=$(GXX_EXECUTABLE) \
-		CXXFLAGS="-static-libstdc++ -static-libgcc" \
-		CFLAGS="-static-libgcc" \
+		CXXFLAGS="-static-libstdc++ -static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
+		CFLAGS="-static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
+		LINKFLAGS="-L$(PYTHON_LIB)" \
 		--enable-shared=no --enable-cxx11 )
 
 
@@ -625,6 +645,9 @@ boost-rpath-fix:
 	echo Do nothing
 
 readline-rpath-fix:
+	echo Do nothing
+
+libedit-rpath-fix:
 	echo Do nothing
 
 zlib-rpath-fix:
