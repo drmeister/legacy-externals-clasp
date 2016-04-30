@@ -100,10 +100,11 @@ BOOST_SOURCE_DIR = boost
 BOOST_BUILD_SOURCE_DIR = $(BOOST_SOURCE_DIR)/tools/build/v2
 LLDB_SOURCE_DIR = lldb
 
+## Don't get lldb for now - it's a hastle to build
 gitllvm:
 	-git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
 	-(cd $(LLVM_SOURCE_DIR)/tools; git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang clang)
-	-(cd $(LLVM_SOURCE_DIR)/tools; git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/lldb lldb)
+#	-(cd $(LLVM_SOURCE_DIR)/tools; git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/lldb lldb)
 	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang-tools-extra extras)
 
 # Only get --depth 1
