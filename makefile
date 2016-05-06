@@ -30,7 +30,6 @@ export LLVM_VERSION_ID := $(or $(filter $(LLVM_VERSION_ID), 36 ),\
 				$(filter $(LLVM_VERSION_ID), 38 ), \
 				$(error Invalid LLVM_VERSION_ID: $(LLVM_VERSION_ID) ))
 export LLVM_VERSION = llvm$(LLVM_VERSION_ID)
-export LLVM_SOURCE_DIR = llvm$(LLVM_VERSION_ID)
 
 export CLASP_REQUIRES_RTTI=1
 export CLASP_APP_RESOURCES_DIR = $(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)
@@ -102,8 +101,19 @@ BOOST_SOURCE_DIR = boost
 BOOST_BUILD_SOURCE_DIR = $(BOOST_SOURCE_DIR)/tools/build/v2
 LLDB_SOURCE_DIR = lldb
 
-## Don't get lldb for now - it's a hastle to build
+#export LLVM_SOURCE_DIR = llvm$(LLVM_VERSION_ID)
+
+export LLVM_SOURCE_DIR = llvm39ToT
+
 gitllvm:
+	-git clone http://llvm.org/git/llvm.git $(LLVM_SOURCE_DIR)
+	-(cd $(LLVM_SOURCE_DIR)/tools; git clone http://llvm.org/git/clang.git clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone http://llvm.org/git/clang-tools-extra extras)
+#       -(cd $(LLVM_SOURCE_DIR)/tools; git clone http://llvm.org/git/lldb.git lldb)
+
+
+## Don't get lldb for now - it's a hastle to build
+gitllvm-version:
 	-git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/llvm $(LLVM_SOURCE_DIR) 
 	-(cd $(LLVM_SOURCE_DIR)/tools; git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/clang clang)
 #	-(cd $(LLVM_SOURCE_DIR)/tools; git clone -b release_$(LLVM_VERSION_ID) https://github.com/llvm-mirror/lldb lldb)
@@ -158,7 +168,7 @@ setup:
 	make subClean
 	make boostbuild2-build
 #	make boehm-setup
-	make libedit-setup
+#	make libedit-setup
 	make llvm-setup
 	make boost-setup
 #	make ecl-setup
@@ -173,7 +183,7 @@ setup:
 build subAll sa:
 #	make boehm-build
 	make readline-build
-	make libedit-build
+#	make libedit-build
 	make llvm-release
 	make boost-build
 	make gmp-build
@@ -189,7 +199,7 @@ subClean:
 #	make openmpi-clean
 #	-make boehm-clean
 	make readline-clean
-	make libedit-clean
+#	make libedit-clean
 	make expat-clean
 #	make ecl-clean
 	make zlib-clean
@@ -229,7 +239,7 @@ rpath-fix:
 	make gmp-rpath-fix
 	make zlib-rpath-fix
 	make readline-rpath-fix
-	make libedit-rpath-fix
+#	make libedit-rpath-fix
 	make expat-rpath-fix
 
 
@@ -591,33 +601,43 @@ ifeq ($(TARGET_OS),Linux)
 
 #linux
 llvm-setup-debug:
-	echo GCC_TOOLCHAIN = $(GCC_TOOLCHAIN)
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-debug
 	(cd $(LLVM_SOURCE_DIR)/build-debug; \
-		../configure --enable-targets=x86_64 --enable-debug-symbols --enable-debug-runtime \
-		--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
-		--with-gcc-toolchain=$(GCC_TOOLCHAIN) \
-		CC=$(GCC_EXECUTABLE) \
-		CXX=$(GXX_EXECUTABLE) \
-		CXXFLAGS="-static-libstdc++ -static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
-		CFLAGS="-static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
-		LINKFLAGS="-L$(PYTHON_LIB)" \
-		--enable-shared=no --enable-cxx11 )
+		cmake -DCMAKE_BUILD_TYPE:STRING="Debug" \
+			-DCMAKE_INSTALL_PREFIX:STRING=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
+			-DLLVM_BUILD_LLVM_DYLIB:BOOL=true \
+			-DLLVM_PARALLEL_COMPILE_JOBS:STRING=$(PJOBS) \
+			-DLLVM_ENABLE_CXX11:BOOL=true \
+			-DLLVM_BUILD_TOOLS:BOOL=true \
+			-DLLVM_ENABLE_RTTI:BOOL=true \
+			-DLLVM_TARGETS_TO_BUILD:STRING="X86" \
+			-DCMAKE_CXX_FLAGS:STRING="-I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
+			-DCMAKE_C_FLAGS:STRING="-I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
+			.. )
 
 
+#			-DCMAKE_C_COMPILER:STRING=$(GCC_EXECUTABLE) 
+#			-DCMAKE_CXX_COMPILER:STRING=$(GXX_EXECUTABLE) 
+#		export LINKFLAGS="-L$(PYTHON_LIB)"; 
 #linux
 llvm-setup-release:
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-release
 	(cd $(LLVM_SOURCE_DIR)/build-release; \
-		../configure --enable-targets=x86_64  --enable-optimized --enable-assertions \
-		--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) \
-		--with-gcc-toolchain=$(GCC_TOOLCHAIN) \
-		CC=$(GCC_EXECUTABLE) \
-		CXX=$(GXX_EXECUTABLE) \
-		CXXFLAGS="-static-libstdc++ -static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
-		CFLAGS="-static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
-		LINKFLAGS="-L$(PYTHON_LIB)" \
-		--enable-shared=no --enable-cxx11 )
+		cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
+			-DCMAKE_INSTALL_PREFIX:STRING=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) \
+			-DLLVM_BUILD_LLVM_DYLIB:BOOL=true \
+			-DLLVM_PARALLEL_COMPILE_JOBS:STRING=$(PJOBS) \
+			-DLLVM_ENABLE_CXX11:BOOL=true \
+			-DLLVM_BUILD_TOOLS:BOOL=true \
+			-DLLVM_ENABLE_RTTI:BOOL=true \
+			-DLLVM_TARGETS_TO_BUILD:STRING="X86" \
+			-DCMAKE_CXX_FLAGS:STRING="-I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
+			-DCMAKE_C_FLAGS:STRING="-I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
+			.. )
+
+#../configure --enable-targets=x86_64  --enable-optimized --enable-assertions \
+#		--with-gcc-toolchain=$(GCC_TOOLCHAIN) \
+#		--enable-shared=no --enable-cxx11 )
 
 
 
@@ -677,21 +697,62 @@ export RPATH_COMMON_FIX = @executable_path/../Resources/externals/common/lib
 
 
 #darwin
+#			-DCMAKE_C_COMPILER:STRING=$(GCC_EXECUTABLE) 
+#			-DCMAKE_CXX_COMPILER:STRING=$(GXX_EXECUTABLE) 
 llvm-setup-debug:
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-debug
 	(cd $(LLVM_SOURCE_DIR)/build-debug; \
-		../configure --enable-targets=x86_64 \
-			--enable-debug-symbols --enable-debug-runtime \
-			--enable-cxx11 \
-			--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR);)
+		cmake -DCMAKE_BUILD_TYPE:STRING="Debug" \
+			-DCMAKE_INSTALL_PREFIX:STRING=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
+			-DLLVM_BUILD_LLVM_DYLIB:BOOL=true \
+			-DLLVM_PARALLEL_COMPILE_JOBS:STRING=$(PJOBS) \
+			-DLLVM_ENABLE_CXX11:BOOL=true \
+			-DLLVM_BUILD_TOOLS:BOOL=true \
+			-DLLVM_ENABLE_RTTI:BOOL=true \
+			-DLLVM_TARGETS_TO_BUILD:STRING="X86" \
+			-DCMAKE_CXX_FLAGS:STRING="-I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
+			-DCMAKE_C_FLAGS:STRING="-I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
+			.. )
 
+
+#			-DCMAKE_C_COMPILER:STRING=$(GCC_EXECUTABLE) 
+#			-DCMAKE_CXX_COMPILER:STRING=$(GXX_EXECUTABLE) 
+#		export LINKFLAGS="-L$(PYTHON_LIB)"; 
 #darwin
 llvm-setup-release:
 	-mkdir -p $(LLVM_SOURCE_DIR)/build-release
 	(cd $(LLVM_SOURCE_DIR)/build-release; \
-		../configure --enable-targets=x86_64  --enable-optimized --enable-assertions  \
-			--enable-cxx11 \
-			--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR);)
+		cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
+			-DCMAKE_INSTALL_PREFIX:STRING=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) \
+			-DLLVM_BUILD_LLVM_DYLIB:BOOL=true \
+			-DLLVM_PARALLEL_COMPILE_JOBS:STRING=$(PJOBS) \
+			-DLLVM_ENABLE_CXX11:BOOL=true \
+			-DLLVM_BUILD_TOOLS:BOOL=true \
+			-DLLVM_ENABLE_RTTI:BOOL=true \
+			-DLLVM_TARGETS_TO_BUILD:STRING="X86" \
+			-DCMAKE_CXX_FLAGS:STRING="-I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
+			-DCMAKE_C_FLAGS:STRING="-I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" \
+			.. )
+
+#			-DCMAKE_CXX_FLAGS:STRING="-static-libstdc++ -static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" 
+#			-DCMAKE_C_FLAGS:STRING="-static-libgcc -I$(CLASP_APP_RESOURCES_EXTERNALS_COMMON_INCLUDE_DIR)" 
+
+
+#llvm-setup-debug:
+#	-mkdir -p $(LLVM_SOURCE_DIR)/build-debug
+#	(cd $(LLVM_SOURCE_DIR)/build-debug; \
+#		../configure --enable-targets=x86_64 \
+#			--enable-debug-symbols --enable-debug-runtime \
+#			--enable-cxx11 \
+#			--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR);)
+#
+#darwin
+#llvm-setup-release:
+#	-mkdir -p $(LLVM_SOURCE_DIR)/build-release
+#	(cd $(LLVM_SOURCE_DIR)/build-release; \
+#		../configure --enable-targets=x86_64  --enable-optimized --enable-assertions  \
+#			--enable-cxx11 \
+#			--prefix=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR);)
 
 gmp-build:
 	(cd $(GMP_SOURCE_DIR); make install)
