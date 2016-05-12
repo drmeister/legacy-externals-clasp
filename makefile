@@ -323,7 +323,7 @@ llvm-build:
 
 llvm-debug:
 	(cd $(LLVM_SOURCE_DIR)/build-debug; make -j$(PJOBS) ; make install)
-	make llvm-debug-symlinks
+#	make llvm-debug-symlinks
 
 llvm-release:
 	(cd $(LLVM_SOURCE_DIR)/build-release; make -j$(PJOBS) ; make install)
@@ -605,7 +605,7 @@ llvm-setup-debug:
 	(cd $(LLVM_SOURCE_DIR)/build-debug; \
 		cmake -DCMAKE_BUILD_TYPE:STRING="Debug" \
 			-DCMAKE_INSTALL_PREFIX:STRING=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
-			-DLLVM_BUILD_LLVM_DYLIB:BOOL=true \
+			-DLLVM_BUILD_LLVM_DYLIB:BOOL=false \
 			-DLLVM_PARALLEL_COMPILE_JOBS:STRING=$(PJOBS) \
 			-DLLVM_ENABLE_CXX11:BOOL=true \
 			-DLLVM_BUILD_TOOLS:BOOL=true \
@@ -625,7 +625,7 @@ llvm-setup-release:
 	(cd $(LLVM_SOURCE_DIR)/build-release; \
 		cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
 			-DCMAKE_INSTALL_PREFIX:STRING=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) \
-			-DLLVM_BUILD_LLVM_DYLIB:BOOL=true \
+			-DLLVM_BUILD_LLVM_DYLIB:BOOL=false \
 			-DLLVM_PARALLEL_COMPILE_JOBS:STRING=$(PJOBS) \
 			-DLLVM_ENABLE_CXX11:BOOL=true \
 			-DLLVM_BUILD_TOOLS:BOOL=true \
@@ -704,7 +704,7 @@ llvm-setup-debug:
 	(cd $(LLVM_SOURCE_DIR)/build-debug; \
 		cmake -DCMAKE_BUILD_TYPE:STRING="Debug" \
 			-DCMAKE_INSTALL_PREFIX:STRING=$(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR) \
-			-DLLVM_BUILD_LLVM_DYLIB:BOOL=true \
+			-DLLVM_BUILD_LLVM_DYLIB:BOOL=false \
 			-DLLVM_PARALLEL_COMPILE_JOBS:STRING=$(PJOBS) \
 			-DLLVM_ENABLE_CXX11:BOOL=true \
 			-DLLVM_BUILD_TOOLS:BOOL=true \
@@ -724,7 +724,7 @@ llvm-setup-release:
 	(cd $(LLVM_SOURCE_DIR)/build-release; \
 		cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
 			-DCMAKE_INSTALL_PREFIX:STRING=$(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR) \
-			-DLLVM_BUILD_LLVM_DYLIB:BOOL=true \
+			-DLLVM_BUILD_LLVM_DYLIB:BOOL=false \
 			-DLLVM_PARALLEL_COMPILE_JOBS:STRING=$(PJOBS) \
 			-DLLVM_ENABLE_CXX11:BOOL=true \
 			-DLLVM_BUILD_TOOLS:BOOL=true \
