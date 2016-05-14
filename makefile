@@ -24,10 +24,11 @@ export EXTERNALS_INTERNAL_BUILD_TARGET_DIR = $(TOP)/build
 
 export PATH := $(PATH):$(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/release/bin:$(EXTERNALS_INTERNAL_BUILD_TARGET_DIR)/common/bin
 
-export LLVM_VERSION_ID ?= 38
+export LLVM_VERSION_ID ?= 39
 export LLVM_VERSION_ID := $(or $(filter $(LLVM_VERSION_ID), 36 ),\
 				$(filter $(LLVM_VERSION_ID), 37 ), \
 				$(filter $(LLVM_VERSION_ID), 38 ), \
+				$(filter $(LLVM_VERSION_ID), 39 ), \
 				$(error Invalid LLVM_VERSION_ID: $(LLVM_VERSION_ID) ))
 export LLVM_VERSION = llvm$(LLVM_VERSION_ID)
 
