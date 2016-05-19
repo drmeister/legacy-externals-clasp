@@ -176,7 +176,7 @@ setup:
 #	make boehm-setup
 #	make libedit-setup
 	make llvm-setup
-	make boost-setup
+#	make boost-setup
 #	make ecl-setup
 	make gmp-setup
 	make expat-setup
@@ -191,7 +191,7 @@ build subAll sa:
 	make readline-build
 #	make libedit-build
 	make llvm-release
-	make boost-build
+#	make boost-build
 	make gmp-build
 #	make ecl-build
 	make expat-build
@@ -210,7 +210,7 @@ subClean:
 #	make ecl-clean
 	make zlib-clean
 	make gmp-clean
-	make boost-clean
+#	make boost-clean
 #	make clang-clean Redundant.
 	-make llvm-clean
 
@@ -240,7 +240,7 @@ endif
 
 
 rpath-fix:
-	make boost-rpath-fix
+#	make boost-rpath-fix
 	make llvm-rpath-fix
 	make gmp-rpath-fix
 	make zlib-rpath-fix
@@ -858,7 +858,7 @@ endif
 
 ifeq ($(TARGET_OS),kraken)
 subAll sa:
-	make boost-jam
+#	make boost-jam
 	make boost
 	make expat
 	make readline
