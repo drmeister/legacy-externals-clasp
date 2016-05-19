@@ -172,7 +172,7 @@ setup:
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_DEBUG_DIR)
 	install -d $(CLASP_APP_RESOURCES_EXTERNALS_RELEASE_DIR)
 	make subClean
-	make boostbuild2-build
+#	make boostbuild2-build
 #	make boehm-setup
 #	make libedit-setup
 	make llvm-setup
