@@ -107,13 +107,19 @@ LLDB_SOURCE_DIR = lldb
 
 export LLVM_SOURCE_DIR = llvm39ToT
 
+export LLVM_COMMIT = 7a3e4d658c5d54e48cc6a793ee9e497ae7afc6f5
+export CLANG_COMMIT = 15e8341db0a87789998fd828bf09c96a7821e917
+export CLANG_TOOLS_EXTRA_COMMIT = fcb2d531ece8d8efb661f9339a00e78368d36a3c
 #
 # Load llvm, clang and extras
 # Apply patch D18035:   http://reviews.llvm.org/D18035
 gitllvm:
 	-git clone http://llvm.org/git/llvm.git $(LLVM_SOURCE_DIR)
+	-(cd $(LLVM_SOURCE_DIR); git reset --hard $(LLVM_COMMIT))
 	-(cd $(LLVM_SOURCE_DIR)/tools; git clone http://llvm.org/git/clang.git clang)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang; git reset --hard $(CLANG_COMMIT))
 	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools; git clone http://llvm.org/git/clang-tools-extra extras)
+	-(cd $(LLVM_SOURCE_DIR)/tools/clang/tools/extras; git reset --hard $(CLANG_TOOLS_EXTRA_COMMIT))
 	-patch -d $(LLVM_SOURCE_DIR)/tools/clang -Np0 < patches/D18035.patch
 #       -(cd $(LLVM_SOURCE_DIR)/tools; git clone http://llvm.org/git/lldb.git lldb)
 
