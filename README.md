@@ -1,6 +1,9 @@
 **externals-clasp**
 ===============
 
+Ask drmeister  on irc.freenode.net  #clasp if you have problems.
+
+
 <a href="http://drmeister.wordpress.com/2014/09/26/building-clasp-and-externals-clasp/">Note to those brave souls building early releases of Clasp</a>
 
 Clasp can be found at:   https://github.com/drmeister/clasp
@@ -9,7 +12,7 @@ These are the external libraries that Clasp depends on. If there are legal issue
 
 **Building externals-clasp**
 
-_You need to have gcc 4.8 or higher to build externals-clasp._
+_You need to have gcc 4.8 or 4.9 to build externals-clasp - gcc 5.x won't work._
 
 To build everything from within the top level directory (externals-clasp/) do the following.
 
@@ -20,23 +23,18 @@ To build everything from within the top level directory (externals-clasp/) do th
   
 | Variable  |   Description 
 | ------------- | --------------|
-| **EXTERNALS_BUILD_TARGET_DIR**  | This defines where make will put all of the built libraries  |
-|   | I use $HOME/local/externals-clasp |
-|**TARGET_OS**                    |Currently either _linux_ or _darwin_|
 |**PJOBS**                        |The number of processors you have available to build with|
-|**GCC_TOOLCHAIN**                |Important on Linux systems. | 
+|**GCC_TOOLCHAIN**                |Important on Linux systems.  Don't use on OS/X | 
 |                                 |gcc and g++ must be found in $(**GCC_TOOLCHAIN**)/bin/ |
 |                                 |On a linux system with an up-to-date (>= 4.8) gcc/g++ you can use /usr |
 |**GCC_EXECUTABLE**               |Set this if the gcc you use is NOT found at $(**GCC_TOOLCHAIN**)/bin/gcc |
 |**GXX_EXECUTABLE**               |Set this if the g++ you use is NOT found at $(**GCC_TOOLCHAIN**)/bin/g++ |
   
-3) Type:  _make_    - this will download llvm/clang, build everything and install it in $(**EXTERNALS_BUILD_TARGET_DIR**)
-
-4) Go to the Clasp library and configure and build it.
+3) Go to the Clasp library and configure and build it.
 
 
 ## On OS X
-You need to install automake and libtool<br>
+You may need to install automake and libtool<br>
 brew install automake<br>
 brew install libtool<br>
 brew install pkg-config<br>
